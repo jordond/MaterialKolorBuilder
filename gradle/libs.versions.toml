@@ -23,6 +23,7 @@ materialKolor = "1.7.0"
 voyager = "1.1.0-beta02"
 composeIcons = "1.1.1"
 stateHolder = "1.2.0"
+colorpicker = "1.1.2"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
@@ -56,6 +57,7 @@ voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", vers
 voyager-bottomSheet = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
+compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 
 [bundles]
 voyager = [
