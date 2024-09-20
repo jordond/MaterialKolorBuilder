@@ -1,4 +1,4 @@
-package com.materialkolor.builder
+package com.materialkolor.builder.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

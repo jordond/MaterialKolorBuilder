@@ -1,19 +1,24 @@
 package com.materialkolor.builder.settings.model
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 
+@Immutable
 data class Settings(
     val colors: ColorSettings,
     val isDarkMode: Boolean,
     val contrast: Contrast = Contrast.Default,
     val style: PaletteStyle = PaletteStyle.TonalSpot,
     val isExtendedFidelity: Boolean = false,
+    val selectedImage: Image = ImagePresets.all.first(),
 )
 
+@Immutable
 data class ColorSettings(
-    val primary: Color,
+    val seed: Color,
+    val primary: Color? = null,
     val secondary: Color? = null,
     val tertiary: Color? = null,
     val error: Color? = null,

@@ -25,7 +25,13 @@ internal fun AppTheme(
 ) {
     val isDarkState = remember(settings.isDarkMode) { mutableStateOf(settings.isDarkMode) }
     val dynamicThemeState = rememberDynamicMaterialThemeState(
-        seedColor = settings.colors.primary,
+        seedColor = settings.colors.seed,
+        primary = settings.colors.primary,
+        secondary = settings.colors.secondary,
+        tertiary = settings.colors.tertiary,
+        neutral = settings.colors.neutral,
+        neutralVariant = settings.colors.neutralVariant,
+        error = settings.colors.error,
         isDark = settings.isDarkMode,
         style = settings.style,
         extendedFidelity = settings.isExtendedFidelity,

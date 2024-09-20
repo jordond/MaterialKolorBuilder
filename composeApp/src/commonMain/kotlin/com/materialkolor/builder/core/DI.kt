@@ -1,13 +1,17 @@
-package com.materialkolor.builder.di
+package com.materialkolor.builder.core
 
 import com.materialkolor.builder.settings.DarkModeProvider
 import com.materialkolor.builder.settings.DefaultDarkModeProvider
 import com.materialkolor.builder.settings.DefaultSettingsRepo
 import com.materialkolor.builder.settings.SettingsRepo
 
-object Di {
+object DI {
+
+    val urlLauncher: UrlLauncher = DefaultUrlLauncher()
 
     val darkModeProvider: DarkModeProvider = DefaultDarkModeProvider()
 
-    fun settingsRepo(): SettingsRepo = DefaultSettingsRepo(darkModeProvider)
+    val settingsRepo: SettingsRepo by lazy {
+        DefaultSettingsRepo(darkModeProvider)
+    }
 }

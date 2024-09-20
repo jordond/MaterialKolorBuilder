@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 rootProject.name = "MaterialKolorBuilder"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
@@ -31,3 +30,8 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+includeBuild("materialkolor") {
+    dependencySubstitution {
+        substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
+    }
+}
