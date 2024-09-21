@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.LightMode
+import androidx.compose.material.icons.outlined.QuestionMark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ fun RowScope.TopBarActions(
     settings: Settings,
     onToggleDarkMode: () -> Unit,
     onLaunchUrl: (url: UrlLink) -> Unit,
+    onAboutClicked: () -> Unit,
 ) {
     IconButton(onClick = onToggleDarkMode) {
         val icon =
@@ -35,10 +37,10 @@ fun RowScope.TopBarActions(
         )
     }
 
-    IconButton(onClick = { onLaunchUrl(UrlLink.Source) }) {
+    IconButton(onClick = onAboutClicked) {
         Icon(
-            imageVector = Icons.Outlined.Code,
-            contentDescription = "MaterialKolor Builder Source"
+            imageVector = Icons.Outlined.QuestionMark,
+            contentDescription = "About MaterialKolor Builder"
         )
     }
 

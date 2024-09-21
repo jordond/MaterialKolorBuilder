@@ -55,6 +55,7 @@ kotlin {
         all {
             languageSettings {
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+                optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
             }
         }
 
@@ -68,6 +69,11 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.material3.adaptive)
+            implementation(libs.material3.adaptive.layout)
+            implementation(libs.material3.adaptive.navigation)
+            implementation(libs.material3.adaptive.navigation.suite)
+            implementation(libs.material3.windowSizeClass)
             implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)

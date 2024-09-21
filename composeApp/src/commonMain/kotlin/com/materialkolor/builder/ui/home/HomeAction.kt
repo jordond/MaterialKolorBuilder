@@ -10,4 +10,5 @@ sealed interface HomeAction {
     data class ChangeContrast(val contrast: Contrast) : HomeAction
     data class SelectImage(val preset: Image.Resource) : HomeAction
     data object SelectCustomImage : HomeAction
+    data object Export : HomeAction
 }

@@ -19,6 +19,7 @@ koin = "4.0.0"
 coil = "3.0.0-alpha10"
 kstore = "0.8.0"
 kermit = "2.0.4"
+material3-adaptive = "1.0.0-alpha03"
 materialKolor = "1.7.0"
 voyager = "1.1.0-beta02"
 composeIcons = "1.1.1"
@@ -49,6 +50,11 @@ kotlinx-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections" }
+material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
+material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "material3-adaptive" }
+material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "material3-adaptive" }
+material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "compose-multiplatform" }
+material3-windowSizeClass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "compose-multiplatform" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 stateHolder = { module = "dev.stateholder:core", version.ref = "stateHolder" }
 stateHolder-compose = { module = "dev.stateholder:extensions-compose", version.ref = "stateHolder" }
