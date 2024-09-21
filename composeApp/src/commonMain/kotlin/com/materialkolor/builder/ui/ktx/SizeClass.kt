@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 expect fun windowSizeClass(): WindowSizeClass
 
 fun WindowSizeClass.widthIsExpanded(): Boolean {
-    return this.widthSizeClass != WindowWidthSizeClass.Expanded
+    return this.widthSizeClass == WindowWidthSizeClass.Expanded
 }
 
 fun WindowSizeClass.widthIsMedium(): Boolean {

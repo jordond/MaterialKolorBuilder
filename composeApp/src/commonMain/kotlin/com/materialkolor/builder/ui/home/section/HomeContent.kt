@@ -3,7 +3,9 @@ package com.materialkolor.builder.ui.home.section
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import co.touchlab.kermit.Logger
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.HomeAction
@@ -19,7 +21,7 @@ fun ExpandedContent(
     ) {
         CustomizeSection(
             settings = settings,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(0.5f),
         )
 
         PreviewSection(
