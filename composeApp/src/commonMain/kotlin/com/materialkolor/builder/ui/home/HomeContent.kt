@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
+import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
 import com.materialkolor.builder.ui.home.page.ExportPage
 import com.materialkolor.builder.ui.home.page.HomeSection
@@ -25,8 +27,8 @@ fun ExpandedContent(
         CustomizePage(
             settings = settings,
             onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
-            onRandomColor = dispatcher.rememberRelay(HomeAction.RandomColor),
-            openColorPicker = dispatcher.rememberRelay(HomeAction.OpenColorPicker),
+            onRandomColor = dispatcher.rememberRelay(RandomColor),
+            openColorPicker = dispatcher.rememberRelay(OpenColorPicker(ColorType.Seed)),
             modifier = Modifier.weight(0.5f)
         )
 
@@ -49,8 +51,8 @@ fun CompactContent(
             HomeSection.Customize -> CustomizePage(
                 settings = settings,
                 onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
-                onRandomColor = dispatcher.rememberRelay(HomeAction.RandomColor),
-                openColorPicker = dispatcher.rememberRelay(HomeAction.OpenColorPicker),
+                onRandomColor = dispatcher.rememberRelay(RandomColor),
+                openColorPicker = dispatcher.rememberRelay(OpenColorPicker(ColorType.Seed)),
                 modifier = modifier,
             )
             HomeSection.Preview -> PreviewPage(

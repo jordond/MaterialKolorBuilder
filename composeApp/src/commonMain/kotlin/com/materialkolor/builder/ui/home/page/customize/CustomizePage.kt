@@ -11,10 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.core.UrlLink
 import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.home.page.customize.seed.SeedColorSection
 import kotlinx.collections.immutable.PersistentList
 
 @Composable
