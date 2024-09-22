@@ -28,7 +28,7 @@ fun ExpandedContent(
             settings = settings,
             onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
             onRandomColor = dispatcher.rememberRelay(RandomColor),
-            openColorPicker = dispatcher.rememberRelay(OpenColorPicker(ColorType.Seed)),
+            openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
             modifier = Modifier.weight(0.5f)
         )
 
@@ -52,7 +52,7 @@ fun CompactContent(
                 settings = settings,
                 onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
                 onRandomColor = dispatcher.rememberRelay(RandomColor),
-                openColorPicker = dispatcher.rememberRelay(OpenColorPicker(ColorType.Seed)),
+                openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
                 modifier = modifier,
             )
             HomeSection.Preview -> PreviewPage(

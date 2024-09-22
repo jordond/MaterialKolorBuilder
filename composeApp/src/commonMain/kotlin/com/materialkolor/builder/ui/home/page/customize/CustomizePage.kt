@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.home.ColorType
+import com.materialkolor.builder.ui.home.page.customize.colors.CoreColorsSection
 import com.materialkolor.builder.ui.home.page.customize.seed.SeedColorSection
 import kotlinx.collections.immutable.PersistentList
 
@@ -22,7 +24,7 @@ fun CustomizePage(
     settings: Settings,
     modifier: Modifier = Modifier,
     onPresetSelected: (SeedImage.Resource) -> Unit,
-    openColorPicker: () -> Unit,
+    openColorPicker: (ColorType) -> Unit,
     onRandomColor: () -> Unit,
     scrollState: ScrollState = rememberScrollState(),
     imagePresets: PersistentList<SeedImage.Resource> = ImagePresets.all,
@@ -41,9 +43,13 @@ fun CustomizePage(
         SeedColorSection(
             settings = settings,
             onPresetSelected = onPresetSelected,
-            openColorPicker = openColorPicker,
+            openColorPicker = { openColorPicker(ColorType.Seed) },
             onRandomColor = onRandomColor,
             imagePresets = imagePresets,
+        )
+
+        CoreColorsSection(
+            onClickColor = openColorPicker,
         )
     }
 }

@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +31,10 @@ fun ColorCard(
 ) {
     Card(
         onClick = onClick,
+        shape = RoundedCornerShape(25.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        ),
         modifier = modifier,
     ) {
         Row(
@@ -38,7 +45,7 @@ fun ColorCard(
             Box(
                 modifier = Modifier
                     .background(color, CircleShape)
-                    .size(64.dp)
+                    .size(50.dp)
             )
 
             Column(
@@ -47,13 +54,14 @@ fun ColorCard(
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
 
                 if (subtitle != null) {
                     Text(
                         text = subtitle,
                         style = MaterialTheme.typography.bodySmall,
+                        color = LocalContentColor.current.copy(alpha = 0.8f),
                     )
                 }
             }

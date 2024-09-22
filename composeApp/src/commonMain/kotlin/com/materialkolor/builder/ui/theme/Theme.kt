@@ -9,6 +9,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.materialkolor.DynamicMaterialTheme
+import com.materialkolor.MaterialKolors
 import com.materialkolor.builder.core.UrlLauncher
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.rememberDynamicMaterialThemeState
@@ -16,6 +17,8 @@ import com.materialkolor.rememberDynamicMaterialThemeState
 internal val LocalThemeIsDark: ProvidableCompositionLocal<State<Boolean>> = compositionLocalOf {
     error("Not initialized")
 }
+
+internal val LocalColors = compositionLocalOf<MaterialKolors> { error("Not initialized") }
 
 @Composable
 internal fun AppTheme(
@@ -49,7 +52,10 @@ internal fun AppTheme(
             typography = AppTypography,
         ) {
             SystemAppearance(isDarkState.value)
-            Surface(content = content)
+
+            CompositionLocalProvider(LocalColors provides dynamicThemeState.colors) {
+                Surface(content = content)
+            }
         }
     }
 }
