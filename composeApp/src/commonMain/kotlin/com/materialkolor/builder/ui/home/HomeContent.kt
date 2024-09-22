@@ -10,6 +10,7 @@ import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
+import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.page.ExportPage
 import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.home.page.PreviewPage
@@ -29,6 +30,7 @@ fun ExpandedContent(
             onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
             onRandomColor = dispatcher.rememberRelay(RandomColor),
             openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
+            onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
             modifier = Modifier.weight(0.5f)
         )
 
@@ -53,6 +55,7 @@ fun CompactContent(
                 onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
                 onRandomColor = dispatcher.rememberRelay(RandomColor),
                 openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
+                onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
                 modifier = modifier,
             )
             HomeSection.Preview -> PreviewPage(

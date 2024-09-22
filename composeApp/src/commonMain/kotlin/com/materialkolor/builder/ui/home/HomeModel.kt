@@ -1,6 +1,7 @@
 package com.materialkolor.builder.ui.home
 
 import com.materialkolor.Contrast
+import com.materialkolor.PaletteStyle
 import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
@@ -29,6 +30,10 @@ class HomeModel(
 
     fun updateContrast(contrast: Contrast) {
         settingsRepo.update { it.copy(contrast = contrast) }
+    }
+
+    fun updatePaletteStyle(style: PaletteStyle) {
+        settingsRepo.update { it.copy(style = style) }
     }
 
     fun selectImage(image: SeedImage.Resource) {

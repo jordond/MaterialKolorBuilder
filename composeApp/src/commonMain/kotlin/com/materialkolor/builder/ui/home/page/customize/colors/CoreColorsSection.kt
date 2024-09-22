@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.ColorType
 import com.materialkolor.builder.ui.home.components.ColorCard
 import kotlinx.collections.immutable.PersistentList
@@ -29,7 +28,7 @@ fun CoreColorsSection(
 
         Text(
             text = "Override or set key colors that will be used to generate tonal palettes and schemes.",
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelMedium,
         )
 
         Column(
