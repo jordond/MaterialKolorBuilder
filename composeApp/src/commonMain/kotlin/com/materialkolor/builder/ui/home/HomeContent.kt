@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page
+package com.materialkolor.builder.ui.home
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Row
@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
-import com.materialkolor.builder.ui.home.HomeAction
-import com.materialkolor.builder.ui.home.HomeAction.LaunchUrl
 import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
+import com.materialkolor.builder.ui.home.page.ExportPage
+import com.materialkolor.builder.ui.home.page.HomeSection
+import com.materialkolor.builder.ui.home.page.PreviewPage
 import com.materialkolor.builder.ui.home.page.customize.CustomizePage
 
 @Composable
@@ -23,7 +24,6 @@ fun ExpandedContent(
     ) {
         CustomizePage(
             settings = settings,
-            onLaunchUrl = dispatcher.rememberRelayOf(::LaunchUrl),
             onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
             onRandomColor = dispatcher.rememberRelay(HomeAction.RandomColor),
             openColorPicker = dispatcher.rememberRelay(HomeAction.OpenColorPicker),
@@ -48,7 +48,6 @@ fun CompactContent(
         when (section) {
             HomeSection.Customize -> CustomizePage(
                 settings = settings,
-                onLaunchUrl = dispatcher.rememberRelayOf(::LaunchUrl),
                 onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
                 onRandomColor = dispatcher.rememberRelay(HomeAction.RandomColor),
                 openColorPicker = dispatcher.rememberRelay(HomeAction.OpenColorPicker),

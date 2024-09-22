@@ -21,7 +21,6 @@ import kotlinx.collections.immutable.PersistentList
 fun CustomizePage(
     settings: Settings,
     modifier: Modifier = Modifier,
-    onLaunchUrl: (UrlLink) -> Unit,
     onPresetSelected: (SeedImage.Resource) -> Unit,
     openColorPicker: () -> Unit,
     onRandomColor: () -> Unit,
@@ -41,7 +40,6 @@ fun CustomizePage(
 
         SeedColorSection(
             settings = settings,
-            onLaunchUrl = onLaunchUrl,
             onPresetSelected = onPresetSelected,
             openColorPicker = openColorPicker,
             onRandomColor = onRandomColor,

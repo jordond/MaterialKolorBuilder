@@ -29,14 +29,12 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.core.exportSupported
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.about.AboutInfo
 import com.materialkolor.builder.ui.home.HomeAction.Export
-import com.materialkolor.builder.ui.home.HomeAction.LaunchUrl
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
 import com.materialkolor.builder.ui.home.components.HomeNavRail
 import com.materialkolor.builder.ui.home.components.TopBarActions
-import com.materialkolor.builder.ui.home.page.CompactContent
-import com.materialkolor.builder.ui.home.page.ExpandedContent
 import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
@@ -85,7 +83,6 @@ fun HomeScreenScaffold(
                     TopBarActions(
                         settings = settings,
                         onToggleDarkMode = dispatcher.relay(ToggleDarkMode),
-                        onLaunchUrl = dispatcher.relayOf(::LaunchUrl),
                         onAboutClicked = { aboutDialogVisible = true },
                     )
                 }
@@ -145,5 +142,11 @@ fun HomeScreenScaffold(
                 }
             }
         }
+
+        AboutInfo(
+            visible = aboutDialogVisible,
+            onDismiss = { aboutDialogVisible = false },
+            windowSizeClass = windowSizeClass,
+        )
     }
 }

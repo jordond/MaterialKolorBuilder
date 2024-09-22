@@ -26,6 +26,7 @@ fun App() {
 
     AppTheme(
         settings = state.settings,
+        urlLauncher = model.urlLauncher,
     ) {
         HomeScreen()
     }

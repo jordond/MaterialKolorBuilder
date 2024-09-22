@@ -18,18 +18,19 @@ import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ColorCard
+import com.materialkolor.builder.ui.theme.LocalUrlLauncher
 import kotlinx.collections.immutable.PersistentList
 
 @Composable
 fun SeedColorSection(
     settings: Settings,
-    onLaunchUrl: (UrlLink) -> Unit,
     onPresetSelected: (SeedImage.Resource) -> Unit,
     openColorPicker: () -> Unit,
     onRandomColor: () -> Unit,
     imagePresets: PersistentList<SeedImage.Resource> = ImagePresets.all,
     modifier: Modifier = Modifier,
 ) {
+    val urlLauncher = LocalUrlLauncher.current
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier,
@@ -49,7 +50,7 @@ fun SeedColorSection(
             text = "Learn more about dynamic colors.",
             color = MaterialTheme.colorScheme.secondary,
             fontWeight = FontWeight.Normal,
-            modifier = Modifier.clickable { onLaunchUrl(UrlLink.DynamicColorDocs) },
+            modifier = Modifier.clickable { urlLauncher.launch(UrlLink.DynamicColorDocs) },
         )
 
         ImagePresetRow(

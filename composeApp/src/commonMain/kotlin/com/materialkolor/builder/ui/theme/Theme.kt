@@ -9,6 +9,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.materialkolor.DynamicMaterialTheme
+import com.materialkolor.builder.core.UrlLauncher
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.rememberDynamicMaterialThemeState
 
@@ -19,6 +20,7 @@ internal val LocalThemeIsDark: ProvidableCompositionLocal<State<Boolean>> = comp
 @Composable
 internal fun AppTheme(
     settings: Settings,
+    urlLauncher: UrlLauncher,
     animate: Boolean = true,
     content: @Composable () -> Unit,
 ) {
@@ -39,6 +41,7 @@ internal fun AppTheme(
 
     CompositionLocalProvider(
         LocalThemeIsDark provides isDarkState,
+        LocalUrlLauncher provides urlLauncher,
     ) {
         DynamicMaterialTheme(
             state = dynamicThemeState,

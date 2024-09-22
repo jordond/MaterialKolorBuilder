@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.UrlLink
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.theme.LocalUrlLauncher
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
@@ -22,9 +23,10 @@ import compose.icons.fontawesomeicons.brands.Github
 fun RowScope.TopBarActions(
     settings: Settings,
     onToggleDarkMode: () -> Unit,
-    onLaunchUrl: (url: UrlLink) -> Unit,
     onAboutClicked: () -> Unit,
 ) {
+    val urlLauncher = LocalUrlLauncher.current
+
     IconButton(onClick = onToggleDarkMode) {
         val icon =
             if (settings.isDarkMode) Icons.Outlined.LightMode
@@ -43,7 +45,7 @@ fun RowScope.TopBarActions(
         )
     }
 
-    IconButton(onClick = { onLaunchUrl(UrlLink.Github) }) {
+    IconButton(onClick = { urlLauncher.launch(UrlLink.Github) }) {
         Icon(
             imageVector = FontAwesomeIcons.Brands.Github,
             contentDescription = "MaterialKolor source code on GitHub",

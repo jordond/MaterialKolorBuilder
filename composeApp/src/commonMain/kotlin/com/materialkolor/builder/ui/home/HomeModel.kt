@@ -2,8 +2,6 @@ package com.materialkolor.builder.ui.home
 
 import com.materialkolor.Contrast
 import com.materialkolor.builder.core.DI
-import com.materialkolor.builder.core.UrlLauncher
-import com.materialkolor.builder.core.UrlLink
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
@@ -16,7 +14,6 @@ import kotlin.random.Random
 
 class HomeModel(
     private val settingsRepo: SettingsRepo = DI.settingsRepo,
-    private val urlLauncher: UrlLauncher = DI.urlLauncher,
     private val random: Random = Random.Default,
 ) : StateViewModel<HomeModel.State>(State(settingsRepo.settings.value)) {
 
@@ -41,10 +38,6 @@ class HomeModel(
                 selectedImage = image,
             )
         }
-    }
-
-    fun launchUrl(url: UrlLink) {
-        urlLauncher.launch(url)
     }
 
     fun randomColor() {

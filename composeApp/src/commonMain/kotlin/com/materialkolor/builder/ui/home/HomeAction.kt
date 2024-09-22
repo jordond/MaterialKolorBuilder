@@ -6,7 +6,6 @@ import com.materialkolor.builder.settings.model.SeedImage
 
 sealed interface HomeAction {
     data object ToggleDarkMode : HomeAction
-    data class LaunchUrl(val url: UrlLink) : HomeAction
     data class ChangeContrast(val contrast: Contrast) : HomeAction
     data class SelectPresetImage(val preset: SeedImage.Resource) : HomeAction
     data object SelectCustomImage : HomeAction
