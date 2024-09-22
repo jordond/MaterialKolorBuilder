@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page
+package com.materialkolor.builder.ui.home.page.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import com.materialkolor.builder.settings.model.Settings
 
 @Composable
-fun PreviewPage(
+fun ExportPage(
     settings: Settings,
     modifier: Modifier = Modifier,
 ) {
@@ -19,6 +19,6 @@ fun PreviewPage(
         verticalArrangement = Arrangement.Center,
         modifier = modifier.fillMaxSize(),
     ) {
-        Text("Preview Section")
+        Text("Export Section")
     }
 }

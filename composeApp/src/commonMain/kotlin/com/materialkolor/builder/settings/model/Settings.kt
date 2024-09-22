@@ -14,6 +14,7 @@ data class Settings(
     val contrast: Contrast = Contrast.Default,
     val style: PaletteStyle = PaletteStyle.TonalSpot,
     val isExtendedFidelity: Boolean = false,
+    val isModified: Boolean = false,
 )
 
 @Immutable

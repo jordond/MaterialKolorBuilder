@@ -1,18 +1,23 @@
 package com.materialkolor.builder.settings
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+
 interface DarkModeProvider {
 
-    val isDarkMode: Boolean
+    val isDarkMode: StateFlow<Boolean>
 
     fun initialize(isDarkMode: Boolean)
 }
 
 class DefaultDarkModeProvider : DarkModeProvider {
 
-    override var isDarkMode: Boolean = false
-        private set
+    private val _isDarkMode = MutableStateFlow(false)
+    override var isDarkMode = _isDarkMode.asStateFlow()
 
     override fun initialize(isDarkMode: Boolean) {
-        this.isDarkMode = isDarkMode
+        _isDarkMode.update { isDarkMode }
     }
 }

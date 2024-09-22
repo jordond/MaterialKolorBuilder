@@ -68,8 +68,8 @@ fun HomeScreenScaffold(
 
                         Text(
                             text = text,
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Thin,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.SemiBold,
                             ),
                         )
                     }
@@ -78,6 +78,7 @@ fun HomeScreenScaffold(
                     TopBarActions(
                         settings = settings,
                         onToggleDarkMode = dispatcher.relay(ToggleDarkMode),
+                        onReset = dispatcher.relay(HomeAction.Reset),
                         onAboutClicked = { aboutDialogVisible = true },
                     )
                 }
@@ -113,6 +114,7 @@ fun HomeScreenScaffold(
                     ExpandedContent(
                         settings = settings,
                         dispatcher = dispatcher,
+                        windowSizeClass = windowSizeClass,
                     )
                 }
                 WindowWidthSizeClass.Medium -> {
@@ -125,6 +127,7 @@ fun HomeScreenScaffold(
                             settings = settings,
                             selectedSection = selectedSection,
                             dispatcher = dispatcher,
+                            windowSizeClass = windowSizeClass,
                         )
                     }
                 }
@@ -133,6 +136,7 @@ fun HomeScreenScaffold(
                         settings = settings,
                         selectedSection = selectedSection,
                         dispatcher = dispatcher,
+                        windowSizeClass = windowSizeClass,
                     )
                 }
             }

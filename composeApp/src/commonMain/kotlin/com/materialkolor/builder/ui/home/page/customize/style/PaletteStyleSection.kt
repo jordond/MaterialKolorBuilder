@@ -44,7 +44,7 @@ fun PaletteStyleSection(
 
         Text(
             text = selected.description(),
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.bodySmall,
             minLines = 2,
         )
     }

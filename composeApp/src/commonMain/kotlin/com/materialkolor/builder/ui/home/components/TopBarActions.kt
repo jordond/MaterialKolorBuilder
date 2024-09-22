@@ -1,8 +1,10 @@
 package com.materialkolor.builder.ui.home.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Undo
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material.icons.outlined.QuestionMark
@@ -19,13 +21,22 @@ import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
 
 @Composable
-@Suppress("UnusedReceiverParameter")
 fun RowScope.TopBarActions(
     settings: Settings,
+    onReset: () -> Unit,
     onToggleDarkMode: () -> Unit,
     onAboutClicked: () -> Unit,
 ) {
     val urlLauncher = LocalUrlLauncher.current
+
+    AnimatedVisibility(visible = settings.isModified) {
+        IconButton(onClick = onReset) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.Undo,
+                contentDescription = "Reset to default"
+            )
+        }
+    }
 
     IconButton(onClick = onToggleDarkMode) {
         val icon =

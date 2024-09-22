@@ -55,6 +55,10 @@ class HomeModel(
         }
     }
 
+    fun reset() {
+        settingsRepo.clear()
+    }
+
     data class State(
         val settings: Settings,
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
