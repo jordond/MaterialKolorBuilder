@@ -4,15 +4,16 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
+import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class Settings(
     val colors: ColorSettings,
     val isDarkMode: Boolean,
+    val selectedImage: SeedImage?,
     val contrast: Contrast = Contrast.Default,
     val style: PaletteStyle = PaletteStyle.TonalSpot,
     val isExtendedFidelity: Boolean = false,
-    val selectedImage: Image = ImagePresets.all.first(),
 )
 
 @Immutable
@@ -24,19 +25,38 @@ data class ColorSettings(
     val error: Color? = null,
     val neutral: Color? = null,
     val neutralVariant: Color? = null,
-)
+) {
 
-object Colors {
-    val blue = Color(0xFFAEC6CF)
-    val pink = Color(0xFFFFC1CC)
-    val green = Color(0xFF77DD77)
-    val yellow = Color(0xFFFDFD96)
-    val purple = Color(0xFFB39EB5)
-    val orange = Color(0xFFFFB347)
-    val red = Color(0xFFFF6961)
-    val brown = Color(0xFFCD9575)
+    companion object {
 
-    val all = listOf(blue, pink, green, yellow, purple, orange, red, brown)
-
-    val default = blue
+        val colors = _colors
+    }
 }
+
+private val _colors = persistentListOf(
+    Color(0xFFFF1493), // Deep Pink
+    Color(0xFF00FF00), // Lime
+    Color(0xFF1E90FF), // Dodger Blue
+    Color(0xFFFFD700), // Gold
+    Color(0xFFFF4500), // Orange Red
+    Color(0xFF00FFFF), // Cyan
+    Color(0xFFFF69B4), // Hot Pink
+    Color(0xFF32CD32), // Lime Green
+    Color(0xFF8A2BE2), // Blue Violet
+    Color(0xFFFFA500), // Orange
+    Color(0xFF00CED1), // Dark Turquoise
+    Color(0xFFFF6347), // Tomato
+    Color(0xFF7FFF00), // Chartreuse
+    Color(0xFFFF00FF), // Magenta
+    Color(0xFF00FA9A), // Medium Spring Green
+    Color(0xFFFF8C00), // Dark Orange
+    Color(0xFF1E90FF), // Dodger Blue
+    Color(0xFFFFFF00), // Yellow
+    Color(0xFFFF1493), // Deep Pink
+    Color(0xFF00BFFF), // Deep Sky Blue
+    Color(0xFFADFF2F), // Green Yellow
+    Color(0xFFFF69B4), // Hot Pink
+    Color(0xFF00FF7F), // Spring Green
+    Color(0xFFFF4500), // Orange Red
+    Color(0xFF1E90FF), // Dodger Blue
+)

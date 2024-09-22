@@ -12,24 +12,24 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 @Suppress("MemberVisibilityCanBePrivate")
-public abstract class StateViewModel<State>(
+abstract class StateViewModel<State>(
     protected val stateHolder: StateHolder<State>,
 ) : ViewModel(), StateOwner<State> {
 
-    public constructor(stateProvider: StateProvider<State>) : this(stateContainer(stateProvider))
+    constructor(stateProvider: StateProvider<State>) : this(stateContainer(stateProvider))
 
-    public constructor(initialState: State) : this(stateContainer(initialState))
+    constructor(initialState: State) : this(stateContainer(initialState))
 
     override val state: StateFlow<State> = stateHolder.state
 
-    public fun <T> Flow<T>.collectToState(
+    fun <T> Flow<T>.collectToState(
         scope: CoroutineScope = viewModelScope,
         block: suspend (state: State, value: T) -> State,
     ): Job {
         return stateHolder.addSource(this, scope, block)
     }
 
-    public fun <T> StateOwner<T>.collectToState(
+    fun <T> StateOwner<T>.collectToState(
         scope: CoroutineScope = viewModelScope,
         block: suspend (state: State, value: T) -> State,
     ): Job = state.collectToState(scope, block)

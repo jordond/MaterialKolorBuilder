@@ -19,4 +19,4 @@ fun WindowSizeClass.widthIsCompact(): Boolean {
     return this.widthSizeClass == WindowWidthSizeClass.Compact
 }
 
-fun WindowSizeClass.showBottomBar(): Boolean = widthIsCompact() || widthIsMedium()
+fun WindowSizeClass.showBottomBar(): Boolean = widthIsCompact()

@@ -5,16 +5,19 @@ import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.core.UrlLauncher
 import com.materialkolor.builder.core.UrlLink
 import com.materialkolor.builder.settings.SettingsRepo
-import com.materialkolor.builder.settings.model.Image
+import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
+import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.ktx.StateViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
+import kotlin.random.Random
 
 class HomeModel(
     private val settingsRepo: SettingsRepo = DI.settingsRepo,
     private val urlLauncher: UrlLauncher = DI.urlLauncher,
+    private val random: Random = Random.Default,
 ) : StateViewModel<HomeModel.State>(State(settingsRepo.settings.value)) {
 
     init {
@@ -31,16 +34,31 @@ class HomeModel(
         settingsRepo.update { it.copy(contrast = contrast) }
     }
 
-    fun selectImage(image: Image) {
-        settingsRepo.update { it.copy(selectedImage = image) }
+    fun selectImage(image: SeedImage.Resource) {
+        settingsRepo.update { settings ->
+            settings.copy(
+                colors = settings.colors.copy(seed = image.color),
+                selectedImage = image,
+            )
+        }
     }
 
     fun launchUrl(url: UrlLink) {
         urlLauncher.launch(url)
     }
 
+    fun randomColor() {
+        val color = ColorSettings.colors.random(random)
+        settingsRepo.update { settings ->
+            settings.copy(
+                colors = ColorSettings(seed = color),
+                selectedImage = null,
+            )
+        }
+    }
+
     data class State(
         val settings: Settings,
-        val imagePresets: PersistentList<Image> = ImagePresets.all.toPersistentList(),
+        val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
     )
 }

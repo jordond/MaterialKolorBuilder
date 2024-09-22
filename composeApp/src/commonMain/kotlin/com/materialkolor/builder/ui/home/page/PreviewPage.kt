@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.section
+package com.materialkolor.builder.ui.home.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import com.materialkolor.builder.settings.model.Settings
 
 @Composable
-fun PreviewSection(
+fun PreviewPage(
     settings: Settings,
     modifier: Modifier = Modifier,
 ) {

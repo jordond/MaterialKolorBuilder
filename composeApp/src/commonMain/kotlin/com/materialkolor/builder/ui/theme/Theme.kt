@@ -1,6 +1,5 @@
 package com.materialkolor.builder.ui.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -44,13 +43,10 @@ internal fun AppTheme(
         DynamicMaterialTheme(
             state = dynamicThemeState,
             animate = animate,
+            typography = AppTypography,
         ) {
-            MaterialTheme(
-                colorScheme = MaterialTheme.colorScheme,
-            ) {
-                SystemAppearance(isDarkState.value)
-                Surface(content = content)
-            }
+            SystemAppearance(isDarkState.value)
+            Surface(content = content)
         }
     }
 }

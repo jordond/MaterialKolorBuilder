@@ -2,13 +2,15 @@ package com.materialkolor.builder.ui.home
 
 import com.materialkolor.Contrast
 import com.materialkolor.builder.core.UrlLink
-import com.materialkolor.builder.settings.model.Image
+import com.materialkolor.builder.settings.model.SeedImage
 
 sealed interface HomeAction {
     data object ToggleDarkMode : HomeAction
     data class LaunchUrl(val url: UrlLink) : HomeAction
     data class ChangeContrast(val contrast: Contrast) : HomeAction
-    data class SelectImage(val preset: Image.Resource) : HomeAction
+    data class SelectPresetImage(val preset: SeedImage.Resource) : HomeAction
     data object SelectCustomImage : HomeAction
+    data object OpenColorPicker : HomeAction
+    data object RandomColor : HomeAction
     data object Export : HomeAction
 }

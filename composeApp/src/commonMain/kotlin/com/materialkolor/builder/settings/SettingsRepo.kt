@@ -2,7 +2,7 @@ package com.materialkolor.builder.settings
 
 import co.touchlab.kermit.Logger
 import com.materialkolor.builder.settings.model.ColorSettings
-import com.materialkolor.builder.settings.model.Colors
+import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,8 +42,12 @@ class DefaultSettingsRepo(
         _settings.update { defaults() }
     }
 
-    private fun defaults(): Settings = Settings(
-        colors = ColorSettings(seed = Colors.default),
-        isDarkMode = darkModeProvider.isDarkMode,
-    )
+    private fun defaults(): Settings {
+        val image = ImagePresets.all.first()
+        return Settings(
+            selectedImage = image,
+            colors = ColorSettings(seed = image.color),
+            isDarkMode = darkModeProvider.isDarkMode,
+        )
+    }
 }
