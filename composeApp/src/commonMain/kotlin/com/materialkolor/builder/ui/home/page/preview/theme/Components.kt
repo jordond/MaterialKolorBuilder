@@ -1,24 +1,35 @@
 package com.materialkolor.builder.ui.home.page.preview.theme
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import com.materialkolor.builder.ui.home.page.preview.model.ThemeColor
 import com.materialkolor.builder.ui.home.page.preview.model.ThemeGroup
 import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
@@ -28,20 +39,22 @@ import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults
 @Composable
 fun ColorGroupContainer(
     group: ThemeGroup,
+    onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(InnerDivider),
         modifier = modifier,
     ) {
-        ColorPairContainer(group.main)
-        ColorPairContainer(group.container)
+        ColorPairContainer(group.main, onClick)
+        ColorPairContainer(group.container, onClick)
     }
 }
 
 @Composable
 fun ColorPairContainer(
     pair: ThemePair,
+    onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
     lines: Int = 3,
 ) {
@@ -49,11 +62,20 @@ fun ColorPairContainer(
         modifier = modifier,
     ) {
         CompositionLocalProvider(LocalContentColor provides pair.onColor.color()) {
-            ColorBox(pair.color, lines = lines, modifier = Modifier.fillMaxSize())
+            ColorBox(
+                themeColor = pair.color,
+                onClick = onClick,
+                lines = lines,
+                modifier = Modifier.fillMaxSize(),
+            )
         }
 
         CompositionLocalProvider(LocalContentColor provides pair.color.color()) {
-            SingleLineColorBox(pair.onColor, modifier = Modifier.fillMaxWidth())
+            SingleLineColorBox(
+                themeColor = pair.onColor,
+                onClick = onClick,
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }
@@ -61,19 +83,47 @@ fun ColorPairContainer(
 @Composable
 fun ColorBox(
     themeColor: ThemeColor,
+    onClick: (String, Color) -> Unit,
     lines: Int = 3,
     modifier: Modifier = Modifier,
     textColor: Color? = null,
 ) {
+    val color = themeColor.color()
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+
     ContentColorWrapper(themeColor, textColor) {
-        Column(
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = modifier
+        Box(
+            modifier
                 .background(themeColor.color())
+                .hoverable(interactionSource)
+                .clickable(onClick = { onClick(themeColor.title, color) })
                 .padding(BoxPadding)
         ) {
-            Text(text = themeColor.title, minLines = lines)
-            Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Text(
+                    text = themeColor.title,
+                    minLines = lines,
+                    maxLines = lines,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
+            }
+
+            AnimatedVisibility(
+                visible = isHovered,
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier = Modifier.align(Alignment.TopEnd),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy color code",
+                )
+            }
         }
     }
 }
@@ -81,18 +131,32 @@ fun ColorBox(
 @Composable
 fun SingleLineColorBox(
     themeColor: ThemeColor,
+    onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
     textColor: Color? = null,
 ) {
+    val color = themeColor.color()
+
     ContentColorWrapper(themeColor, textColor) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .background(themeColor.color())
-                .padding(BoxPadding)
+                .clickable(onClick = { onClick(themeColor.title, color) })
+                .padding(BoxPadding),
         ) {
-            Text(text = themeColor.title, modifier = Modifier.weight(1f))
-            Text(text = themeColor.swatchNumber)
+            Text(
+                text = themeColor.title,
+                maxLines = 1,
+                overflow = TextOverflow.Clip,
+                modifier = Modifier.weight(1f),
+            )
+
+            Text(
+                text = themeColor.swatchNumber,
+                maxLines = 1,
+                overflow = TextOverflow.Clip,
+            )
         }
     }
 }

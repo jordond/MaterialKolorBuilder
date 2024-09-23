@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialTheme
 import com.materialkolor.DynamicMaterialThemeState
@@ -38,22 +39,25 @@ enum class ThemeMode {
 fun LightThemeDisplay(
     settings: Settings,
     modifier: Modifier = Modifier,
+    onClick: (String, Color) -> Unit = { _, _ -> },
 ) {
-    ThemeDisplay(ThemeMode.Light, createThemeState(settings, isDark = false), modifier)
+    ThemeDisplay(ThemeMode.Light, createThemeState(settings, isDark = false), onClick, modifier)
 }
 
 @Composable
 fun DarkThemeDisplay(
     settings: Settings,
     modifier: Modifier = Modifier,
+    onClick: (String, Color) -> Unit = { _, _ -> },
 ) {
-    ThemeDisplay(ThemeMode.Dark, createThemeState(settings, isDark = true), modifier)
+    ThemeDisplay(ThemeMode.Dark, createThemeState(settings, isDark = true), onClick, modifier)
 }
 
 @Composable
 private fun ThemeDisplay(
     theme: ThemeMode,
     state: DynamicMaterialThemeState,
+    onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     DynamicMaterialTheme(
@@ -61,13 +65,14 @@ private fun ThemeDisplay(
         animate = true,
         typography = AppTypography,
     ) {
-        ThemeDisplay(theme, modifier)
+        ThemeDisplay(theme, onClick, modifier)
     }
 }
 
 @Composable
 private fun ThemeDisplay(
     theme: ThemeMode,
+    onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedCard(
@@ -95,7 +100,7 @@ private fun ThemeDisplay(
                             horizontalArrangement = Arrangement.spacedBy(InnerDivider),
                         ) {
                             MainColors.forEach { group ->
-                                ColorGroupContainer(group, modifier = Modifier.weight(1f))
+                                ColorGroupContainer(group, onClick, modifier = Modifier.weight(1f))
                             }
                         }
 
@@ -106,6 +111,7 @@ private fun ThemeDisplay(
                                 Surface.forEach { themeColor ->
                                     ColorBox(
                                         themeColor = themeColor,
+                                        onClick = onClick,
                                         lines = 4,
                                         modifier = Modifier.weight(1f),
                                     )
@@ -116,6 +122,7 @@ private fun ThemeDisplay(
                                 SurfaceContainer.forEach { themeColor ->
                                     ColorBox(
                                         themeColor = themeColor,
+                                        onClick = onClick,
                                         lines = 4,
                                         modifier = Modifier.weight(1f),
                                     )
@@ -126,6 +133,7 @@ private fun ThemeDisplay(
                                 MiscColors.forEach { (themeColor, onColor) ->
                                     SingleLineColorBox(
                                         themeColor = themeColor,
+                                        onClick = onClick,
                                         textColor = onColor,
                                         modifier = Modifier.weight(1f),
                                     )
@@ -138,20 +146,22 @@ private fun ThemeDisplay(
                         verticalArrangement = Arrangement.spacedBy(SectionDivider),
                         modifier = Modifier.weight(0.3f)
                     ) {
-                        ColorGroupContainer(Theme.Groups.Error)
+                        ColorGroupContainer(Theme.Groups.Error, onClick)
 
                         Column(
                             verticalArrangement = Arrangement.spacedBy(InnerDivider),
                         ) {
-                            ColorPairContainer(pair = InverseSurfacePair)
+                            ColorPairContainer(InverseSurfacePair, onClick)
 
                             SingleLineColorBox(
                                 themeColor = Theme.Colors.InversePrimary,
+                                onClick = onClick,
                                 modifier = Modifier.fillMaxWidth(),
                             )
 
                             SingleLineColorBox(
                                 themeColor = Theme.Colors.Scrim,
+                                onClick = onClick,
                                 textColor = Theme.Colors.Scrim.color().inverse(),
                                 modifier = Modifier.fillMaxWidth(),
                             )

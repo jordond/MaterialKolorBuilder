@@ -3,6 +3,8 @@ package com.materialkolor.builder.ui.ktx
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 @Composable
 expect fun windowSizeClass(): WindowSizeClass
@@ -20,3 +22,12 @@ fun WindowSizeClass.widthIsCompact(): Boolean {
 }
 
 fun WindowSizeClass.showBottomBar(): Boolean = widthIsCompact()
+
+fun WindowSizeClass.sidePadding(): Dp {
+    return when (widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> 32.dp
+        WindowWidthSizeClass.Medium -> 16.dp
+        WindowWidthSizeClass.Compact -> 8.dp
+        else -> Dp.Unspecified
+    }
+}

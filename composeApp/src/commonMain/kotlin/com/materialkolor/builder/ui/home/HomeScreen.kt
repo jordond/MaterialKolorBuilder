@@ -1,10 +1,14 @@
 package com.materialkolor.builder.ui.home
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.materialkolor.builder.core.rememberDebounceDispatcher
+import com.materialkolor.builder.ui.home.HomeAction.CopyColor
 import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
@@ -14,14 +18,30 @@ import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
+import com.materialkolor.builder.ui.ktx.HandleEvents
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen() {
     val model = viewModel { HomeModel() }
     val state by model.state.collectAsStateWithLifecycle()
 
+    val scope = rememberCoroutineScope()
+    val snackbar = remember { SnackbarHostState() }
+
+    HandleEvents(model) { event ->
+        when (event) {
+            is HomeModel.Event.ShowSnackbar -> {
+                scope.launch {
+                    snackbar.showSnackbar(event.message)
+                }
+            }
+        }
+    }
+
     HomeScreenScaffold(
         settings = state.settings,
+        snackbarState = snackbar,
         dispatcher = rememberDebounceDispatcher { action ->
             when (action) {
                 is UpdateContrast -> model.updateContrast(action.contrast)
@@ -35,6 +55,7 @@ fun HomeScreen() {
                 is OpenColorPicker -> {} // TODO: Implement color picker
                 is RandomColor -> model.randomColor()
                 is Reset -> model.reset()
+                is CopyColor -> model.copyColorToClipboard(action.name, action.color)
             }
         }
     )

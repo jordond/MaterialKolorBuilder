@@ -12,6 +12,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -28,6 +29,7 @@ import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.core.exportSupported
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.about.AboutInfo
+import com.materialkolor.builder.ui.components.AppSnackbarHost
 import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
@@ -43,6 +45,7 @@ fun HomeScreenScaffold(
     settings: Settings,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
+    snackbarState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     var aboutDialogVisible by remember { mutableStateOf(false) }
     var selectedSection by remember { mutableStateOf(HomeSection.Customize) }
@@ -50,6 +53,7 @@ fun HomeScreenScaffold(
 
     Scaffold(
         modifier = modifier,
+        snackbarHost = { AppSnackbarHost(snackbarState) },
         topBar = {
             TopAppBar(
                 title = {

@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.home.HomeAction.CopyColor
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
-import com.materialkolor.builder.ui.home.page.export.ExportPage
 import com.materialkolor.builder.ui.home.page.HomeSection
-import com.materialkolor.builder.ui.home.page.preview.PreviewPage
 import com.materialkolor.builder.ui.home.page.customize.CustomizePage
+import com.materialkolor.builder.ui.home.page.export.ExportPage
+import com.materialkolor.builder.ui.home.page.preview.PreviewPage
 
 @Composable
 fun ExpandedContent(
@@ -42,6 +43,7 @@ fun ExpandedContent(
         PreviewPage(
             settings = settings,
             onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
+            onCopyColor = dispatcher.rememberRelayOf(::CopyColor),
             modifier = Modifier.weight(1f),
             windowSizeClass = windowSizeClass,
         )
@@ -71,6 +73,7 @@ fun CompactContent(
             HomeSection.Preview -> PreviewPage(
                 settings = settings,
                 onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
+                onCopyColor = dispatcher.rememberRelayOf(::CopyColor),
                 modifier = modifier,
                 windowSizeClass = windowSizeClass,
             )

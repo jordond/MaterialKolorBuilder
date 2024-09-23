@@ -13,6 +13,8 @@ object DI {
 
     val urlLauncher: UrlLauncher = DefaultUrlLauncher()
 
+    val clipboard: Clipboard = DefaultClipboard()
+
     val darkModeProvider: DarkModeProvider = DefaultDarkModeProvider()
 
     val settingsRepo: SettingsRepo by lazy {
