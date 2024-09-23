@@ -202,12 +202,6 @@ object Theme {
             swatchNumber = "N-0",
             color = c { MaterialTheme.colorScheme.scrim },
         )
-
-        val Shadow = ThemeColor(
-            title = "Shadow",
-            swatchNumber = "N-0",
-            color = c { m3Colors.shadow().palette(dynamicScheme).toneColor(0) },
-        )
     }
 
     object Groups {

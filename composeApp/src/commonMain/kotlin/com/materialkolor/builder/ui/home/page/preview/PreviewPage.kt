@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
+import com.materialkolor.builder.ui.home.page.preview.theme.DarkThemeDisplay
+import com.materialkolor.builder.ui.home.page.preview.theme.LightThemeDisplay
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
 
