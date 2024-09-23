@@ -87,6 +87,7 @@ kotlin {
             implementation(libs.stateHolder.compose)
             implementation(libs.stateHolder.voyager)
             implementation(libs.materialKolor)
+            implementation("com.materialkolor:material-kolor:material-color-utilities")
             implementation(libs.compose.colorpicker)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel.compose)

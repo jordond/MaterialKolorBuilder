@@ -9,16 +9,42 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.materialkolor.DynamicMaterialTheme
+import com.materialkolor.DynamicMaterialThemeState
 import com.materialkolor.MaterialKolors
 import com.materialkolor.builder.core.UrlLauncher
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.ktx.colors
 import com.materialkolor.rememberDynamicMaterialThemeState
 
 internal val LocalThemeIsDark: ProvidableCompositionLocal<State<Boolean>> = compositionLocalOf {
     error("Not initialized")
 }
 
+internal val LocalDynamicThemeState = compositionLocalOf<DynamicMaterialThemeState> {
+    error("Not initialized")
+}
+
 internal val LocalColors = compositionLocalOf<MaterialKolors> { error("Not initialized") }
+
+@Composable
+fun createThemeState(
+    settings: Settings,
+    isDark: Boolean = settings.isDarkMode,
+): DynamicMaterialThemeState {
+    return rememberDynamicMaterialThemeState(
+        seedColor = settings.colors.seed,
+        primary = settings.colors.primary,
+        secondary = settings.colors.secondary,
+        tertiary = settings.colors.tertiary,
+        neutral = settings.colors.neutral,
+        neutralVariant = settings.colors.neutralVariant,
+        error = settings.colors.error,
+        isDark = isDark,
+        style = settings.style,
+        extendedFidelity = settings.isExtendedFidelity,
+        contrastLevel = settings.contrast.value,
+    )
+}
 
 @Composable
 internal fun AppTheme(
@@ -28,21 +54,10 @@ internal fun AppTheme(
     content: @Composable () -> Unit,
 ) {
     val isDarkState = remember(settings.isDarkMode) { mutableStateOf(settings.isDarkMode) }
-    val dynamicThemeState = rememberDynamicMaterialThemeState(
-        seedColor = settings.colors.seed,
-        primary = settings.colors.primary,
-        secondary = settings.colors.secondary,
-        tertiary = settings.colors.tertiary,
-        neutral = settings.colors.neutral,
-        neutralVariant = settings.colors.neutralVariant,
-        error = settings.colors.error,
-        isDark = settings.isDarkMode,
-        style = settings.style,
-        extendedFidelity = settings.isExtendedFidelity,
-        contrastLevel = settings.contrast.value,
-    )
+    val dynamicThemeState = createThemeState(settings)
 
     CompositionLocalProvider(
+        LocalDynamicThemeState provides dynamicThemeState,
         LocalThemeIsDark provides isDarkState,
         LocalUrlLauncher provides urlLauncher,
     ) {

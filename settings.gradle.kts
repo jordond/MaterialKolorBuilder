@@ -33,5 +33,6 @@ include(":composeApp")
 includeBuild("materialkolor") {
     dependencySubstitution {
         substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
+        substitute(module("com.materialkolor:material-color-utilities")).using(project(":material-color-utilities"))
     }
 }
