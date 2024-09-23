@@ -17,8 +17,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 fun Modifier.debugBorder(
-    width: Dp = 1.dp,
     color: Color = Color.Red,
+    width: Dp = 1.dp,
 ) = border(width, color = color)
 
 @Composable

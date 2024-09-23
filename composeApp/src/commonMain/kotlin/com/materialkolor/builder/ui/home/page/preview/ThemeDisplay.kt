@@ -1,12 +1,16 @@
 package com.materialkolor.builder.ui.home.page.preview
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LocalContentColor
@@ -14,10 +18,13 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialTheme
@@ -30,6 +37,7 @@ import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
 import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.theme.AppTypography
 import com.materialkolor.builder.ui.theme.createThemeState
+import com.materialkolor.ktx.isLight
 import kotlinx.collections.immutable.persistentListOf
 
 enum class ThemeMode {
@@ -119,65 +127,82 @@ private fun ThemeDisplay(
             )
 
             CompositionLocalProvider(LocalTextStyle provides TextStyle) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(SectionDivider),
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(SectionDivider),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(InnerDivider),
-                        modifier = Modifier.fillMaxWidth(),
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(SectionDivider),
+                        modifier = Modifier.weight(1f),
                     ) {
-                        MainColors.forEach { group ->
-                            ColorGroupContainer(group, modifier = Modifier.weight(1f))
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(InnerDivider),
+                        ) {
+                            MainColors.forEach { group ->
+                                ColorGroupContainer(group, modifier = Modifier.weight(1f))
+                            }
                         }
 
-                        Spacer(modifier = Modifier.width(SectionDivider - InnerDivider))
-
-                        ColorGroupContainer(Theme.Groups.Error, modifier = Modifier.weight(1f))
-                    }
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(SectionDivider),
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(InnerDivider),
-                            modifier = Modifier.weight(1f),
                         ) {
                             Row {
                                 Surface.forEach { themeColor ->
-                                    ColorBox(themeColor, lines = 4, modifier = Modifier.weight(1f))
+                                    ColorBox(
+                                        themeColor = themeColor,
+                                        lines = 4,
+                                        modifier = Modifier.weight(1f),
+                                    )
                                 }
                             }
 
                             Row {
                                 SurfaceContainer.forEach { themeColor ->
-                                    ColorBox(themeColor, lines = 4, modifier = Modifier.weight(1f))
+                                    ColorBox(
+                                        themeColor = themeColor,
+                                        lines = 4,
+                                        modifier = Modifier.weight(1f),
+                                    )
                                 }
                             }
 
                             Row {
                                 MiscColors.forEach { themeColor ->
-                                    SingleLineColorBox(themeColor, modifier = Modifier.weight(1f))
+                                    MiscColorBox(
+                                        themeColor = themeColor,
+                                        modifier = Modifier.weight(1f),
+                                    )
                                 }
                             }
                         }
+                    }
+
+                    // Error and misc column
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(SectionDivider),
+                        modifier = Modifier
+                            .width(IntrinsicSize.Min)
+                            .weight(0.3f)
+                            .fillMaxHeight()
+                    ) {
+                        ColorGroupContainer(Theme.Groups.Error)
 
                         Column(
                             verticalArrangement = Arrangement.spacedBy(InnerDivider),
-                            modifier = Modifier.width(IntrinsicSize.Min),
                         ) {
-                            ColorPairContainer(pair = InverseSurfacePair)
-                            SingleLineColorBox(
+                            ColorPairContainer(
+                                pair = InverseSurfacePair,
+                                modifier = Modifier.fillMaxHeight(),
+                            )
+
+                            MiscColorBox(
                                 themeColor = Theme.Colors.InversePrimary,
                                 modifier = Modifier.fillMaxWidth(),
                             )
 
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(SectionDivider),
-                            ) {
-                                SingleLineColorBox(Theme.Colors.Scrim)
-                                SingleLineColorBox(Theme.Colors.Shadow)
-                            }
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            MiscColorBox(Theme.Colors.Scrim, modifier = Modifier.fillMaxWidth())
                         }
                     }
                 }
@@ -204,12 +229,13 @@ fun ColorGroupContainer(
 fun ColorPairContainer(
     pair: ThemePair,
     modifier: Modifier = Modifier,
+    lines: Int = 3,
 ) {
     Column(
         modifier = modifier,
     ) {
         CompositionLocalProvider(LocalContentColor provides pair.onColor.color()) {
-            ColorBox(pair.color, modifier = Modifier.fillMaxWidth())
+            ColorBox(pair.color, lines = lines, modifier = Modifier.fillMaxSize())
         }
 
         CompositionLocalProvider(LocalContentColor provides pair.color.color()) {
@@ -219,31 +245,69 @@ fun ColorPairContainer(
 }
 
 @Composable
-fun ColorBox(themeColor: ThemeColor, lines: Int = 3, modifier: Modifier = Modifier) {
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
-            .background(themeColor.color())
-            .padding(BoxPadding)
-    ) {
-        Text(text = themeColor.title, minLines = lines)
-        Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
+fun ColorBox(
+    themeColor: ThemeColor,
+    lines: Int = 3,
+    modifier: Modifier = Modifier,
+    textColor: Color? = null,
+) {
+    ContentColorWrapper(themeColor, textColor) {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = modifier
+                .background(themeColor.color())
+                .padding(BoxPadding)
+        ) {
+            Text(text = themeColor.title, minLines = lines)
+            Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
+        }
     }
+}
+
+@Composable
+fun MiscColorBox(
+    themeColor: ThemeColor,
+    modifier: Modifier = Modifier,
+) {
+    val contentColor by animateColorAsState(
+        if (themeColor.color().isLight()) MaterialTheme.colorScheme.inverseSurface
+        else MaterialTheme.colorScheme.surface
+    )
+
+    SingleLineColorBox(themeColor, modifier, contentColor)
 }
 
 @Composable
 fun SingleLineColorBox(
     themeColor: ThemeColor,
     modifier: Modifier = Modifier,
+    textColor: Color? = null,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .background(themeColor.color())
-            .padding(BoxPadding)
-            .width(IntrinsicSize.Min)
-    ) {
-        Text(text = themeColor.title, modifier = Modifier.weight(1f))
-        Text(text = themeColor.swatchNumber)
+    ContentColorWrapper(themeColor, textColor) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .background(themeColor.color())
+                .padding(BoxPadding)
+                .width(IntrinsicSize.Min)
+        ) {
+            Text(text = themeColor.title, modifier = Modifier.weight(1f))
+            Text(text = themeColor.swatchNumber)
+        }
+    }
+}
+
+@Composable
+private fun ContentColorWrapper(
+    themeColor: ThemeColor,
+    textColor: Color? = null,
+    content: @Composable () -> Unit,
+) {
+    val contentColor by animateColorAsState(
+        textColor ?: contentColorFor(themeColor.color())
+    )
+
+    CompositionLocalProvider(LocalContentColor provides contentColor) {
+        content()
     }
 }
