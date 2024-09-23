@@ -57,6 +57,7 @@ kotlin {
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
 
@@ -89,6 +90,7 @@ kotlin {
             implementation(libs.materialKolor)
             implementation("com.materialkolor:material-kolor:material-color-utilities")
             implementation(libs.compose.colorpicker)
+            implementation(libs.calf.filePicker)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)

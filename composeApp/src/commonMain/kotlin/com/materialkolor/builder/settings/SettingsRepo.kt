@@ -3,6 +3,7 @@ package com.materialkolor.builder.settings
 import co.touchlab.kermit.Logger
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
+import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,8 @@ interface SettingsRepo {
     fun update(block: (Settings) -> Settings)
 
     fun update(settings: Settings) = update { settings }
+
+    fun updateImage(image: SeedImage)
 
     fun clear()
 }
@@ -48,6 +51,15 @@ class DefaultSettingsRepo(
             block(settings).copy(isModified = true).also { value ->
                 logger.d { "Updated settings: $value" }
             }
+        }
+    }
+
+    override fun updateImage(image: SeedImage) {
+        _settings.update { settings ->
+            settings.copy(
+                colors = settings.colors.copy(seed = image.color),
+                selectedImage = image,
+            )
         }
     }
 

@@ -46,6 +46,7 @@ fun HomeScreenScaffold(
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
     snackbarState: SnackbarHostState = remember { SnackbarHostState() },
+    processingImage: Boolean = false,
 ) {
     var aboutDialogVisible by remember { mutableStateOf(false) }
     var selectedSection by remember { mutableStateOf(HomeSection.Customize) }
@@ -117,6 +118,7 @@ fun HomeScreenScaffold(
                 WindowWidthSizeClass.Expanded -> {
                     ExpandedContent(
                         settings = settings,
+                        processingImage = processingImage,
                         dispatcher = dispatcher,
                         windowSizeClass = windowSizeClass,
                     )
@@ -130,6 +132,7 @@ fun HomeScreenScaffold(
                         CompactContent(
                             settings = settings,
                             selectedSection = selectedSection,
+                            processingImage = processingImage,
                             dispatcher = dispatcher,
                             windowSizeClass = windowSizeClass,
                         )
@@ -139,6 +142,7 @@ fun HomeScreenScaffold(
                     CompactContent(
                         settings = settings,
                         selectedSection = selectedSection,
+                        processingImage = processingImage,
                         dispatcher = dispatcher,
                         windowSizeClass = windowSizeClass,
                     )

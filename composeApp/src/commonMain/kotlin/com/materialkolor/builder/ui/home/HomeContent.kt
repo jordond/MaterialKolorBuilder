@@ -11,7 +11,7 @@ import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
-import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
+import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.page.HomeSection
@@ -22,6 +22,7 @@ import com.materialkolor.builder.ui.home.page.preview.PreviewPage
 @Composable
 fun ExpandedContent(
     settings: Settings,
+    processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
@@ -31,11 +32,12 @@ fun ExpandedContent(
     ) {
         CustomizePage(
             settings = settings,
-            onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
+            onSelectImage = dispatcher.rememberRelayOf(::SelectImage),
             onRandomColor = dispatcher.rememberRelay(RandomColor),
             openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
             onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
             onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
+            processingImage = processingImage,
             windowSizeClass = windowSizeClass,
             modifier = Modifier.weight(0.5f)
         )
@@ -54,6 +56,7 @@ fun ExpandedContent(
 fun CompactContent(
     settings: Settings,
     selectedSection: HomeSection,
+    processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
@@ -62,11 +65,12 @@ fun CompactContent(
         when (section) {
             HomeSection.Customize -> CustomizePage(
                 settings = settings,
-                onPresetSelected = dispatcher.rememberRelayOf(::SelectPresetImage),
+                onSelectImage = dispatcher.rememberRelayOf(::SelectImage),
                 onRandomColor = dispatcher.rememberRelay(RandomColor),
                 openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
                 onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
                 onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
+                processingImage = processingImage,
                 windowSizeClass = windowSizeClass,
                 modifier = modifier,
             )

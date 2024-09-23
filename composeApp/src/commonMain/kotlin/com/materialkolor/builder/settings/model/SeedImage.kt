@@ -15,12 +15,13 @@ import org.jetbrains.compose.resources.DrawableResource
 @Immutable
 sealed class SeedImage {
     abstract val id: String
+    abstract val color: Color
 
     @Immutable
     data class Resource(
         override val id: String,
         val drawableResource: DrawableResource,
-        val color: Color,
+        override val color: Color,
     ) : SeedImage() {
         constructor(
             id: Int,
@@ -30,7 +31,7 @@ sealed class SeedImage {
     }
 
     @Immutable
-    data class Custom(val data: ImageBitmap) : SeedImage() {
+    data class Custom(val image: ImageBitmap, override val color: Color) : SeedImage() {
         override val id: String = "custom"
     }
 }

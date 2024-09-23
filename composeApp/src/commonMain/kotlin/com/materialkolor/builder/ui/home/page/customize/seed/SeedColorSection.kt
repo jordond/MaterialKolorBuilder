@@ -24,11 +24,12 @@ import kotlinx.collections.immutable.PersistentList
 @Composable
 fun SeedColorSection(
     settings: Settings,
-    onPresetSelected: (SeedImage.Resource) -> Unit,
+    onSelectImage: (SeedImage.Resource?) -> Unit,
     openColorPicker: () -> Unit,
     onRandomColor: () -> Unit,
     imagePresets: PersistentList<SeedImage.Resource> = ImagePresets.all,
     modifier: Modifier = Modifier,
+    processingImage: Boolean = false,
 ) {
     val urlLauncher = LocalUrlLauncher.current
     Column(
@@ -53,10 +54,11 @@ fun SeedColorSection(
             modifier = Modifier.clickable { urlLauncher.launch(UrlLink.DynamicColorDocs) },
         )
 
-        ImagePresetRow(
+        SeedImageRow(
             imagePresets = imagePresets,
             selectedImage = settings.selectedImage,
-            onPresetSelected = onPresetSelected,
+            onSelectImage = onSelectImage,
+            processingImage = processingImage,
         )
 
         ColorCard(

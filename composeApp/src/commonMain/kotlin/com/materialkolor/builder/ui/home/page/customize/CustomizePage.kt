@@ -32,7 +32,7 @@ import kotlinx.collections.immutable.PersistentList
 fun CustomizePage(
     settings: Settings,
     modifier: Modifier = Modifier,
-    onPresetSelected: (SeedImage.Resource) -> Unit,
+    onSelectImage: (SeedImage.Resource?) -> Unit,
     openColorPicker: (ColorType) -> Unit,
     onRandomColor: () -> Unit,
     onUpdatePaletteStyle: (PaletteStyle) -> Unit,
@@ -40,6 +40,7 @@ fun CustomizePage(
     scrollState: ScrollState = rememberScrollState(),
     imagePresets: PersistentList<SeedImage.Resource> = ImagePresets.all,
     windowSizeClass: WindowSizeClass = windowSizeClass(),
+    processingImage: Boolean = false,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -54,10 +55,11 @@ fun CustomizePage(
 
         SeedColorSection(
             settings = settings,
-            onPresetSelected = onPresetSelected,
+            onSelectImage = onSelectImage,
             openColorPicker = { openColorPicker(ColorType.Seed) },
             onRandomColor = onRandomColor,
             imagePresets = imagePresets,
+            processingImage = processingImage,
         )
 
         PaletteStyleSection(

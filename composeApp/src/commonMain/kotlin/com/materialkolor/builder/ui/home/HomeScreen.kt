@@ -13,12 +13,14 @@ import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.Reset
-import com.materialkolor.builder.ui.home.HomeAction.SelectCustomImage
-import com.materialkolor.builder.ui.home.HomeAction.SelectPresetImage
+import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.ktx.HandleEvents
+import com.mohamedrejeb.calf.picker.FilePickerFileType
+import com.mohamedrejeb.calf.picker.FilePickerSelectionMode
+import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
 import kotlinx.coroutines.launch
 
 @Composable
@@ -28,6 +30,12 @@ fun HomeScreen() {
 
     val scope = rememberCoroutineScope()
     val snackbar = remember { SnackbarHostState() }
+
+    val pickerLauncher = rememberFilePickerLauncher(
+        type = FilePickerFileType.Image,
+        selectionMode = FilePickerSelectionMode.Single,
+        onResult = { files -> model.handleImage(files.firstOrNull()) }
+    )
 
     HandleEvents(model) { event ->
         when (event) {
@@ -42,14 +50,15 @@ fun HomeScreen() {
     HomeScreenScaffold(
         settings = state.settings,
         snackbarState = snackbar,
+        processingImage = state.processingImage,
         dispatcher = rememberDebounceDispatcher { action ->
             when (action) {
                 is UpdateContrast -> model.updateContrast(action.contrast)
                 is UpdatePaletteStyle -> model.updatePaletteStyle(action.style)
-                is SelectCustomImage -> {
-                    // TODO: Implement image picker
+                is SelectImage -> {
+                    if (action.image == null) pickerLauncher.launch()
+                    else model.selectImagePreset(action.image)
                 }
-                is SelectPresetImage -> model.selectImage(action.preset)
                 is ToggleDarkMode -> model.toggleDarkMode()
                 is Export -> {} // TODO: Implement export
                 is OpenColorPicker -> {} // TODO: Implement color picker
