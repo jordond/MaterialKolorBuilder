@@ -5,8 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.DynamicMaterialThemeState
 import com.materialkolor.builder.ui.theme.LocalDynamicThemeState
-import com.materialkolor.ktx.m3Colors
-import com.materialkolor.ktx.toneColor
 
 object Theme {
 
@@ -26,7 +24,7 @@ object Theme {
         val PrimaryContainer = ThemeColor(
             title = "Primary Container",
             swatchNumber = "P-90",
-            color = c { MaterialTheme.colorScheme.primaryContainer},
+            color = c { MaterialTheme.colorScheme.primaryContainer },
         )
 
         val OnPrimaryContainer = ThemeColor(
@@ -98,7 +96,7 @@ object Theme {
         val ErrorContainer = ThemeColor(
             title = "Error Container",
             swatchNumber = "E-90",
-            color = c {MaterialTheme.colorScheme.errorContainer },
+            color = c { MaterialTheme.colorScheme.errorContainer },
         )
 
         val OnErrorContainer = ThemeColor(

@@ -57,9 +57,9 @@ abstract class UiStateViewModel<State, Event>(
     stateHolder: StateHolder<State>,
 ) : StateViewModel<State>(stateHolder),
     EventHolder<Event> {
-    public constructor(stateProvider: StateProvider<State>) : this(stateContainer(stateProvider))
+    constructor(stateProvider: StateProvider<State>) : this(stateContainer(stateProvider))
 
-    public constructor(initialState: State) : this(stateContainer(initialState))
+    constructor(initialState: State) : this(stateContainer(initialState))
 
     protected val eventContainer = stateContainer<PersistentList<Event>>(persistentListOf())
     override val events: StateFlow<PersistentList<Event>> = eventContainer.state
