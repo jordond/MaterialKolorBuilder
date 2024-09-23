@@ -10,16 +10,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.ui.home.page.preview.gallery.sections.ActionGallerySection
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.CommunicationGallerySection
 import com.materialkolor.builder.ui.home.page.preview.gallery.sections.NavigationGallerySection
 import com.materialkolor.builder.ui.home.page.preview.gallery.sections.TextGallerySection
 
 @Composable
 fun GalleryList(
     modifier: Modifier = Modifier,
+    defaultExpanded: Boolean = true,
 ) {
-    var actionExpanded by remember { mutableStateOf(true) }
-    var textExpanded by remember { mutableStateOf(true) }
-    var navigationExpanded by remember { mutableStateOf(true) }
+    var actionExpanded by remember { mutableStateOf(defaultExpanded) }
+    var textExpanded by remember { mutableStateOf(defaultExpanded) }
+    var communicationExpanded by remember { mutableStateOf(defaultExpanded) }
+    var navigationExpanded by remember { mutableStateOf(defaultExpanded) }
 
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -35,6 +38,11 @@ fun GalleryList(
             expanded = textExpanded,
             toggle = { textExpanded = it },
             width = 500.dp,
+        )
+
+        CommunicationGallerySection(
+            expanded = communicationExpanded,
+            toggle = { communicationExpanded = it },
         )
 
         NavigationGallerySection(

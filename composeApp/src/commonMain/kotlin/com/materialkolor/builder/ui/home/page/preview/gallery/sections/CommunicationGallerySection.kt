@@ -47,12 +47,19 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CommunicationGallerySection(
+    expanded: Boolean,
+    toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     minWidth: Dp = GallerySectionDefaults.MinWidth,
     width: Dp = GallerySectionDefaults.Width,
     boxPadding: Dp = GallerySectionDefaults.BoxPadding,
 ) {
-    GallerySection(title = "Communication", modifier = modifier) {
+    GallerySection(
+        title = "Communication",
+        expanded = expanded,
+        toggle = toggle,
+        modifier = modifier
+    ) {
         GalleryChildSection(
             title = "Badges",
             infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)"
