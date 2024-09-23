@@ -10,7 +10,7 @@ import org.jetbrains.compose.resources.painterResource
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "MaterialKolorBuilder",
+        title = "MaterialKolor Builder",
         icon = painterResource(Res.drawable.icon),
     ) {
         App()
