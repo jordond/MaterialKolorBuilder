@@ -57,7 +57,7 @@ private fun AboutDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         content = {
             Card(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(0.75f)
                     .fillMaxHeight(0.9f)
                     .padding(16.dp)

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryList
 import com.materialkolor.builder.ui.home.page.preview.theme.DarkThemeDisplay
 import com.materialkolor.builder.ui.home.page.preview.theme.LightThemeDisplay
 import com.materialkolor.builder.ui.ktx.sidePadding
@@ -33,6 +34,7 @@ fun PreviewPage(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(32.dp),
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = windowSizeClass.sidePadding())
@@ -45,6 +47,8 @@ fun PreviewPage(
                 modifier = Modifier.padding(vertical = 32.dp),
             )
         }
+
+        GalleryList()
 
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
