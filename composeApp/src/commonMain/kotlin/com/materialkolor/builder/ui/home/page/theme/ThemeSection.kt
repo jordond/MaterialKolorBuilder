@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.theme
+package com.materialkolor.builder.ui.home.page.theme
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,15 +18,15 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialTheme
 import com.materialkolor.DynamicMaterialThemeState
 import com.materialkolor.builder.settings.model.Settings
-import com.materialkolor.builder.ui.home.page.preview.model.Theme
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InnerDivider
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InverseSurfacePair
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.MainColors
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.MiscColors
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.SectionDivider
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.Surface
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.SurfaceContainer
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.inverse
+import com.materialkolor.builder.ui.home.model.Theme
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.InnerDivider
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.InverseSurfacePair
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.MainColors
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.MiscColors
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.SectionDivider
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.Surface
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.SurfaceContainer
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.inverse
 import com.materialkolor.builder.ui.theme.AppTypography
 import com.materialkolor.builder.ui.theme.createThemeState
 

@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery
+package com.materialkolor.builder.ui.home.page.gallery
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.ActionGallery
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.CommunicationGallery
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.ContainmentGallery
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.NavigationGallery
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.SelectionGallery
-import com.materialkolor.builder.ui.home.page.preview.gallery.sections.TextGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.ActionGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.CommunicationGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.ContainmentGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.NavigationGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.SelectionGallery
+import com.materialkolor.builder.ui.home.page.gallery.sections.TextGallery
 
 @Composable
 fun GallerySection(

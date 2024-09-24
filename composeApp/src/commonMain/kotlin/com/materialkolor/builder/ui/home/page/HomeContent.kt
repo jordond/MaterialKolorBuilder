@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home
+package com.materialkolor.builder.ui.home.page
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
@@ -14,19 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.home.HomeAction
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
-import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.home.page.customize.CustomizePage
 import com.materialkolor.builder.ui.home.page.export.ExportPage
+import com.materialkolor.builder.ui.home.page.gallery.GallerySection
+import com.materialkolor.builder.ui.home.page.palette.PaletteSection
 import com.materialkolor.builder.ui.home.page.preview.PreviewPage
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.palette.PaletteSection
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSection
+import com.materialkolor.builder.ui.home.page.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 
 @Composable

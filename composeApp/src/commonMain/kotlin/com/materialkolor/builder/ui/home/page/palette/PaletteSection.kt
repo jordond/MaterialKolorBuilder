@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.palette
+package com.materialkolor.builder.ui.home.page.palette
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

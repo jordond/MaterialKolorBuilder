@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery.sections
+package com.materialkolor.builder.ui.home.page.gallery.sections
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -72,10 +72,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.ui.home.LocalDrawerState
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
-import com.materialkolor.builder.ui.home.page.preview.gallery.NavigationDrawerContent
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerDefaults
+import com.materialkolor.builder.ui.home.page.gallery.NavigationDrawerContent
 import kotlinx.coroutines.launch
 
 @Composable

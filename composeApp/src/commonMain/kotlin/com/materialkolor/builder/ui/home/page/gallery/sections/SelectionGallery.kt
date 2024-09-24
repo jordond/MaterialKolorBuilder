@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery.sections
+package com.materialkolor.builder.ui.home.page.gallery.sections
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -81,9 +81,9 @@ import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerDefaults
 
 private const val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"

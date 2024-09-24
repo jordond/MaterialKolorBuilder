@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery.sections
+package com.materialkolor.builder.ui.home.page.gallery.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,10 +42,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
-import com.materialkolor.builder.ui.home.page.preview.gallery.itemPadding
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerDefaults
+import com.materialkolor.builder.ui.home.page.gallery.itemPadding
 import kotlinx.collections.immutable.persistentListOf
 
 private const val buttonUrl = "https://developer.android.com/jetpack/compose/components/button"

@@ -41,6 +41,8 @@ import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
 import com.materialkolor.builder.ui.home.components.HomeNavRail
 import com.materialkolor.builder.ui.home.components.TopBarActions
+import com.materialkolor.builder.ui.home.page.CompactContent
+import com.materialkolor.builder.ui.home.page.ExpandedContent
 import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.ktx.widthIsExpanded

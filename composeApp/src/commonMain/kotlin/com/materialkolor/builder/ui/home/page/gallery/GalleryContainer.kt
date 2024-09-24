@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery
+package com.materialkolor.builder.ui.home.page.gallery
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize

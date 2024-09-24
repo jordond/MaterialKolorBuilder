@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery.sections
+package com.materialkolor.builder.ui.home.page.gallery.sections
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -47,9 +47,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerDefaults
 
 private const val modalBottomSheetInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary?hl=en#ModalBottomSheet(kotlin.Function0,androidx.compose.ui.Modifier,androidx.compose.material3.SheetState,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color,kotlin.Function0,androidx.compose.foundation.layout.WindowInsets,androidx.compose.ui.window.SecureFlagPolicy,kotlin.Function1)"

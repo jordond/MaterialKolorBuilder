@@ -1,12 +1,12 @@
-package com.materialkolor.builder.ui.home.page.preview.theme
+package com.materialkolor.builder.ui.home.page.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.home.page.preview.model.Theme
-import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
+import com.materialkolor.builder.ui.home.model.Theme
+import com.materialkolor.builder.ui.home.model.ThemePair
 import com.materialkolor.ktx.isLight
 import kotlinx.collections.immutable.persistentListOf
 

@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.theme
+package com.materialkolor.builder.ui.home.page.theme
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -30,11 +30,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import com.materialkolor.builder.ui.home.page.preview.model.ThemeColor
-import com.materialkolor.builder.ui.home.page.preview.model.ThemeGroup
-import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.BoxPadding
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InnerDivider
+import com.materialkolor.builder.ui.home.model.ThemeColor
+import com.materialkolor.builder.ui.home.model.ThemeGroup
+import com.materialkolor.builder.ui.home.model.ThemePair
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.BoxPadding
+import com.materialkolor.builder.ui.home.page.theme.ThemeSectionDefaults.InnerDivider
 
 @Composable
 fun ColorGroupContainer(

@@ -27,7 +27,7 @@ import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
-import com.materialkolor.builder.ui.home.page.preview.gallery.NavigationDrawerContent
+import com.materialkolor.builder.ui.home.page.gallery.NavigationDrawerContent
 import com.materialkolor.builder.ui.ktx.HandleEvents
 import com.materialkolor.builder.ui.ktx.launch
 import com.mohamedrejeb.calf.picker.FilePickerFileType

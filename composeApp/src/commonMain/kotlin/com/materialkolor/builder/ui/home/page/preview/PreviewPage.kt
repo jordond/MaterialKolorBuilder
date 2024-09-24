@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.palette.PaletteSection
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSection
+import com.materialkolor.builder.ui.home.page.gallery.GallerySection
+import com.materialkolor.builder.ui.home.page.palette.PaletteSection
+import com.materialkolor.builder.ui.home.page.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.sidePadding
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass

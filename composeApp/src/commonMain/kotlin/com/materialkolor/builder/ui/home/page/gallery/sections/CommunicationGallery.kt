@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.gallery.sections
+package com.materialkolor.builder.ui.home.page.gallery.sections
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -40,9 +40,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.gallery.GalleryContainerDefaults
 import kotlinx.coroutines.launch
 
 @Composable

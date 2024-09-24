@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.page.preview.model
+package com.materialkolor.builder.ui.home.model
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
