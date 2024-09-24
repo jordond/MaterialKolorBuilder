@@ -55,7 +55,7 @@ fun NavigationDrawerContent() {
     ) {
         var selected by remember { mutableIntStateOf(0) }
 
-        Text("Mail", modifier = Modifier.padding(16.dp))
+        Text(text = "Mail", modifier = Modifier.padding(16.dp))
         mail.forEachIndexed { index, item ->
             NavigationDrawerItem(
                 selected = selected == index,
@@ -73,7 +73,7 @@ fun NavigationDrawerContent() {
 
         HorizontalDivider(Modifier.padding(8.dp))
 
-        Text("Labels", modifier = Modifier.padding(16.dp))
+        Text(text = "Labels", modifier = Modifier.padding(16.dp))
         labels.forEachIndexed { index, item ->
             NavigationDrawerItem(
                 selected = selected == index + 4,
