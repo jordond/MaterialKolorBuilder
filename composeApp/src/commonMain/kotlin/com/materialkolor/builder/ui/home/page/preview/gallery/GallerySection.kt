@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +29,7 @@ object GallerySectionDefaults {
     val MinWidth = 200.dp
     val Width = 400.dp
     val ItemPadding = 8.dp
+    val ItemPadding2 = 8.dp * 2
     val BoxPadding = 16.dp
 }
 
@@ -42,7 +42,7 @@ fun GallerySection(
     boxPadding: Dp = GallerySectionDefaults.BoxPadding,
     content: @Composable () -> Unit,
 ) {
-    Card(
+    Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
             .animateContentSize()
@@ -53,7 +53,7 @@ fun GallerySection(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
             )
 
             IconButton(

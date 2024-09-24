@@ -36,6 +36,21 @@ enum class ThemeMode {
 }
 
 @Composable
+fun ThemeDisplay(
+    settings: Settings,
+    onCopyColor: (String, Color) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier,
+    ) {
+        LightThemeDisplay(settings, onClick = onCopyColor)
+        DarkThemeDisplay(settings, onClick = onCopyColor)
+    }
+}
+
+@Composable
 fun LightThemeDisplay(
     settings: Settings,
     modifier: Modifier = Modifier,

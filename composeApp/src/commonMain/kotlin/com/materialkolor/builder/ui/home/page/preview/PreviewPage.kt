@@ -10,6 +10,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,8 +22,7 @@ import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
 import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryList
-import com.materialkolor.builder.ui.home.page.preview.theme.DarkThemeDisplay
-import com.materialkolor.builder.ui.home.page.preview.theme.LightThemeDisplay
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplay
 import com.materialkolor.builder.ui.ktx.sidePadding
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
@@ -32,6 +35,8 @@ fun PreviewPage(
     onCopyColor: (String, Color) -> Unit = { _, _ -> },
     windowSizeClass: WindowSizeClass = windowSizeClass(),
 ) {
+    var themeExpanded by remember { mutableStateOf(true) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp),
@@ -50,13 +55,17 @@ fun PreviewPage(
 
         GalleryList()
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+        PreviewSection(
+            title = "Theme",
+            expanded = themeExpanded,
+            toggle = { themeExpanded = it },
         ) {
-            LightThemeDisplay(settings, onClick = onCopyColor)
-            DarkThemeDisplay(settings, onClick = onCopyColor)
+            ThemeDisplay(
+                settings = settings,
+                onCopyColor = onCopyColor,
+            )
         }
-    }
 
-    Spacer(modifier = Modifier.height(200.dp))
+        Spacer(modifier = Modifier.height(200.dp))
+    }
 }
