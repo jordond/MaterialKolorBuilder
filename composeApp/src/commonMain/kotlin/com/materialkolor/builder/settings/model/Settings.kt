@@ -1,8 +1,6 @@
 package com.materialkolor.builder.settings.model
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.remember
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 

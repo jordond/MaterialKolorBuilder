@@ -105,6 +105,8 @@ fun ColorPickerDialog(
 
     var selectedColor by remember { mutableStateOf(state.initial) }
     var selectedHex by remember { mutableStateOf(state.initial.toHex(includePrefix = false)) }
+    var userHex by remember { mutableStateOf("") }
+    var hasEdited by remember(selectedColor) { mutableStateOf(false) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -162,9 +164,18 @@ fun ColorPickerDialog(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             OutlinedTextField(
-                                value = selectedHex,
+                                value = if (hasEdited) userHex else selectedHex,
                                 maxLines = 1,
-                                onValueChange = {}, // TODO :Implement user input
+                                onValueChange = { value ->
+                                    userHex = value
+                                    hasEdited = true
+                                    if (value.isValidHex()) {
+                                        val color = value.parse()
+                                        if (color != null) {
+                                            controller.selectByColor(color, fromUser = true)
+                                        }
+                                    }
+                                },
                                 textStyle = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Normal,
                                 ),
@@ -186,6 +197,8 @@ fun ColorPickerDialog(
                                     val color = clipboard.getText()?.toString()?.parse()
                                     if (color != null) {
                                         controller.selectByColor(color, fromUser = true)
+                                    } else {
+                                        snackbar.launch(scope, "Clipboard doesn't contain a valid hex color")
                                     }
                                 },
                             ) {
@@ -195,8 +208,12 @@ fun ColorPickerDialog(
                                 )
                             }
 
+                            val enabled =
+                                if (hasEdited) userHex.isValidHex()
+                                else selectedHex.isValidHex()
+
                             FilledIconButton(
-                                enabled = true, // TODO: Ensure typed in hex is valid
+                                enabled = enabled,
                                 shape = MaterialTheme.shapes.medium,
                                 onClick = {
                                     val value = selectedColor.toHex()
@@ -347,14 +364,22 @@ fun ColorPicker(
     }
 }
 
-private fun String.parse(): Color? = try {
-    val cleanColorString = removePrefix("#")
-    when (cleanColorString.length) {
-        6 -> Color(cleanColorString.toLong(16) or 0xFF000000) // RGB
-        8 -> Color(cleanColorString.toLong(16)) // ARGB
-        else -> null // Invalid format
+private fun String.isValidHex(): Boolean = parse() != null
+
+private val hexPattern = Regex("#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})")
+
+private fun String.parse(): Color? {
+    val matchResult = hexPattern.find(this)
+    return matchResult?.value?.let { hex ->
+        try {
+            val cleanColorString = hex.removePrefix("#")
+            when (cleanColorString.length) {
+                6 -> Color(cleanColorString.toLong(16) or 0xFF000000) // RGB
+                8 -> Color(cleanColorString.toLong(16)) // ARGB
+                else -> null // Invalid format
+            }
+        } catch (exception: NumberFormatException) {
+            null
+        }
     }
-} catch (exception: NumberFormatException) {
-    // Invalid hex value
-    null
 }
