@@ -33,8 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.materialkolor.builder.ui.home.page.preview.model.ThemeColor
 import com.materialkolor.builder.ui.home.page.preview.model.ThemeGroup
 import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.BoxPadding
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.InnerDivider
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.BoxPadding
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InnerDivider
 
 @Composable
 fun ColorGroupContainer(
