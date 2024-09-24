@@ -49,7 +49,7 @@ fun PreviewPage(
             ContrastSelector(
                 selected = settings.contrast,
                 onUpdate = onUpdateContrast,
-                modifier = Modifier.padding(vertical = 32.dp),
+                modifier = Modifier.padding(top = 16.dp),
             )
         }
 

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -33,7 +34,7 @@ fun PreviewSection(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
                 .clickable(onClick = { toggle(!expanded) })
@@ -41,7 +42,9 @@ fun PreviewSection(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontWeight = FontWeight.Thin,
+                ),
             )
 
             val icon =

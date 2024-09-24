@@ -19,8 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 import com.materialkolor.builder.ui.theme.LocalUrlLauncher
 
 fun Modifier.itemPadding() = padding(horizontal = 8.dp, vertical = 4.dp)
@@ -50,26 +53,24 @@ fun GallerySection(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.medium)
+                .clickableWithoutRipple(onClick = { toggle(!expanded) })
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Thin,
+                ),
             )
 
-            IconButton(
-                onClick = { toggle(!expanded) },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(16.dp),
-            ) {
-                val icon =
-                    if (expanded) Icons.Outlined.KeyboardArrowUp
-                    else Icons.Outlined.KeyboardArrowDown
+            val icon =
+                if (expanded) Icons.Outlined.KeyboardArrowUp
+                else Icons.Outlined.KeyboardArrowDown
 
-                val text = if (expanded) "Collapse" else "Expand"
+            val text = if (expanded) "Collapse" else "Expand"
 
-                Icon(imageVector = icon, contentDescription = text)
-            }
+            Icon(imageVector = icon, contentDescription = text)
         }
 
         AnimatedVisibility(expanded) {
@@ -93,7 +94,7 @@ fun GalleryChildSection(
             modifier = modifier.padding(top = 16.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(title)
+            Text(title, style = MaterialTheme.typography.bodyMedium)
             IconButton(
                 onClick = { urlLauncher.launch(infoUrl) },
                 modifier = Modifier
