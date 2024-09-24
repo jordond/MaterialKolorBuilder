@@ -200,6 +200,8 @@ private fun HomeScreenScaffold(
             state = colorPickerState,
             onDismiss = dispatcher.rememberRelay(HomeAction.CloseColorPicker),
             onColorChanged = dispatcher.rememberRelayOf(::UpdateColor),
+            toggleMode = dispatcher.rememberRelay(HomeAction.TogglePickerMode),
+            selectImage = dispatcher.rememberRelay(HomeAction.PickImageForColor),
         )
     }
 }

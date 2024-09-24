@@ -1,22 +1,31 @@
 package com.materialkolor.builder.ui.components
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.requiredWidthIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.ContentPaste
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -38,6 +47,8 @@ import androidx.compose.ui.window.Dialog
 import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.ColorPickerController
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
+import com.github.skydoves.colorpicker.compose.ImageColorPicker
+import com.github.skydoves.colorpicker.compose.PaletteContentScale
 import com.github.skydoves.colorpicker.compose.drawColorIndicator
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.materialkolor.builder.settings.model.KeyColor
@@ -50,41 +61,45 @@ fun ColorPickerDialog(
     state: ColorPickerState?,
     onColorChanged: (Color) -> Unit,
     onDismiss: () -> Unit,
+    toggleMode: () -> Unit,
+    selectImage: () -> Unit,
     modifier: Modifier = Modifier,
     controller: ColorPickerController = rememberColorPickerController(),
 ) {
     if (state != null) {
         ColorPickerDialog(
-            initialColor = state.initial,
+            state = state,
             onColorChanged = onColorChanged,
             onConfirm = onDismiss,
             onDismiss = {
                 onColorChanged(state.initial)
                 onDismiss()
             },
+            toggleMode = toggleMode,
+            selectImage = selectImage,
             modifier = modifier,
             controller = controller,
-            text = state.keyColor.name,
         )
     }
 }
 
 @Composable
 fun ColorPickerDialog(
-    initialColor: Color,
+    state: ColorPickerState,
     onColorChanged: (Color) -> Unit,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
+    toggleMode: () -> Unit,
+    selectImage: () -> Unit,
     modifier: Modifier = Modifier,
-    text: String? = null,
     controller: ColorPickerController = rememberColorPickerController(),
 ) {
     val scope = rememberCoroutineScope()
     val clipboard = LocalClipboardManager.current
     val snackbar = LocalSnackbarHostState.current
 
-    var selectedColor by remember { mutableStateOf(initialColor) }
-    var selectedHex by remember { mutableStateOf(initialColor.toHex(includePrefix = false)) }
+    var selectedColor by remember { mutableStateOf(state.initial) }
+    var selectedHex by remember { mutableStateOf(state.initial.toHex(includePrefix = false)) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -92,7 +107,7 @@ fun ColorPickerDialog(
             Card(
                 modifier = Modifier
                     .requiredWidthIn(min = 300.dp, max = 400.dp)
-                    .requiredHeightIn(min = 400.dp, max = 600.dp)
+                    .requiredHeightIn(min = 450.dp, max = 650.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -104,7 +119,7 @@ fun ColorPickerDialog(
                     Icon(
                         imageVector = Icons.Outlined.Palette,
                         contentDescription = "Hero icon",
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
                     )
 
                     Text(
@@ -114,24 +129,22 @@ fun ColorPickerDialog(
                         ),
                     )
 
-                    if (text != null) {
+                    Text(
+                        text = "Select a color to use as the ${state.keyColor.name} color",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Center,
+                        ),
+                    )
+
+                    if (state.keyColor.name == KeyColor.Primary.name) {
                         Text(
-                            text = "Select a color to use as the $text color",
+                            text = "The primary color will be used as the new seed color.",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Normal,
                                 textAlign = TextAlign.Center,
                             ),
                         )
-
-                        if (text == KeyColor.Primary.name) {
-                            Text(
-                                text = "The primary color will be used as the new seed color.",
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    fontWeight = FontWeight.Normal,
-                                    textAlign = TextAlign.Center,
-                                ),
-                            )
-                        }
                     }
 
                     Row(
@@ -203,8 +216,9 @@ fun ColorPickerDialog(
                     }
 
                     ColorPicker(
-                        initialColor = initialColor,
+                        state = state,
                         controller = controller,
+                        onSelectImage = selectImage,
                         onChange = { envelope ->
                             selectedColor = envelope.color
                             selectedHex = envelope.color.toHex(includePrefix = false)
@@ -217,6 +231,19 @@ fun ColorPickerDialog(
                             .padding(top = 16.dp)
                             .weight(1f),
                     )
+
+                    FilledTonalButton(
+                        onClick = toggleMode,
+                    ) {
+                        val icon =
+                            if (state.mode == ColorPickerMode.HSV) Icons.Outlined.Image
+                            else Icons.Outlined.Palette
+
+                        val text = if (state.mode == ColorPickerMode.HSV) "Image" else "Color"
+                        Icon(imageVector = icon, contentDescription = "Toggle Mode")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = "From $text")
+                    }
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -239,23 +266,63 @@ fun ColorPickerDialog(
 
 @Composable
 fun ColorPicker(
-    initialColor: Color,
+    state: ColorPickerState,
     onChange: (ColorEnvelope) -> Unit,
     modifier: Modifier = Modifier,
+    onSelectImage: () -> Unit = {},
     controller: ColorPickerController = rememberColorPickerController(),
 ) {
-    HsvColorPicker(
-        initialColor = initialColor,
-        controller = controller,
-        drawOnPosSelected = {
-            drawColorIndicator(
-                controller.selectedPoint.value,
-                controller.selectedColor.value,
-            )
-        },
-        onColorChanged = onChange,
-        modifier = modifier.padding(10.dp),
-    )
+    Crossfade(
+        targetState = state,
+        modifier = modifier,
+    ) { currentState ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            when (currentState.mode) {
+                ColorPickerMode.HSV -> {
+                    HsvColorPicker(
+                        modifier = Modifier,
+                        initialColor = currentState.initial,
+                        controller = controller,
+                        drawOnPosSelected = {
+                            drawColorIndicator(
+                                controller.selectedPoint.value,
+                                controller.selectedColor.value,
+                            )
+                        },
+                        onColorChanged = onChange,
+                    )
+                }
+                ColorPickerMode.Image -> {
+                    if (currentState.image == null) {
+                        OutlinedButton(
+                            onClick = onSelectImage,
+                            modifier = Modifier.align(Alignment.Center),
+                        ) {
+                            if (currentState.loading) {
+                                CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                            } else {
+                                Text("Select Image")
+                            }
+                        }
+                    } else {
+                        ImageColorPicker(
+                            modifier = Modifier.fillMaxSize(),
+                            paletteImageBitmap = currentState.image,
+                            controller = controller,
+                            drawOnPosSelected = {
+                                drawColorIndicator(
+                                    controller.selectedPoint.value,
+                                    controller.selectedColor.value,
+                                )
+                            },
+                            onColorChanged = onChange,
+                            paletteContentScale = PaletteContentScale.FIT,
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 private fun String.parse(): Color? = try {

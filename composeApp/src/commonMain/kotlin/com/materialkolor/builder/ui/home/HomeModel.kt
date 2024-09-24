@@ -63,19 +63,19 @@ class HomeModel(
                 val state = ColorPickerState(action.key, action.initial)
                 updateState { it.copy(colorPickerState = state) }
             }
+            is HomeAction.PickImageForColor -> emit(Event.PickImage)
+            is HomeAction.TogglePickerMode -> updateState { state ->
+                val pickerState = state.colorPickerState?.toggleMode() ?: return@updateState state
+                state.copy(colorPickerState = pickerState)
+            }
             is HomeAction.UpdateColor -> {
                 val key = state.value.colorPickerState?.keyColor ?: return
-
                 settingsRepo.update { settings ->
                     val colors = settings.colors.update(key, action.color)
-                    settings.copy(colors = colors)
+                    settings.copy(colors = colors, selectedImage = null)
                 }
             }
         }
-    }
-
-    fun updateColors(colors: ColorSettings) {
-        settingsRepo.update { it.copy(colors = colors) }
     }
 
     fun selectImagePreset(image: SeedImage.Resource) {
@@ -109,7 +109,7 @@ class HomeModel(
     fun handleImage(file: KmpFile?) {
         if (file == null) return
 
-        updateState { it.copy(processingImage = true) }
+        imageLoading(true)
         viewModelScope.launch {
             try {
                 val seedImage = withContext(Dispatchers.Default) {
@@ -120,13 +120,27 @@ class HomeModel(
                     SeedImage.Custom(image, color)
                 }
 
+                if (state.value.colorPickerState != null) {
+                    updateState { state ->
+                        val pickerState = state.colorPickerState?.copy(image = seedImage.image)
+                        state.copy(colorPickerState = pickerState)
+                    }
+                }
+
                 settingsRepo.updateImage(seedImage)
             } catch (cause: Throwable) {
                 Logger.e(cause) { "Failed to read image" }
                 emit(Event.ShowSnackbar("Failed to read uploaded image"))
             } finally {
-                updateState { it.copy(processingImage = false) }
+                imageLoading(false)
             }
+        }
+    }
+
+    private fun imageLoading(value: Boolean) {
+        updateState { state ->
+            val pickerState = state.colorPickerState?.copy(loading = value)
+            state.copy(processingImage = value, colorPickerState = pickerState)
         }
     }
 
@@ -139,5 +153,6 @@ class HomeModel(
 
     sealed interface Event {
         data class ShowSnackbar(val message: String) : Event
+        data object PickImage : Event
     }
 }

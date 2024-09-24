@@ -14,10 +14,13 @@ sealed interface HomeAction {
     data class UpdateContrast(val contrast: Contrast) : HomeAction
     data class UpdatePaletteStyle(val style: PaletteStyle) : HomeAction
     data class SelectImage(val image: SeedImage.Resource?) : HomeAction
-    data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker
-    data class UpdateColor(val color: Color) : ColorPicker
-    data object CloseColorPicker : ColorPicker
     data class CopyColor(val name: String, val color: Color) : HomeAction
     data object RandomColor : HomeAction
     data object Export : HomeAction
+
+    data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker
+    data class UpdateColor(val color: Color) : ColorPicker
+    data object TogglePickerMode : ColorPicker
+    data object PickImageForColor : ColorPicker
+    data object CloseColorPicker : ColorPicker
 }

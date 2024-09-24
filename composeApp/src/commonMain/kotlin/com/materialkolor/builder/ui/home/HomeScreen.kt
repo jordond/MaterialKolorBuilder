@@ -29,10 +29,10 @@ import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.page.preview.gallery.NavigationDrawerContent
 import com.materialkolor.builder.ui.ktx.HandleEvents
+import com.materialkolor.builder.ui.ktx.launch
 import com.mohamedrejeb.calf.picker.FilePickerFileType
 import com.mohamedrejeb.calf.picker.FilePickerSelectionMode
 import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
-import kotlinx.coroutines.launch
 
 val LocalSnackbarHostState =
     compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }
@@ -64,11 +64,8 @@ fun HomeScreen() {
 
     HandleEvents(model) { event ->
         when (event) {
-            is HomeModel.Event.ShowSnackbar -> {
-                scope.launch {
-                    snackbar.showSnackbar(event.message)
-                }
-            }
+            is HomeModel.Event.ShowSnackbar -> snackbar.launch(scope, event.message)
+            is HomeModel.Event.PickImage -> pickerLauncher.launch()
         }
     }
 
@@ -98,11 +95,11 @@ fun HomeScreen() {
                             else model.selectImagePreset(action.image)
                         }
                         is ToggleDarkMode -> model.toggleDarkMode()
-                        is Export -> {} // TODO: Implement export
                         is RandomColor -> model.randomColor()
                         is Reset -> model.reset()
                         is CopyColor -> model.copyColorToClipboard(action.name, action.color)
                         is HomeAction.ColorPicker -> model.handleColorPickerAction(action)
+                        is Export -> {} // TODO: Implement export
                     }
                 }
             )
