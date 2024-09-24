@@ -1,6 +1,7 @@
 package com.materialkolor.builder.ui.components
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,18 +15,20 @@ import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Colorize
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.ContentPaste
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,10 +54,12 @@ import com.github.skydoves.colorpicker.compose.ImageColorPicker
 import com.github.skydoves.colorpicker.compose.PaletteContentScale
 import com.github.skydoves.colorpicker.compose.drawColorIndicator
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
-import com.materialkolor.builder.settings.model.KeyColor
+import com.materialkolor.builder.settings.model.name
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
 import com.materialkolor.builder.ui.ktx.launch
 import com.materialkolor.builder.ui.ktx.toHex
+import com.materialkolor.builder.ui.theme.AppIcons
+import com.materialkolor.builder.ui.theme.icons.ResetImage
 
 @Composable
 fun ColorPickerDialog(
@@ -105,14 +110,14 @@ fun ColorPickerDialog(
         onDismissRequest = onDismiss,
         content = {
             Card(
-                modifier = Modifier
+                modifier = modifier
                     .requiredWidthIn(min = 300.dp, max = 400.dp)
-                    .requiredHeightIn(min = 450.dp, max = 650.dp)
+                    .requiredHeightIn(min = 500.dp, max = 700.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = modifier
+                    modifier = Modifier
                         .padding(horizontal = 32.dp)
                         .padding(top = 32.dp, bottom = 16.dp)
                 ) {
@@ -130,22 +135,12 @@ fun ColorPickerDialog(
                     )
 
                     Text(
-                        text = "Select a color to use as the ${state.keyColor.name} color",
+                        text = "Select a color to use as the ${state.keyColor.name()} color",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
                         ),
                     )
-
-                    if (state.keyColor.name == KeyColor.Primary.name) {
-                        Text(
-                            text = "The primary color will be used as the new seed color.",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontWeight = FontWeight.Normal,
-                                textAlign = TextAlign.Center,
-                            ),
-                        )
-                    }
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -153,11 +148,13 @@ fun ColorPickerDialog(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Hex Color",
+                            text = state.keyColor.name(),
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Normal,
                             ),
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .weight(1f),
                         )
 
                         Row(
@@ -215,6 +212,7 @@ fun ColorPickerDialog(
                         }
                     }
 
+
                     ColorPicker(
                         state = state,
                         controller = controller,
@@ -237,12 +235,12 @@ fun ColorPickerDialog(
                     ) {
                         val icon =
                             if (state.mode == ColorPickerMode.HSV) Icons.Outlined.Image
-                            else Icons.Outlined.Palette
+                            else Icons.Outlined.Colorize
 
                         val text = if (state.mode == ColorPickerMode.HSV) "Image" else "Color"
                         Icon(imageVector = icon, contentDescription = "Toggle Mode")
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "From $text")
+                        Text(text = text)
                     }
 
                     Row(
@@ -294,30 +292,54 @@ fun ColorPicker(
                 }
                 ColorPickerMode.Image -> {
                     if (currentState.image == null) {
-                        OutlinedButton(
+                        Card(
                             onClick = onSelectImage,
-                            modifier = Modifier.align(Alignment.Center),
+                            border = CardDefaults.outlinedCardBorder(),
+                            modifier = Modifier
+                                .size(200.dp)
+                                .align(Alignment.Center),
                         ) {
-                            if (currentState.loading) {
-                                CircularProgressIndicator(modifier = Modifier.size(24.dp))
-                            } else {
-                                Text("Select Image")
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                if (currentState.loading) {
+                                    CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                                } else {
+                                    Text("Select Image", fontWeight = FontWeight.Normal)
+                                }
                             }
                         }
                     } else {
-                        ImageColorPicker(
-                            modifier = Modifier.fillMaxSize(),
-                            paletteImageBitmap = currentState.image,
-                            controller = controller,
-                            drawOnPosSelected = {
-                                drawColorIndicator(
-                                    controller.selectedPoint.value,
-                                    controller.selectedColor.value,
+                        Column {
+                            ImageColorPicker(
+                                paletteImageBitmap = currentState.image,
+                                controller = controller,
+                                drawOnPosSelected = {
+                                    drawColorIndicator(
+                                        controller.selectedPoint.value,
+                                        controller.selectedColor.value,
+                                    )
+                                },
+                                onColorChanged = onChange,
+                                paletteContentScale = PaletteContentScale.FIT,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                                    .fillMaxWidth()
+                                    .weight(1f)
+                            )
+
+                            IconButton(
+                                onClick = onSelectImage,
+                                modifier = Modifier.align(Alignment.End),
+                            ) {
+                                Icon(
+                                    imageVector = AppIcons.ResetImage,
+                                    contentDescription = "Select Image",
                                 )
-                            },
-                            onColorChanged = onChange,
-                            paletteContentScale = PaletteContentScale.FIT,
-                        )
+                            }
+                        }
                     }
                 }
             }
