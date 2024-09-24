@@ -10,6 +10,8 @@ internal actual fun launchUrl(url: String) {
         if (!url.startsWith("http://") && !url.startsWith("https://")) "http://$url"
         else url
 
-    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(safeUrl))
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(safeUrl)).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
     context.startActivity(browserIntent)
 }
