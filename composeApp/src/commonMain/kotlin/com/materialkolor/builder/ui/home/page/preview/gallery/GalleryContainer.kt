@@ -88,13 +88,14 @@ fun GalleryContainerChild(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Column {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         val urlLauncher = LocalUrlLauncher.current
         Row(
             modifier = modifier.padding(top = 16.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(title, style = MaterialTheme.typography.bodyMedium)
             IconButton(
                 onClick = { urlLauncher.launch(infoUrl) },
                 modifier = Modifier
@@ -103,6 +104,8 @@ fun GalleryContainerChild(
             ) {
                 Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
             }
+
+            Text(title, style = MaterialTheme.typography.bodyMedium)
         }
 
         content()

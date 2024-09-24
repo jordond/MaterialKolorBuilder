@@ -42,7 +42,7 @@ fun GallerySection(
     var selectionExpanded by remember { mutableStateOf(defaultExpanded) }
     var navigationExpanded by remember { mutableStateOf(defaultExpanded) }
 
-    val anyExpanded = remember(
+    val (anyExpanded, allExpanded) = remember(
         actionExpanded,
         textExpanded,
         communicationExpanded,
@@ -50,14 +50,16 @@ fun GallerySection(
         selectionExpanded,
         navigationExpanded,
     ) {
-        listOf(
+        val list = listOf(
             actionExpanded,
             textExpanded,
             communicationExpanded,
             containmentExpanded,
             selectionExpanded,
             navigationExpanded,
-        ).any { it }
+        )
+
+        list.any { it } to list.all { it }
     }
 
     fun toggleAll(expanded: Boolean) {
@@ -78,7 +80,12 @@ fun GallerySection(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
-                .clickable(onClick = { toggleAll(!anyExpanded) })
+                .clickable(
+                    onClick = {
+                        if (anyExpanded && !allExpanded) toggleAll(expanded = true)
+                        else toggleAll(!anyExpanded)
+                    }
+                )
                 .padding(16.dp),
         ) {
             Text(
