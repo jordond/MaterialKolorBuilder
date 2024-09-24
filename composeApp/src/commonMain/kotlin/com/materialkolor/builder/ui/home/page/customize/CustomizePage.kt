@@ -13,13 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 import com.materialkolor.builder.settings.model.ImagePresets
+import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
-import com.materialkolor.builder.ui.home.ColorType
 import com.materialkolor.builder.ui.home.page.customize.colors.CoreColorsSection
 import com.materialkolor.builder.ui.home.page.customize.contrast.ContrastSection
 import com.materialkolor.builder.ui.home.page.customize.seed.SeedColorSection
@@ -33,7 +34,7 @@ fun CustomizePage(
     settings: Settings,
     modifier: Modifier = Modifier,
     onSelectImage: (SeedImage.Resource?) -> Unit,
-    openColorPicker: (ColorType) -> Unit,
+    openColorPicker: (KeyColor, Color) -> Unit,
     onRandomColor: () -> Unit,
     onUpdatePaletteStyle: (PaletteStyle) -> Unit,
     onUpdateContrast: (Contrast) -> Unit,
@@ -56,7 +57,7 @@ fun CustomizePage(
         SeedColorSection(
             settings = settings,
             onSelectImage = onSelectImage,
-            openColorPicker = { openColorPicker(ColorType.Seed) },
+            openColorPicker = { openColorPicker(KeyColor.Seed, settings.colors.seed) },
             onRandomColor = onRandomColor,
             imagePresets = imagePresets,
             processingImage = processingImage,

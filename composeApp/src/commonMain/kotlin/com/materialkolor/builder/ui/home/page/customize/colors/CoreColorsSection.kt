@@ -7,14 +7,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.home.ColorType
+import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.ui.home.components.ColorCard
 import kotlinx.collections.immutable.PersistentList
 
 @Composable
 fun CoreColorsSection(
-    onClickColor: (ColorType) -> Unit,
+    onClickColor: (KeyColor, Color) -> Unit,
     modifier: Modifier = Modifier,
     coreColors: PersistentList<CoreColor> = CoreColors,
 ) {
@@ -37,11 +38,12 @@ fun CoreColorsSection(
             modifier = Modifier.padding(top = 8.dp),
         ) {
             coreColors.forEach { coreColor ->
+                val color = coreColor.color()
                 ColorCard(
-                    color = coreColor.color(),
+                    color = color,
                     title = coreColor.title,
                     subtitle = coreColor.subtitle,
-                    onClick = { onClickColor(coreColor.type) },
+                    onClick = { onClickColor(coreColor.type, color) },
                 )
             }
         }

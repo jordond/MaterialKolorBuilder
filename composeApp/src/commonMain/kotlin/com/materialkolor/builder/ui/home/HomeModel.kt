@@ -1,7 +1,6 @@
 package com.materialkolor.builder.ui.home
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.materialkolor.Contrast
@@ -12,8 +11,10 @@ import com.materialkolor.builder.core.readBytes
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
+import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.ktx.UiStateViewModel
 import com.materialkolor.builder.ui.ktx.toHex
 import com.materialkolor.ktx.themeColorOrNull
@@ -48,6 +49,33 @@ class HomeModel(
 
     fun updatePaletteStyle(style: PaletteStyle) {
         settingsRepo.update { it.copy(style = style) }
+    }
+
+    fun openColorPicker(keyColor: KeyColor, initial: Color) {
+        val state = ColorPickerState(keyColor, initial)
+        updateState { it.copy(colorPickerState = state) }
+    }
+
+    fun handleColorPickerAction(action: HomeAction.ColorPicker) {
+        when (action) {
+            is HomeAction.CloseColorPicker -> updateState { it.copy(colorPickerState = null) }
+            is HomeAction.OpenColorPicker -> {
+                val state = ColorPickerState(action.key, action.initial)
+                updateState { it.copy(colorPickerState = state) }
+            }
+            is HomeAction.UpdateColor -> {
+                val key = state.value.colorPickerState?.keyColor ?: return
+
+                settingsRepo.update { settings ->
+                    val colors = settings.colors.update(key, action.color)
+                    settings.copy(colors = colors)
+                }
+            }
+        }
+    }
+
+    fun updateColors(colors: ColorSettings) {
+        settingsRepo.update { it.copy(colors = colors) }
     }
 
     fun selectImagePreset(image: SeedImage.Resource) {
@@ -106,11 +134,8 @@ class HomeModel(
         val settings: Settings,
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
-    ) {
-
-        val customImage: ImageBitmap?
-            get() = (settings.selectedImage as? SeedImage.Custom)?.image
-    }
+        val colorPickerState: ColorPickerState? = null,
+    )
 
     sealed interface Event {
         data class ShowSnackbar(val message: String) : Event

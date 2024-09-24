@@ -13,4 +13,4 @@ expect val exportSupported: Boolean
 
 expect val platformContext: PlatformContext
 
-suspend fun KmpFile.readBytes():ByteArray = readByteArray(platformContext)
+suspend fun KmpFile.readBytes(): ByteArray = readByteArray(platformContext)

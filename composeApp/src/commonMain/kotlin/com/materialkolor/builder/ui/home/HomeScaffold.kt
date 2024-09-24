@@ -33,8 +33,11 @@ import com.materialkolor.builder.core.exportSupported
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.about.AboutInfo
 import com.materialkolor.builder.ui.components.AppSnackbarHost
+import com.materialkolor.builder.ui.components.ColorPickerDialog
+import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
+import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
 import com.materialkolor.builder.ui.home.components.HomeNavRail
 import com.materialkolor.builder.ui.home.components.TopBarActions
@@ -48,6 +51,7 @@ val LocalWindowSizeClass = compositionLocalOf<WindowSizeClass> { error("Not init
 @Composable
 fun HomeScreenScaffold(
     settings: Settings,
+    colorPickerState: ColorPickerState?,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
     snackbarState: SnackbarHostState = remember { SnackbarHostState() },
@@ -60,6 +64,7 @@ fun HomeScreenScaffold(
     CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
         HomeScreenScaffold(
             settings = settings,
+            colorPickerState = colorPickerState,
             dispatcher = dispatcher,
             snackbarState = snackbarState,
             processingImage = processingImage,
@@ -75,6 +80,7 @@ fun HomeScreenScaffold(
 
 @Composable
 private fun HomeScreenScaffold(
+    colorPickerState: ColorPickerState?,
     settings: Settings,
     dispatcher: Dispatcher<HomeAction>,
     snackbarState: SnackbarHostState,
@@ -188,6 +194,12 @@ private fun HomeScreenScaffold(
             visible = aboutDialogVisible,
             onDismiss = { toggleAboutDialog(false) },
             windowSizeClass = windowSizeClass,
+        )
+
+        ColorPickerDialog(
+            state = colorPickerState,
+            onDismiss = dispatcher.rememberRelay(HomeAction.CloseColorPicker),
+            onColorChanged = dispatcher.rememberRelayOf(::UpdateColor),
         )
     }
 }

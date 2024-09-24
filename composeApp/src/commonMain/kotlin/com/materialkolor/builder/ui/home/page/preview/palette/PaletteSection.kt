@@ -17,20 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.materialkolor.DynamicMaterialThemeState
+import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.ui.theme.LocalDynamicThemeState
 import com.materialkolor.ktx.isLight
 import com.materialkolor.ktx.m3Colors
 import com.materialkolor.ktx.toneColor
 import kotlinx.collections.immutable.persistentListOf
 
-private enum class Palette {
-    Primary,
-    Secondary,
-    Tertiary,
-    Neutral,
-    NeutralVariant,
-    Error,
-}
+private val keyColors = (KeyColor.entries - KeyColor.Seed)
 
 private val steps = persistentListOf(
     100, 99, 98, 95, 90, 80, 70, 60, 50, 40, 35, 30, 25, 20, 15, 10, 5, 0
@@ -46,7 +40,7 @@ fun PaletteSection(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier,
     ) {
-        Palette.entries.forEach { palette ->
+        keyColors.forEach { palette ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
@@ -82,15 +76,16 @@ fun PaletteSection(
 }
 
 @Composable
-private fun DynamicMaterialThemeState.tone(palette: Palette, tone: Int): Color {
+private fun DynamicMaterialThemeState.tone(palette: KeyColor, tone: Int): Color {
     // TODO: Once MaterialKolor is released, replace this with referencing the m3Colors itself.
     return when (palette) {
-        Palette.Primary -> m3Colors.primary().palette(dynamicScheme).toneColor(tone)
-        Palette.Secondary -> m3Colors.secondary().palette(dynamicScheme).toneColor(tone)
-        Palette.Tertiary -> m3Colors.tertiary().palette(dynamicScheme).toneColor(tone)
-        Palette.Neutral -> m3Colors.neutralPaletteKeyColor().palette(dynamicScheme).toneColor(tone)
-        Palette.NeutralVariant ->
+        KeyColor.Primary -> m3Colors.primary().palette(dynamicScheme).toneColor(tone)
+        KeyColor.Secondary -> m3Colors.secondary().palette(dynamicScheme).toneColor(tone)
+        KeyColor.Tertiary -> m3Colors.tertiary().palette(dynamicScheme).toneColor(tone)
+        KeyColor.Neutral -> m3Colors.neutralPaletteKeyColor().palette(dynamicScheme).toneColor(tone)
+        KeyColor.NeutralVariant ->
             m3Colors.neutralVariantPaletteKeyColor().palette(dynamicScheme).toneColor(tone)
-        Palette.Error -> m3Colors.error().palette(dynamicScheme).toneColor(tone)
+        KeyColor.Error -> m3Colors.error().palette(dynamicScheme).toneColor(tone)
+        else -> Color.Unspecified
     }
 }

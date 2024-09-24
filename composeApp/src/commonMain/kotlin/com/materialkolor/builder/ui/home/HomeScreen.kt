@@ -21,7 +21,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.materialkolor.builder.core.rememberDebounceDispatcher
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
 import com.materialkolor.builder.ui.home.HomeAction.Export
-import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.Reset
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
@@ -73,7 +72,6 @@ fun HomeScreen() {
         }
     }
 
-
     CompositionLocalProvider(
         LocalSnackbarHostState provides snackbar,
         LocalDrawerState provides drawerState,
@@ -88,6 +86,7 @@ fun HomeScreen() {
         ) {
             HomeScreenScaffold(
                 settings = state.settings,
+                colorPickerState = state.colorPickerState,
                 snackbarState = snackbar,
                 processingImage = state.processingImage,
                 dispatcher = rememberDebounceDispatcher { action ->
@@ -100,10 +99,10 @@ fun HomeScreen() {
                         }
                         is ToggleDarkMode -> model.toggleDarkMode()
                         is Export -> {} // TODO: Implement export
-                        is OpenColorPicker -> {} // TODO: Implement color picker
                         is RandomColor -> model.randomColor()
                         is Reset -> model.reset()
                         is CopyColor -> model.copyColorToClipboard(action.name, action.color)
+                        is HomeAction.ColorPicker -> model.handleColorPickerAction(action)
                     }
                 }
             )
