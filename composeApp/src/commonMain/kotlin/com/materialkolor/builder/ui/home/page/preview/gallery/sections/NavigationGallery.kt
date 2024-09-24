@@ -72,22 +72,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.ui.home.LocalDrawerState
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 import com.materialkolor.builder.ui.home.page.preview.gallery.NavigationDrawerContent
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavigationGallerySection(
+fun NavigationGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    boxPadding: Dp = GallerySectionDefaults.BoxPadding,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    boxPadding: Dp = GalleryContainerDefaults.BoxPadding,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Navigation",
         expanded = expanded,
         toggle = toggle,
@@ -98,21 +98,21 @@ fun NavigationGallerySection(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Column {
-                GalleryChildSection(
+                GalleryContainerChild(
                     title = "Bottom app bar",
                     infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars#bottom"
                 ) {
                     GalleryBottomAppBar(minWidth, width, boxPadding)
                 }
 
-                GalleryChildSection(
+                GalleryContainerChild(
                     title = "Navigation bar",
                     infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationbar"
                 ) {
                     GalleryNavigationBar(minWidth, width, boxPadding)
                 }
 
-                GalleryChildSection(
+                GalleryContainerChild(
                     title = "Tabs",
                     infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.interaction.MutableInteractionSource)"
                 ) {
@@ -120,21 +120,21 @@ fun NavigationGallerySection(
                 }
             }
 
-            GalleryChildSection(
+            GalleryContainerChild(
                 title = "Navigation drawer",
                 infoUrl = "https://developer.android.com/jetpack/compose/components/drawer"
             ) {
                 GalleryNavigationDrawer(minWidth, width, boxPadding)
             }
 
-            GalleryChildSection(
+            GalleryContainerChild(
                 title = "Navigation rail",
                 infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail"
             ) {
                 GalleryNavigationRail(minWidth, width, boxPadding)
             }
 
-            GalleryChildSection(
+            GalleryContainerChild(
                 title = "Top app bars",
                 infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars"
             ) {

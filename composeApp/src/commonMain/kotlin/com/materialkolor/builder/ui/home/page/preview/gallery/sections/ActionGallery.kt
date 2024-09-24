@@ -42,9 +42,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 import com.materialkolor.builder.ui.home.page.preview.gallery.itemPadding
 import kotlinx.collections.immutable.persistentListOf
 
@@ -54,33 +54,33 @@ private const val iconButtonUrl = "https://developer.android.com/reference/kotli
 private const val segmentedButtonUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#(androidx.compose.material3.MultiChoiceSegmentedButtonRowScope).SegmentedButton(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.graphics.Shape,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.SegmentedButtonColors,androidx.compose.foundation.BorderStroke,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0,kotlin.Function0)"
 
 @Composable
-fun ActionGallerySection(
+fun ActionGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    itemPadding: Dp = GallerySectionDefaults.ItemPadding,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    itemPadding: Dp = GalleryContainerDefaults.ItemPadding,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Actions",
         expanded = expanded,
         toggle = toggle,
         modifier = modifier,
     ) {
-        GalleryChildSection(title = "Common buttons", infoUrl = buttonUrl) {
+        GalleryContainerChild(title = "Common buttons", infoUrl = buttonUrl) {
             CommonButtons(minWidth, width, itemPadding)
         }
 
-        GalleryChildSection(title = "Floating action buttons", infoUrl = fabUrl) {
+        GalleryContainerChild(title = "Floating action buttons", infoUrl = fabUrl) {
             FloatingActionButtons(minWidth, width, itemPadding)
         }
 
-        GalleryChildSection(title = "Icon buttons", infoUrl = iconButtonUrl) {
+        GalleryContainerChild(title = "Icon buttons", infoUrl = iconButtonUrl) {
             IconButtons(minWidth, width, itemPadding)
         }
 
-        GalleryChildSection(title = "Segmented buttons", infoUrl = segmentedButtonUrl) {
+        GalleryContainerChild(title = "Segmented buttons", infoUrl = segmentedButtonUrl) {
             SegmentedButtons(minWidth, width, itemPadding)
         }
     }

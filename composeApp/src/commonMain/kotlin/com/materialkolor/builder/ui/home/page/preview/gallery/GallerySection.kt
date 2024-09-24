@@ -1,110 +1,138 @@
 package com.materialkolor.builder.ui.home.page.preview.gallery
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
-import com.materialkolor.builder.ui.theme.LocalUrlLauncher
-
-fun Modifier.itemPadding() = padding(horizontal = 8.dp, vertical = 4.dp)
-
-object GallerySectionDefaults {
-    val MinWidth = 200.dp
-    val Width = 400.dp
-    val ItemPadding = 8.dp
-    val ItemPadding2 = 8.dp * 2
-    val BoxPadding = 16.dp
-}
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.ActionGallery
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.CommunicationGallery
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.ContainmentGallery
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.NavigationGallery
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.SelectionGallery
+import com.materialkolor.builder.ui.home.page.preview.gallery.sections.TextGallery
 
 @Composable
 fun GallerySection(
-    title: String,
     modifier: Modifier = Modifier,
-    expanded: Boolean = true,
-    toggle: (Boolean) -> Unit = {},
-    boxPadding: Dp = GallerySectionDefaults.BoxPadding,
-    content: @Composable () -> Unit,
+    defaultExpanded: Boolean = true,
 ) {
+    var actionExpanded by remember { mutableStateOf(defaultExpanded) }
+    var textExpanded by remember { mutableStateOf(defaultExpanded) }
+    var communicationExpanded by remember { mutableStateOf(defaultExpanded) }
+    var containmentExpanded by remember { mutableStateOf(defaultExpanded) }
+    var selectionExpanded by remember { mutableStateOf(defaultExpanded) }
+    var navigationExpanded by remember { mutableStateOf(defaultExpanded) }
+
+    val anyExpanded = remember(
+        actionExpanded,
+        textExpanded,
+        communicationExpanded,
+        containmentExpanded,
+        selectionExpanded,
+        navigationExpanded,
+    ) {
+        listOf(
+            actionExpanded,
+            textExpanded,
+            communicationExpanded,
+            containmentExpanded,
+            selectionExpanded,
+            navigationExpanded,
+        ).any { it }
+    }
+
+    fun toggleAll(expanded: Boolean) {
+        actionExpanded = expanded
+        textExpanded = expanded
+        communicationExpanded = expanded
+        containmentExpanded = expanded
+        selectionExpanded = expanded
+        navigationExpanded = expanded
+    }
+
     Column(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-            .animateContentSize()
-            .padding(boxPadding)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
-                .clickableWithoutRipple(onClick = { toggle(!expanded) })
+                .clickable(onClick = { toggleAll(!anyExpanded) })
+                .padding(16.dp),
         ) {
             Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium.copy(
+                text = "Component Gallery",
+                style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Thin,
                 ),
             )
 
             val icon =
-                if (expanded) Icons.Outlined.KeyboardArrowUp
-                else Icons.Outlined.KeyboardArrowDown
+                if (anyExpanded) Icons.Default.Visibility
+                else Icons.Default.VisibilityOff
 
-            val text = if (expanded) "Collapse" else "Expand"
-
+            val text = if (anyExpanded) "Collapse all" else "Expand all"
             Icon(imageVector = icon, contentDescription = text)
         }
 
-        AnimatedVisibility(expanded) {
-            Column {
-                content()
-            }
-        }
-    }
-}
-
-@Composable
-fun GalleryChildSection(
-    title: String,
-    infoUrl: String,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    Column {
-        val urlLauncher = LocalUrlLauncher.current
-        Row(
-            modifier = modifier.padding(top = 16.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            maxItemsInEachRow = 3,
+            modifier = modifier,
         ) {
-            Text(title, style = MaterialTheme.typography.bodyMedium)
-            IconButton(
-                onClick = { urlLauncher.launch(infoUrl) },
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(16.dp),
-            ) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = null)
-            }
-        }
+            ActionGallery(
+                expanded = actionExpanded,
+                toggle = { actionExpanded = it },
+            )
 
-        content()
+            TextGallery(
+                expanded = textExpanded,
+                toggle = { textExpanded = it },
+                width = 500.dp,
+            )
+
+            CommunicationGallery(
+                expanded = communicationExpanded,
+                toggle = { communicationExpanded = it },
+            )
+
+            ContainmentGallery(
+                expanded = containmentExpanded,
+                toggle = { containmentExpanded = it },
+            )
+
+            SelectionGallery(
+                expanded = selectionExpanded,
+                toggle = { selectionExpanded = it },
+                width = 500.dp,
+            )
+
+            NavigationGallery(
+                expanded = navigationExpanded,
+                toggle = { navigationExpanded = it },
+            )
+        }
     }
 }

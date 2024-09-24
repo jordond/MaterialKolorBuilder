@@ -24,26 +24,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 
 @Composable
-fun TextGallerySection(
+fun TextGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    itemPadding: Dp = GallerySectionDefaults.ItemPadding,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    itemPadding: Dp = GalleryContainerDefaults.ItemPadding,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Text inputs",
         expanded = expanded,
         toggle = toggle,
         modifier = modifier,
     ) {
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Text fields",
             infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#textfield"
         ) {

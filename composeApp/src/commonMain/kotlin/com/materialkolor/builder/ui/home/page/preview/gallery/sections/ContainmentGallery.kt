@@ -47,9 +47,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 
 private const val modalBottomSheetInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary?hl=en#ModalBottomSheet(kotlin.Function0,androidx.compose.ui.Modifier,androidx.compose.material3.SheetState,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color,kotlin.Function0,androidx.compose.foundation.layout.WindowInsets,androidx.compose.ui.window.SecureFlagPolicy,kotlin.Function1)"
@@ -61,35 +61,35 @@ private const val dividersInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Divider(androidx.compose.ui.Modifier,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color)"
 
 @Composable
-fun ContainmentGallerySection(
+fun ContainmentGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    boxPadding: Dp = GallerySectionDefaults.BoxPadding,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    boxPadding: Dp = GalleryContainerDefaults.BoxPadding,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Containment",
         expanded = expanded,
         toggle = toggle,
         modifier = modifier,
     ) {
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Dialog / Bottom Sheet",
             infoUrl = modalBottomSheetInfoUrl
         ) {
             DialogsDemo(minWidth, width, boxPadding)
         }
 
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Cards",
             infoUrl = cardsInfoUrl
         ) {
             CardsDemo(minWidth, width, boxPadding)
         }
 
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Dividers",
             infoUrl = dividersInfoUrl
         ) {

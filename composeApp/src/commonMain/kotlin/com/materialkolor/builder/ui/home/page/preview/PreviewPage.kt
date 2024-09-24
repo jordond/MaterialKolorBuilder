@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryList
+import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.sidePadding
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
@@ -53,7 +53,7 @@ fun PreviewPage(
             )
         }
 
-        GalleryList()
+        GallerySection()
 
         PreviewSectionContainer(
             title = "Theme",

@@ -40,41 +40,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 import kotlinx.coroutines.launch
 
 @Composable
-fun CommunicationGallerySection(
+fun CommunicationGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    boxPadding: Dp = GallerySectionDefaults.BoxPadding,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    boxPadding: Dp = GalleryContainerDefaults.BoxPadding,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Communication",
         expanded = expanded,
         toggle = toggle,
         modifier = modifier
     ) {
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Badges",
             infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)"
         ) {
             Badges(minWidth, width, boxPadding)
         }
 
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Progress indicators",
             infoUrl = "https://developer.android.com/jetpack/compose/components/progress"
         ) {
             ProgressIndicators(minWidth, width, boxPadding)
         }
 
-        GalleryChildSection(
+        GalleryContainerChild(
             title = "Snackbar",
             infoUrl = "https://developer.android.com/jetpack/compose/components/snackbar"
         ) {

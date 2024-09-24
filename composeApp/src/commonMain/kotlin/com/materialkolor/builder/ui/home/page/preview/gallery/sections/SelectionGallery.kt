@@ -81,9 +81,9 @@ import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
-import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainer
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerChild
+import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryContainerDefaults
 
 private const val checkboxesInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Checkbox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.CheckboxColors,androidx.compose.foundation.interaction.MutableInteractionSource)"
@@ -109,15 +109,15 @@ private const val timePickerInfoUrl =
     "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#TimePicker(androidx.compose.material3.TimePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.TimePickerColors,androidx.compose.material3.TimePickerLayoutType)"
 
 @Composable
-fun SelectionGallerySection(
+fun SelectionGallery(
     expanded: Boolean,
     toggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    minWidth: Dp = GallerySectionDefaults.MinWidth,
-    width: Dp = GallerySectionDefaults.Width,
-    itemPadding: Dp = GallerySectionDefaults.ItemPadding2,
+    minWidth: Dp = GalleryContainerDefaults.MinWidth,
+    width: Dp = GalleryContainerDefaults.Width,
+    itemPadding: Dp = GalleryContainerDefaults.ItemPadding2,
 ) {
-    GallerySection(
+    GalleryContainer(
         title = "Selection",
         expanded = expanded,
         toggle = toggle,
@@ -127,35 +127,35 @@ fun SelectionGallerySection(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            GalleryChildSection(title = "Checkboxes", checkboxesInfoUrl) {
+            GalleryContainerChild(title = "Checkboxes", checkboxesInfoUrl) {
                 CheckboxesDemo(minWidth, width, itemPadding)
             }
 
-            GalleryChildSection(title = "Radio buttons", radioButtonInfoUrl) {
+            GalleryContainerChild(title = "Radio buttons", radioButtonInfoUrl) {
                 RadioButtonsDemo(minWidth, width, itemPadding)
             }
 
-            GalleryChildSection(title = "Chips", chipsInfoUrl) {
+            GalleryContainerChild(title = "Chips", chipsInfoUrl) {
                 ChipsDemo(minWidth, width, itemPadding)
             }
 
-            GalleryChildSection(title = "Menus", menusInfoUrl) {
+            GalleryContainerChild(title = "Menus", menusInfoUrl) {
                 MenuDemo(minWidth, width)
             }
 
-            GalleryChildSection(title = "Switches", switchInfoUrl) {
+            GalleryContainerChild(title = "Switches", switchInfoUrl) {
                 SwitchesDemo(minWidth, width)
             }
 
-            GalleryChildSection(title = "Sliders", sliderInfoUrl) {
+            GalleryContainerChild(title = "Sliders", sliderInfoUrl) {
                 SlidersDemo(minWidth, width)
             }
 
-            GalleryChildSection(title = "Date picker", datePickerInfoUrl) {
+            GalleryContainerChild(title = "Date picker", datePickerInfoUrl) {
                 DatePickerDemo(minWidth, width, itemPadding)
             }
 
-            GalleryChildSection(title = "Time picker", timePickerInfoUrl) {
+            GalleryContainerChild(title = "Time picker", timePickerInfoUrl) {
                 TimePickerDemo(minWidth, width, itemPadding)
             }
         }
