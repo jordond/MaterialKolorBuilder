@@ -22,7 +22,7 @@ import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
 import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryList
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplay
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.sidePadding
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
@@ -55,12 +55,12 @@ fun PreviewPage(
 
         GalleryList()
 
-        PreviewSection(
+        PreviewSectionContainer(
             title = "Theme",
             expanded = themeExpanded,
             toggle = { themeExpanded = it },
         ) {
-            ThemeDisplay(
+            ThemeSection(
                 settings = settings,
                 onCopyColor = onCopyColor,
             )

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PreviewSection(
+fun PreviewSectionContainer(
     title: String,
     expanded: Boolean,
     toggle: (Boolean) -> Unit,

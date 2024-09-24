@@ -19,24 +19,24 @@ import com.materialkolor.DynamicMaterialTheme
 import com.materialkolor.DynamicMaterialThemeState
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.page.preview.model.Theme
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.InnerDivider
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.InverseSurfacePair
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.MainColors
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.MiscColors
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.SectionDivider
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.Surface
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.SurfaceContainer
-import com.materialkolor.builder.ui.home.page.preview.theme.ThemeDisplayDefaults.inverse
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InnerDivider
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.InverseSurfacePair
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.MainColors
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.MiscColors
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.SectionDivider
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.Surface
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.SurfaceContainer
+import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSectionDefaults.inverse
 import com.materialkolor.builder.ui.theme.AppTypography
 import com.materialkolor.builder.ui.theme.createThemeState
 
-enum class ThemeMode {
+private enum class ThemeMode {
     Light,
     Dark,
 }
 
 @Composable
-fun ThemeDisplay(
+fun ThemeSection(
     settings: Settings,
     onCopyColor: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
@@ -45,31 +45,31 @@ fun ThemeDisplay(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier,
     ) {
-        LightThemeDisplay(settings, onClick = onCopyColor)
-        DarkThemeDisplay(settings, onClick = onCopyColor)
+        LightTheme(settings, onClick = onCopyColor)
+        DarkTheme(settings, onClick = onCopyColor)
     }
 }
 
 @Composable
-fun LightThemeDisplay(
+private fun LightTheme(
     settings: Settings,
     modifier: Modifier = Modifier,
     onClick: (String, Color) -> Unit = { _, _ -> },
 ) {
-    ThemeDisplay(ThemeMode.Light, createThemeState(settings, isDark = false), onClick, modifier)
+    ThemeSection(ThemeMode.Light, createThemeState(settings, isDark = false), onClick, modifier)
 }
 
 @Composable
-fun DarkThemeDisplay(
+private fun DarkTheme(
     settings: Settings,
     modifier: Modifier = Modifier,
     onClick: (String, Color) -> Unit = { _, _ -> },
 ) {
-    ThemeDisplay(ThemeMode.Dark, createThemeState(settings, isDark = true), onClick, modifier)
+    ThemeSection(ThemeMode.Dark, createThemeState(settings, isDark = true), onClick, modifier)
 }
 
 @Composable
-private fun ThemeDisplay(
+private fun ThemeSection(
     theme: ThemeMode,
     state: DynamicMaterialThemeState,
     onClick: (String, Color) -> Unit,
@@ -80,12 +80,12 @@ private fun ThemeDisplay(
         animate = true,
         typography = AppTypography,
     ) {
-        ThemeDisplay(theme, onClick, modifier)
+        ThemeSection(theme, onClick, modifier)
     }
 }
 
 @Composable
-private fun ThemeDisplay(
+private fun ThemeSection(
     theme: ThemeMode,
     onClick: (String, Color) -> Unit,
     modifier: Modifier = Modifier,
@@ -102,7 +102,7 @@ private fun ThemeDisplay(
                 modifier = Modifier.padding(bottom = SectionDivider),
             )
 
-            CompositionLocalProvider(LocalTextStyle provides ThemeDisplayDefaults.TextStyle) {
+            CompositionLocalProvider(LocalTextStyle provides ThemeSectionDefaults.TextStyle) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(SectionDivider),
                     modifier = Modifier.fillMaxSize()

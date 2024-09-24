@@ -10,7 +10,7 @@ import com.materialkolor.builder.ui.home.page.preview.model.ThemePair
 import com.materialkolor.ktx.isLight
 import kotlinx.collections.immutable.persistentListOf
 
-object ThemeDisplayDefaults {
+object ThemeSectionDefaults {
 
     val SectionDivider = 16.dp
     val InnerDivider = 6.dp
