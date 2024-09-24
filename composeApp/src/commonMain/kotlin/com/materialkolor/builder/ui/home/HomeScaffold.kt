@@ -15,8 +15,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +43,8 @@ import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
 
+val LocalWindowSizeClass = compositionLocalOf<WindowSizeClass> { error("Not initialized") }
+
 @Composable
 fun HomeScreenScaffold(
     settings: Settings,
@@ -47,11 +52,40 @@ fun HomeScreenScaffold(
     modifier: Modifier = Modifier,
     snackbarState: SnackbarHostState = remember { SnackbarHostState() },
     processingImage: Boolean = false,
+    windowSizeClass: WindowSizeClass = windowSizeClass(),
 ) {
     var aboutDialogVisible by remember { mutableStateOf(false) }
     var selectedSection by remember { mutableStateOf(HomeSection.Customize) }
-    val windowSizeClass = windowSizeClass()
 
+    CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
+        HomeScreenScaffold(
+            settings = settings,
+            dispatcher = dispatcher,
+            snackbarState = snackbarState,
+            processingImage = processingImage,
+            aboutDialogVisible = aboutDialogVisible,
+            toggleAboutDialog = { aboutDialogVisible = it },
+            selectedSection = selectedSection,
+            onSelectedSection = { selectedSection = it },
+            windowSizeClass = windowSizeClass,
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+private fun HomeScreenScaffold(
+    settings: Settings,
+    dispatcher: Dispatcher<HomeAction>,
+    snackbarState: SnackbarHostState,
+    processingImage: Boolean,
+    aboutDialogVisible: Boolean,
+    toggleAboutDialog: (Boolean) -> Unit,
+    selectedSection: HomeSection,
+    onSelectedSection: (HomeSection) -> Unit,
+    windowSizeClass: WindowSizeClass,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         modifier = modifier,
         snackbarHost = { AppSnackbarHost(snackbarState) },
@@ -84,7 +118,7 @@ fun HomeScreenScaffold(
                         settings = settings,
                         onToggleDarkMode = dispatcher.relay(ToggleDarkMode),
                         onReset = dispatcher.relay(HomeAction.Reset),
-                        onAboutClicked = { aboutDialogVisible = true },
+                        onAboutClicked = { toggleAboutDialog(true) },
                     )
                 }
             )
@@ -93,7 +127,7 @@ fun HomeScreenScaffold(
             AnimatedVisibility(windowSizeClass.widthIsCompact()) {
                 HomeBottomBar(
                     selected = selectedSection,
-                    onSelected = { selectedSection = it },
+                    onSelected = { onSelectedSection(it) },
                 )
             }
         },
@@ -127,7 +161,7 @@ fun HomeScreenScaffold(
                     Row {
                         HomeNavRail(
                             selected = selectedSection,
-                            onSelected = { selectedSection = it },
+                            onSelected = { onSelectedSection(it) },
                         )
                         CompactContent(
                             settings = settings,
@@ -152,7 +186,7 @@ fun HomeScreenScaffold(
 
         AboutInfo(
             visible = aboutDialogVisible,
-            onDismiss = { aboutDialogVisible = false },
+            onDismiss = { toggleAboutDialog(false) },
             windowSizeClass = windowSizeClass,
         )
     }

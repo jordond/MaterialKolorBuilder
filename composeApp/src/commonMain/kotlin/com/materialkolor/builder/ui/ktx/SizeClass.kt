@@ -25,9 +25,9 @@ fun WindowSizeClass.showBottomBar(): Boolean = widthIsCompact()
 
 fun WindowSizeClass.sidePadding(): Dp {
     return when (widthSizeClass) {
-        WindowWidthSizeClass.Expanded -> 32.dp
-        WindowWidthSizeClass.Medium -> 16.dp
-        WindowWidthSizeClass.Compact -> 8.dp
+        WindowWidthSizeClass.Expanded -> 16.dp
+        WindowWidthSizeClass.Medium -> 8.dp
+        WindowWidthSizeClass.Compact -> 4.dp
         else -> Dp.Unspecified
     }
 }

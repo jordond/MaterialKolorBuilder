@@ -14,11 +14,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+
+@Composable
+fun PreviewSectionContainer(
+    title: String,
+    modifier: Modifier = Modifier,
+    initialExpanded: Boolean = true,
+    content: @Composable () -> Unit,
+) {
+    var expanded by remember { mutableStateOf(initialExpanded) }
+    PreviewSectionContainer(
+        title = title,
+        expanded = expanded,
+        toggle = { expanded = it },
+        modifier = modifier,
+        content = content,
+    )
+}
 
 @Composable
 fun PreviewSectionContainer(
@@ -56,7 +77,7 @@ fun PreviewSectionContainer(
         }
 
         AnimatedVisibility(visible = expanded) {
-            Column {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 content()
             }
         }

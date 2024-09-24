@@ -10,10 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +18,7 @@ import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
 import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
+import com.materialkolor.builder.ui.home.page.preview.palette.PaletteSection
 import com.materialkolor.builder.ui.home.page.preview.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.sidePadding
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
@@ -35,8 +32,6 @@ fun PreviewPage(
     onCopyColor: (String, Color) -> Unit = { _, _ -> },
     windowSizeClass: WindowSizeClass = windowSizeClass(),
 ) {
-    var themeExpanded by remember { mutableStateOf(true) }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp),
@@ -55,15 +50,15 @@ fun PreviewPage(
 
         GallerySection()
 
-        PreviewSectionContainer(
-            title = "Theme",
-            expanded = themeExpanded,
-            toggle = { themeExpanded = it },
-        ) {
+        PreviewSectionContainer(title = "Theme") {
             ThemeSection(
                 settings = settings,
                 onCopyColor = onCopyColor,
             )
+        }
+
+        PreviewSectionContainer(title = "Palettes") {
+            PaletteSection()
         }
 
         Spacer(modifier = Modifier.height(200.dp))
