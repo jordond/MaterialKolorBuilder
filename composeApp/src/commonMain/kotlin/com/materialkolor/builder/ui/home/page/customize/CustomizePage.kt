@@ -51,7 +51,7 @@ fun CustomizePage(
             .verticalScroll(scrollState)
     ) {
         Text(
-            text = "Generate your own Material 3 color scheme, powered by MaterialKolor.",
+            text = "Generate your own Material 3 color scheme, to use with Jetpack Compose, or Compose Multiplatform.",
         )
 
         SeedColorSection(
