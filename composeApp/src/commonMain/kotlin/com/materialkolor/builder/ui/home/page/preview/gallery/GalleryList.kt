@@ -83,7 +83,7 @@ fun GalleryList(
         ) {
             Text(
                 text = "Component Gallery",
-                style = MaterialTheme.typography.displaySmall.copy(
+                style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Thin,
                 ),
             )

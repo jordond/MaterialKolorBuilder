@@ -42,7 +42,7 @@ fun PreviewSection(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.displaySmall.copy(
+                style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Thin,
                 ),
             )

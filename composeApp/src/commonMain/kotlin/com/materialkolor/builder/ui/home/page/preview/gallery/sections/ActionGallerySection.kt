@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -21,12 +24,21 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -34,6 +46,12 @@ import com.materialkolor.builder.ui.home.page.preview.gallery.GalleryChildSectio
 import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.preview.gallery.GallerySectionDefaults
 import com.materialkolor.builder.ui.home.page.preview.gallery.itemPadding
+import kotlinx.collections.immutable.persistentListOf
+
+private const val buttonUrl = "https://developer.android.com/jetpack/compose/components/button"
+private const val fabUrl = "https://developer.android.com/jetpack/compose/components/fab"
+private const val iconButtonUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)"
+private const val segmentedButtonUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#(androidx.compose.material3.MultiChoiceSegmentedButtonRowScope).SegmentedButton(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.graphics.Shape,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.SegmentedButtonColors,androidx.compose.foundation.BorderStroke,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0,kotlin.Function0)"
 
 @Composable
 fun ActionGallerySection(
@@ -50,25 +68,20 @@ fun ActionGallerySection(
         toggle = toggle,
         modifier = modifier,
     ) {
-        GalleryChildSection(
-            title = "Common buttons",
-            infoUrl = "https://developer.android.com/jetpack/compose/components/button"
-        ) {
+        GalleryChildSection(title = "Common buttons", infoUrl = buttonUrl) {
             CommonButtons(minWidth, width, itemPadding)
         }
 
-        GalleryChildSection(
-            title = "Floating action buttons",
-            infoUrl = "https://developer.android.com/jetpack/compose/components/fab"
-        ) {
+        GalleryChildSection(title = "Floating action buttons", infoUrl = fabUrl) {
             FloatingActionButtons(minWidth, width, itemPadding)
         }
 
-        GalleryChildSection(
-            title = "Icon buttons",
-            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)"
-        ) {
+        GalleryChildSection(title = "Icon buttons", infoUrl = iconButtonUrl) {
             IconButtons(minWidth, width, itemPadding)
+        }
+
+        GalleryChildSection(title = "Segmented buttons", infoUrl = segmentedButtonUrl) {
+            SegmentedButtons(minWidth, width, itemPadding)
         }
     }
 }
@@ -302,6 +315,80 @@ private fun IconButtons(
                     Icon(Icons.Default.Settings, contentDescription = null)
                 }
             )
+        }
+    }
+}
+
+@Composable
+private fun SegmentedButtons(
+    minWidth: Dp,
+    width: Dp,
+    itemPadding: Dp,
+) {
+
+    OutlinedCard {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .requiredWidthIn(minWidth)
+                .width(width)
+                .padding(itemPadding),
+        ) {
+            var selectedIndex by remember { mutableIntStateOf(0) }
+            val options = remember { persistentListOf("Day", "Month", "Week") }
+            SingleChoiceSegmentedButtonRow {
+                options.forEachIndexed { index, label ->
+                    SegmentedButton(
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = options.size,
+                        ),
+                        onClick = { selectedIndex = index },
+                        selected = index == selectedIndex,
+                        label = { Text(label) },
+                    )
+                }
+            }
+
+            val checkedList = remember { mutableStateListOf<Int>() }
+            val options2 = listOf("Favorites", "Trending", "Saved")
+            val icons = remember {
+                persistentListOf(
+                    Icons.Filled.StarBorder,
+                    Icons.AutoMirrored.Filled.TrendingUp,
+                    Icons.Filled.BookmarkBorder
+                )
+            }
+
+            MultiChoiceSegmentedButtonRow {
+                options2.forEachIndexed { index, label ->
+                    SegmentedButton(
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = options.size,
+                        ),
+                        icon = {
+                            SegmentedButtonDefaults.Icon(active = index in checkedList) {
+                                Icon(
+                                    imageVector = icons[index],
+                                    contentDescription = null,
+                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                )
+                            }
+                        },
+                        onCheckedChange = {
+                            if (index in checkedList) {
+                                checkedList.remove(index)
+                            } else {
+                                checkedList.add(index)
+                            }
+                        },
+                        checked = index in checkedList,
+                        label = { Text(label) },
+                    )
+                }
+            }
         }
     }
 }
