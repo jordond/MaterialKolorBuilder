@@ -23,7 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.materialkolor.builder.ui.home.LocalWindowSizeClass
 import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
+import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.theme.LocalUrlLauncher
 
 fun Modifier.itemPadding() = padding(horizontal = 8.dp, vertical = 4.dp)
@@ -33,7 +35,9 @@ object GalleryContainerDefaults {
     val Width = 400.dp
     val ItemPadding = 8.dp
     val ItemPadding2 = 8.dp * 2
-    val BoxPadding = 16.dp
+    val BoxPadding: Dp
+        @Composable
+        get() = if (LocalWindowSizeClass.current.widthIsCompact()) 8.dp else 16.dp
 }
 
 @Composable

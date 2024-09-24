@@ -34,6 +34,7 @@ import com.materialkolor.builder.ui.home.page.preview.gallery.sections.TextGalle
 fun GallerySection(
     modifier: Modifier = Modifier,
     defaultExpanded: Boolean = true,
+    showTitle: Boolean = true,
 ) {
     var actionExpanded by remember { mutableStateOf(defaultExpanded) }
     var textExpanded by remember { mutableStateOf(defaultExpanded) }
@@ -75,32 +76,12 @@ fun GallerySection(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.medium)
-                .clickable(
-                    onClick = {
-                        if (anyExpanded && !allExpanded) toggleAll(expanded = true)
-                        else toggleAll(!anyExpanded)
-                    }
-                )
-                .padding(16.dp),
-        ) {
-            Text(
-                text = "Component Gallery",
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontWeight = FontWeight.Thin,
-                ),
+        if (showTitle) {
+            Title(
+                anyExpanded = anyExpanded,
+                allExpanded = allExpanded,
+                toggleAll = ::toggleAll,
             )
-
-            val icon =
-                if (anyExpanded) Icons.Default.Visibility
-                else Icons.Default.VisibilityOff
-
-            val text = if (anyExpanded) "Collapse all" else "Expand all"
-            Icon(imageVector = icon, contentDescription = text)
         }
 
         FlowRow(
@@ -141,5 +122,41 @@ fun GallerySection(
                 toggle = { navigationExpanded = it },
             )
         }
+    }
+}
+
+@Composable
+private fun Title(
+    anyExpanded: Boolean,
+    allExpanded: Boolean,
+    toggleAll: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(
+                onClick = {
+                    if (anyExpanded && !allExpanded) toggleAll(true)
+                    else toggleAll(!anyExpanded)
+                }
+            )
+            .padding(16.dp),
+    ) {
+        Text(
+            text = "Component Gallery",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Thin,
+            ),
+        )
+
+        val icon =
+            if (anyExpanded) Icons.Default.Visibility
+            else Icons.Default.VisibilityOff
+
+        val text = if (anyExpanded) "Collapse all" else "Expand all"
+        Icon(imageVector = icon, contentDescription = text)
     }
 }

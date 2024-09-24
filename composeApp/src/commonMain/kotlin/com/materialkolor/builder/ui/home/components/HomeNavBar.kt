@@ -1,7 +1,9 @@
 package com.materialkolor.builder.ui.home.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Contrast
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
@@ -14,20 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.materialkolor.builder.ui.home.page.HomeSection
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun HomeBottomBar(
     selected: HomeSection,
     onSelected: (HomeSection) -> Unit,
     modifier: Modifier = Modifier,
-    items: PersistentList<HomeSection> = HomeSection.entries.toPersistentList(),
 ) {
     NavigationBar(
         modifier = modifier,
     ) {
-        items.forEach { section ->
+        HomeSection.Compact.forEach { section ->
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -48,12 +47,11 @@ fun HomeNavRail(
     selected: HomeSection,
     onSelected: (HomeSection) -> Unit,
     modifier: Modifier = Modifier,
-    items: PersistentList<HomeSection> = HomeSection.entries.toPersistentList(),
 ) {
     NavigationRail(
         modifier = modifier,
     ) {
-        items.forEach { section ->
+        HomeSection.Compact.forEach { section ->
             NavigationRailItem(
                 icon = {
                     Icon(
@@ -71,6 +69,10 @@ fun HomeNavRail(
 
 private fun HomeSection.icon(): ImageVector = when (this) {
     HomeSection.Customize -> Icons.Default.Tune
-    HomeSection.Preview -> Icons.Default.Preview
+    HomeSection.Themes -> Icons.Default.Contrast
+    HomeSection.Palettes -> Icons.Default.Palette
     HomeSection.Export -> Icons.Default.Download
+    HomeSection.Preview,
+    HomeSection.Components,
+    -> Icons.Default.Preview
 }
