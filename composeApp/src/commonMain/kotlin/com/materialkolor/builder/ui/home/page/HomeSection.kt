@@ -17,8 +17,5 @@ enum class HomeSection {
         val All: PersistentList<HomeSection> =
             if (exportSupported) HomeSection.entries.toPersistentList()
             else (HomeSection.entries - Export).toPersistentList()
-
-        val Compact: PersistentList<HomeSection> = (All - Preview).toPersistentList()
-        val Expanded: PersistentList<HomeSection> = All
     }
 }

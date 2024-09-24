@@ -1,6 +1,7 @@
 package com.materialkolor.builder.ui.home.page.preview
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.home.components.ContrastSelector
+import com.materialkolor.builder.ui.home.page.device.DeviceSection
 import com.materialkolor.builder.ui.home.page.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.palette.PaletteSection
 import com.materialkolor.builder.ui.home.page.theme.ThemeSection
@@ -32,35 +34,46 @@ fun PreviewPage(
     onCopyColor: (String, Color) -> Unit = { _, _ -> },
     windowSizeClass: WindowSizeClass = windowSizeClass(),
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(32.dp),
+    Box(
         modifier = modifier
-            .fillMaxSize()
             .padding(horizontal = windowSizeClass.sidePadding())
-            .verticalScroll(rememberScrollState()),
+            .fillMaxSize()
     ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(32.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            PreviewSectionContainer(title = "Preview") {
+                DeviceSection()
+            }
+
+            GallerySection()
+
+            PreviewSectionContainer(title = "Theme") {
+                ThemeSection(
+                    settings = settings,
+                    onCopyColor = onCopyColor,
+                )
+            }
+
+            PreviewSectionContainer(title = "Palettes") {
+                PaletteSection()
+            }
+
+            Spacer(modifier = Modifier.height(200.dp))
+        }
+
         if (windowSizeClass.widthIsExpanded()) {
             ContrastSelector(
                 selected = settings.contrast,
                 onUpdate = onUpdateContrast,
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 16.dp),
             )
         }
-
-        GallerySection()
-
-        PreviewSectionContainer(title = "Theme") {
-            ThemeSection(
-                settings = settings,
-                onCopyColor = onCopyColor,
-            )
-        }
-
-        PreviewSectionContainer(title = "Palettes") {
-            PaletteSection()
-        }
-
-        Spacer(modifier = Modifier.height(200.dp))
     }
 }

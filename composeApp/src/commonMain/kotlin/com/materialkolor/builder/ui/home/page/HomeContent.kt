@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
@@ -22,6 +23,7 @@ import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.page.customize.CustomizePage
+import com.materialkolor.builder.ui.home.page.device.DeviceSection
 import com.materialkolor.builder.ui.home.page.export.ExportPage
 import com.materialkolor.builder.ui.home.page.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.palette.PaletteSection
@@ -87,13 +89,9 @@ fun CompactContent(
                 )
             }
             HomeSection.Preview -> {
-                PreviewPage(
-                    settings = settings,
-                    onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
-                    onCopyColor = dispatcher.rememberRelayOf(::CopyColor),
-                    modifier = modifier,
-                    windowSizeClass = windowSizeClass,
-                )
+                WrappedContent {
+                    DeviceSection()
+                }
             }
             HomeSection.Components -> {
                 val isCompact = windowSizeClass.widthIsCompact()
@@ -135,6 +133,7 @@ private fun WrappedContent(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(horizontal = 8.dp)
             .verticalScroll(rememberScrollState())

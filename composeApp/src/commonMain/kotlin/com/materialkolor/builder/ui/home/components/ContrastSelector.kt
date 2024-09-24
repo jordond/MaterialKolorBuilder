@@ -14,7 +14,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.BrightnessHigh
 import androidx.compose.material.icons.outlined.BrightnessLow
 import androidx.compose.material.icons.outlined.BrightnessMedium
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -36,7 +36,7 @@ fun ContrastSelector(
     modifier: Modifier = Modifier,
     options: PersistentList<Contrast> = Contrast.entries.sortedBy { it.value }.toPersistentList(),
 ) {
-    Card(
+    ElevatedCard(
         shape = CircleShape,
         modifier = modifier,
     ) {

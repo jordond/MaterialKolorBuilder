@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Contrast
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
+import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,7 +27,7 @@ fun HomeBottomBar(
     NavigationBar(
         modifier = modifier,
     ) {
-        HomeSection.Compact.forEach { section ->
+        HomeSection.All.forEach { section ->
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -51,7 +52,7 @@ fun HomeNavRail(
     NavigationRail(
         modifier = modifier,
     ) {
-        HomeSection.Compact.forEach { section ->
+        HomeSection.All.forEach { section ->
             NavigationRailItem(
                 icon = {
                     Icon(
@@ -72,7 +73,6 @@ private fun HomeSection.icon(): ImageVector = when (this) {
     HomeSection.Themes -> Icons.Default.Contrast
     HomeSection.Palettes -> Icons.Default.Palette
     HomeSection.Export -> Icons.Default.Download
-    HomeSection.Preview,
-    HomeSection.Components,
-    -> Icons.Default.Preview
+    HomeSection.Preview -> Icons.Default.Smartphone
+    HomeSection.Components -> Icons.Default.Preview
 }
