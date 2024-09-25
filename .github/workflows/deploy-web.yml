@@ -12,7 +12,6 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploy web app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +19,7 @@ jobs:
         with:
           submodules: recursive
 
-      - name: setup-java
+      - name: Setup-java
         uses: actions/setup-java@v4
         with:
           java-version: 17
