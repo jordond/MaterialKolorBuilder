@@ -13,7 +13,7 @@ import materialkolorbuilder.composeapp.generated.resources.Halant_SemiBold
 import materialkolorbuilder.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
-private val Font: FontFamily
+val PhoneFont: FontFamily
     @Composable
     get() = FontFamily(
         Font(Res.font.Halant_Light, weight = FontWeight.Light),
@@ -25,7 +25,7 @@ private val Font: FontFamily
 
 val PhoneTypography: Typography
     @Composable
-    get() = createTypographyWith(Font)
+    get() = createTypographyWith(PhoneFont)
 
 @Composable
 private fun createTypographyWith(family: FontFamily): Typography {

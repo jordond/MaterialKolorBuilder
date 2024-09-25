@@ -12,7 +12,6 @@ import androidx.compose.material.icons.filled.SignalWifiStatusbar4Bar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -20,9 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.materialkolor.builder.ui.home.page.device.components.frame.PhotoFrameScope
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 @Suppress("UnusedReceiverParameter")
 @Composable
@@ -30,12 +26,7 @@ fun PhotoFrameScope.AndroidStatusBar(
     time: Long = Clock.System.now().toEpochMilliseconds(),
     modifier: Modifier = Modifier,
 ) {
-    val formattedTime = remember(time) {
-        val date = Instant.fromEpochMilliseconds(time)
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-
-        "${date.hour}:${date.minute.toString().padStart(2, '0')}"
-    }
+    val formattedTime = rememberFormattedTime(time)
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

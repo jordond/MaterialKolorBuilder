@@ -34,9 +34,6 @@ import com.materialkolor.builder.ui.home.page.device.components.frame.PhotoFrame
 import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 import com.materialkolor.builder.ui.theme.icons.BatteryFullAlt
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 @Suppress("UnusedReceiverParameter")
 @Composable
@@ -44,12 +41,7 @@ fun PhotoFrameScope.IPhoneStatusBar(
     time: Long = Clock.System.now().toEpochMilliseconds(),
     modifier: Modifier = Modifier,
 ) {
-    val formattedTime = remember(time) {
-        val date = Instant.fromEpochMilliseconds(time)
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-
-        "${date.hour}:${date.minute.toString().padStart(2, '0')}"
-    }
+    val formattedTime = rememberFormattedTime(time)
 
     Box(
         modifier = modifier
@@ -64,7 +56,6 @@ fun PhotoFrameScope.IPhoneStatusBar(
         ) {
             Text(
                 text = formattedTime,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal
             )
@@ -82,19 +73,16 @@ fun PhotoFrameScope.IPhoneStatusBar(
             Icon(
                 imageVector = Icons.Default.NetworkCell,
                 contentDescription = "Cell Signal",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(16.dp)
             )
             Icon(
                 imageVector = Icons.Default.Wifi,
                 contentDescription = "WiFi",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(16.dp)
             )
             Icon(
                 imageVector = Icons.BatteryFullAlt,
                 contentDescription = "Battery",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
             )
         }

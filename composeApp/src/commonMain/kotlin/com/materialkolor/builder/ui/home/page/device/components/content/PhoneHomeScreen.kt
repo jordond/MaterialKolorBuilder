@@ -100,7 +100,6 @@ fun PhoneHomeScreen(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxSize(),
     ) {
-
         Title(modifier = Modifier.padding(top = 18.dp))
         Spacer(modifier = Modifier.height(24.dp))
         DailyTip()
