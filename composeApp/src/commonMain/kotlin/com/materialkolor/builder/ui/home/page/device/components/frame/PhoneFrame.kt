@@ -3,10 +3,10 @@ package com.materialkolor.builder.ui.home.page.device.components.frame
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import com.materialkolor.builder.ui.home.page.device.components.frame.PhoneFrameDefaults.androidAspectRatio
 import com.materialkolor.builder.ui.home.page.device.components.frame.status.AndroidStatusBar
 import com.materialkolor.builder.ui.home.page.device.components.frame.status.IPhoneStatusBar
 import kotlinx.coroutines.delay
@@ -49,7 +50,7 @@ fun IosPhoneFrame(
 @Composable
 fun AndroidPhoneFrame(
     modifier: Modifier = Modifier,
-    size: PhoneFrameSize = PhoneFrameDefaults.size(),
+    size: PhoneFrameSize = PhoneFrameDefaults.size(aspectRatio = androidAspectRatio),
     framePadding: PhoneFramePadding = PhoneFrameDefaults.androidFramePadding(),
     autoUpdateTime: Boolean = true,
     content: @Composable () -> Unit,
@@ -86,8 +87,8 @@ fun PhoneFrame(
 
     Box(
         modifier = modifier
-            .width(size.width)
             .height(size.height)
+            .aspectRatio(size.aspectRatio)
             .clip(RoundedCornerShape(framePadding.outer))
             .background(MaterialTheme.colorScheme.outlineVariant)
             .padding(framePadding.thickness)

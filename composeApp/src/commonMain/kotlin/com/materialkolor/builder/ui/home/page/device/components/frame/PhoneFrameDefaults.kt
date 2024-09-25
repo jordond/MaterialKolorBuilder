@@ -4,8 +4,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 data class PhoneFrameSize(
-    val width: Dp,
     val height: Dp,
+    val aspectRatio: Float,
 )
 
 data class PhoneFramePadding(
@@ -16,8 +16,9 @@ data class PhoneFramePadding(
 
 object PhoneFrameDefaults {
 
-    val width = 400.dp
     val height = 800.dp
+    val aspectRatio = 9f / 19.5f
+    val androidAspectRatio = 9f / 18.5f
 
     private val androidOuterPadding = 20.dp
     private val androidInnerPadding = 10.dp
@@ -26,7 +27,10 @@ object PhoneFrameDefaults {
     private val iosInnerPadding = 30.dp
     private val iosThickness = 10.dp
 
-    fun size(width: Dp = this.width, height: Dp = this.height) = PhoneFrameSize(width, height)
+    fun size(
+        height: Dp = this.height,
+        aspectRatio: Float = this.aspectRatio,
+    ) = PhoneFrameSize(height, aspectRatio)
 
     fun framePaddingIos(
         outer: Dp = iosOuterPadding,
