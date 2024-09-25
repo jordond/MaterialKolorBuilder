@@ -1,17 +1,30 @@
-name: Deploy to Firebase Hosting on merge
+name: CI
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches:
+      - main
+    types: [ opened, synchronize, reopened, ready_for_review ]
+    paths-ignore:
+      - 'assets/**'
+      - '**.md'
 
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
-  deploy:
+  verify:
+    name: "Verify"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,13 +44,8 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v3
 
-      - name: Build web app
-        run: ./gradlew wasmJsBrowserDistribution
+      - name: Lint
+        run: ./gradlew lint --scan
 
-      - name: Deploy to production
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JORDOND_A4B2F }}
-          channelId: live
-          projectId: jordond-a4b2f
+      - name: Upstream Tests
+        run: ./gradlew test --scan

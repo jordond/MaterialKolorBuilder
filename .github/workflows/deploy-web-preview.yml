@@ -7,6 +7,10 @@ permissions:
   contents: read
   pull-requests: write
 
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
@@ -14,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: setup-java
         uses: actions/setup-java@v4

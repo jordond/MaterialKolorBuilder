@@ -44,7 +44,7 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
@@ -97,7 +97,6 @@ kotlin {
             implementation(libs.stateHolder.compose)
             implementation(libs.stateHolder.voyager)
             implementation(libs.materialKolor)
-            implementation("com.materialkolor:material-kolor:material-color-utilities")
             implementation(libs.compose.colorpicker)
             implementation(libs.calf.filePicker)
             implementation(libs.androidx.lifecycle.viewmodel)
