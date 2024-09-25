@@ -11,13 +11,12 @@ import com.materialkolor.builder.core.readBytes
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
-import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.ktx.UiStateViewModel
-import com.materialkolor.builder.ui.ktx.toHex
 import com.materialkolor.ktx.themeColorOrNull
+import com.materialkolor.ktx.toHex
 import com.mohamedrejeb.calf.io.KmpFile
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -40,20 +39,15 @@ class HomeModel(
     }
 
     fun toggleDarkMode() {
-        settingsRepo.update { it.copy(isDarkMode = !it.isDarkMode) }
+        updateSettings { it.copy(isDarkMode = !it.isDarkMode) }
     }
 
     fun updateContrast(contrast: Contrast) {
-        settingsRepo.update { it.copy(contrast = contrast) }
+        updateSettings { it.copy(contrast = contrast) }
     }
 
     fun updatePaletteStyle(style: PaletteStyle) {
-        settingsRepo.update { it.copy(style = style) }
-    }
-
-    fun openColorPicker(keyColor: KeyColor, initial: Color) {
-        val state = ColorPickerState(keyColor, initial)
-        updateState { it.copy(colorPickerState = state) }
+        updateSettings { it.copy(style = style) }
     }
 
     fun handleColorPickerAction(action: HomeAction.ColorPicker) {
@@ -70,7 +64,7 @@ class HomeModel(
             }
             is HomeAction.UpdateColor -> {
                 val key = state.value.colorPickerState?.keyColor ?: return
-                settingsRepo.update { settings ->
+                updateSettings { settings ->
                     val colors = settings.colors.update(key, action.color)
                     settings.copy(colors = colors, selectedImage = null)
                 }
@@ -79,7 +73,9 @@ class HomeModel(
     }
 
     fun selectImagePreset(image: SeedImage.Resource) {
-        settingsRepo.updateImage(image)
+        viewModelScope.launch {
+            settingsRepo.updateImage(image)
+        }
     }
 
     fun copyColorToClipboard(name: String, color: Color) {
@@ -94,7 +90,7 @@ class HomeModel(
 
     fun randomColor() {
         val color = ColorSettings.colors.random(random)
-        settingsRepo.update { settings ->
+        updateSettings { settings ->
             settings.copy(
                 colors = ColorSettings(seed = color),
                 selectedImage = null,
@@ -134,6 +130,12 @@ class HomeModel(
             } finally {
                 imageLoading(false)
             }
+        }
+    }
+
+    private fun updateSettings(block: (Settings) -> Settings) {
+        viewModelScope.launch {
+            settingsRepo.update(block)
         }
     }
 

@@ -14,3 +14,7 @@ expect val exportSupported: Boolean
 expect val platformContext: PlatformContext
 
 suspend fun KmpFile.readBytes(): ByteArray = readByteArray(platformContext)
+
+expect fun updatePlatformQueryParams(queryParams: String)
+
+expect fun readPlatformQueryParams(): String?

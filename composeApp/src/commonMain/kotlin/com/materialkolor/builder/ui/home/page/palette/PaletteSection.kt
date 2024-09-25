@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,14 +79,18 @@ fun PaletteSection(
 @Composable
 private fun DynamicMaterialThemeState.tone(palette: KeyColor, tone: Int): Color {
     // TODO: Once MaterialKolor is released, replace this with referencing the m3Colors itself.
-    return when (palette) {
-        KeyColor.Primary -> m3Colors.primary().palette(dynamicScheme).toneColor(tone)
-        KeyColor.Secondary -> m3Colors.secondary().palette(dynamicScheme).toneColor(tone)
-        KeyColor.Tertiary -> m3Colors.tertiary().palette(dynamicScheme).toneColor(tone)
-        KeyColor.Neutral -> m3Colors.neutralPaletteKeyColor().palette(dynamicScheme).toneColor(tone)
-        KeyColor.NeutralVariant ->
-            m3Colors.neutralVariantPaletteKeyColor().palette(dynamicScheme).toneColor(tone)
-        KeyColor.Error -> m3Colors.error().palette(dynamicScheme).toneColor(tone)
-        else -> Color.Unspecified
+    val colors = m3Colors
+    val scheme = dynamicScheme
+    return remember(this, palette, tone) {
+        when (palette) {
+            KeyColor.Primary -> colors.primary().palette(scheme).toneColor(tone)
+            KeyColor.Secondary -> colors.secondary().palette(scheme).toneColor(tone)
+            KeyColor.Tertiary -> colors.tertiary().palette(scheme).toneColor(tone)
+            KeyColor.Neutral -> colors.neutralPaletteKeyColor().palette(scheme).toneColor(tone)
+            KeyColor.NeutralVariant ->
+                colors.neutralVariantPaletteKeyColor().palette(scheme).toneColor(tone)
+            KeyColor.Error -> colors.error().palette(scheme).toneColor(tone)
+            else -> Color.Unspecified
+        }
     }
 }

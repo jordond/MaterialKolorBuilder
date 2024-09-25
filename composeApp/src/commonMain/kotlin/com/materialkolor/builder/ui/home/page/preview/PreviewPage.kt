@@ -50,8 +50,6 @@ fun PreviewPage(
                 DeviceSection()
             }
 
-            GallerySection()
-
             PreviewSectionContainer(title = "Theme") {
                 ThemeSection(
                     settings = settings,
@@ -59,7 +57,9 @@ fun PreviewPage(
                 )
             }
 
-            PreviewSectionContainer(title = "Palettes") {
+            GallerySection(defaultExpanded = false)
+
+            PreviewSectionContainer(title = "Palettes", initialExpanded = false) {
                 PaletteSection()
             }
 

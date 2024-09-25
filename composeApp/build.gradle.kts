@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -58,8 +59,11 @@ kotlin {
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+                optIn("kotlinx.serialization.ExperimentalSerializationApi")
             }
         }
+
+        applyDefaultHierarchyTemplate()
 
         val desktopMain by getting
 
@@ -80,9 +84,14 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.collections)
+            implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.kstore)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.contentNegotiation)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.json)
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.stateHolder)
             implementation(libs.stateHolder.compose)
@@ -95,6 +104,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.bundles.voyager)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotest.assertions)
         }
 
         androidMain.dependencies {
@@ -120,6 +134,13 @@ kotlin {
 
         wasmJsMain.dependencies {
             implementation(libs.kstore.storage)
+        }
+
+        val nonBrowserMain by creating {
+            dependsOn(commonMain.get())
+            androidMain.get().dependsOn(this)
+            iosMain.get().dependsOn(this)
+            desktopMain.dependsOn(this)
         }
     }
 }

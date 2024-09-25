@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.materialkolor.ktx.hasEnoughContrast
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -210,12 +211,19 @@ private fun ListItem(
                     .padding(horizontal = 8.dp, vertical = 16.dp)
                     .weight(1f)
             ) {
+                val hasEnoughContrast = colorScheme.primary
+                    .hasEnoughContrast(colorScheme.secondaryContainer)
+
+                val titleColor =
+                    if (hasEnoughContrast) colorScheme.primary
+                    else colorScheme.onSecondaryContainer
+                
                 Text(
                     text = details.room,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Light,
                     letterSpacing = 1.sp,
-                    color = colorScheme.primary,
+                    color = titleColor,
                     modifier = Modifier.padding(start = 16.dp)
                 )
 

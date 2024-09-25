@@ -1,61 +1,51 @@
 package com.materialkolor.builder.settings
 
 import co.touchlab.kermit.Logger
-import com.materialkolor.builder.settings.model.ColorSettings
-import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.settings.store.SettingsStore
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.stateIn
 
 interface SettingsRepo {
     val settings: StateFlow<Settings>
 
-    fun update(block: (Settings) -> Settings)
+    suspend fun update(block: (Settings) -> Settings)
 
-    fun update(settings: Settings) = update { settings }
+    suspend fun update(settings: Settings) = update { settings }
 
-    fun updateImage(image: SeedImage)
+    suspend fun updateImage(image: SeedImage)
 
     fun clear()
 }
 
 class DefaultSettingsRepo(
-    private val darkModeProvider: DarkModeProvider,
+    darkModeProvider: DarkModeProvider,
+    private val store: SettingsStore,
     scope: CoroutineScope,
 ) : SettingsRepo {
     private val logger = Logger.withTag("SettingsRepo")
 
-    // TODO: Persist the settings to disk
-    private val _settings = MutableStateFlow(defaults())
-    override val settings = _settings.asStateFlow()
+    override val settings = store.get().stateIn(
+        scope = scope,
+        started = SharingStarted.Lazily,
+        initialValue = SettingsStore.defaults(darkModeProvider.isDarkMode.value),
+    )
 
-    init {
-        scope.launch {
-            darkModeProvider.isDarkMode.collect { isDarkMode ->
-                _settings.update { settings ->
-                    settings.copy(isDarkMode = isDarkMode)
-                }
-            }
-        }
-    }
-
-    override fun update(block: (Settings) -> Settings) {
-        _settings.update { settings ->
+    override suspend fun update(block: (Settings) -> Settings) {
+        val value = settings.value.let { settings ->
             logger.d { "Old settings: $settings" }
-
-            block(settings).copy(isModified = true).also { value ->
-                logger.d { "Updated settings: $value" }
-            }
+            block(settings).copy(isModified = true)
         }
+
+        logger.d { "Updated settings: $value" }
+        store.store(value)
     }
 
-    override fun updateImage(image: SeedImage) {
-        _settings.update { settings ->
+    override suspend fun updateImage(image: SeedImage) {
+        update { settings ->
             settings.copy(
                 colors = settings.colors.copy(seed = image.color),
                 selectedImage = image,
@@ -64,15 +54,6 @@ class DefaultSettingsRepo(
     }
 
     override fun clear() {
-        _settings.update { defaults() }
-    }
-
-    private fun defaults(): Settings {
-        val image = ImagePresets.all.first()
-        return Settings(
-            selectedImage = image,
-            colors = ColorSettings(seed = image.color),
-            isDarkMode = darkModeProvider.isDarkMode.value,
-        )
+        store.clear()
     }
 }

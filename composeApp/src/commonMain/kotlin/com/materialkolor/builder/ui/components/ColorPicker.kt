@@ -54,12 +54,13 @@ import com.github.skydoves.colorpicker.compose.ImageColorPicker
 import com.github.skydoves.colorpicker.compose.PaletteContentScale
 import com.github.skydoves.colorpicker.compose.drawColorIndicator
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
+import com.materialkolor.builder.ktx.parseHexToColor
 import com.materialkolor.builder.settings.model.name
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
 import com.materialkolor.builder.ui.ktx.launch
-import com.materialkolor.builder.ui.ktx.toHex
 import com.materialkolor.builder.ui.theme.AppIcons
 import com.materialkolor.builder.ui.theme.icons.ResetImage
+import com.materialkolor.ktx.toHex
 
 @Composable
 fun ColorPickerDialog(
@@ -170,7 +171,7 @@ fun ColorPickerDialog(
                                     userHex = value
                                     hasEdited = true
                                     if (value.isValidHex()) {
-                                        val color = value.parse()
+                                        val color = value.parseHexToColor()
                                         if (color != null) {
                                             controller.selectByColor(color, fromUser = true)
                                         }
@@ -194,7 +195,7 @@ fun ColorPickerDialog(
                                 enabled = clipboard.hasText(),
                                 shape = MaterialTheme.shapes.medium,
                                 onClick = {
-                                    val color = clipboard.getText()?.toString()?.parse()
+                                    val color = clipboard.getText()?.toString()?.parseHexToColor()
                                     if (color != null) {
                                         controller.selectByColor(color, fromUser = true)
                                     } else {
@@ -364,22 +365,4 @@ fun ColorPicker(
     }
 }
 
-private fun String.isValidHex(): Boolean = parse() != null
-
-private val hexPattern = Regex("#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})")
-
-private fun String.parse(): Color? {
-    val matchResult = hexPattern.find(this)
-    return matchResult?.value?.let { hex ->
-        try {
-            val cleanColorString = hex.removePrefix("#")
-            when (cleanColorString.length) {
-                6 -> Color(cleanColorString.toLong(16) or 0xFF000000) // RGB
-                8 -> Color(cleanColorString.toLong(16)) // ARGB
-                else -> null // Invalid format
-            }
-        } catch (exception: NumberFormatException) {
-            null
-        }
-    }
-}
+private fun String.isValidHex(): Boolean = parseHexToColor() != null
