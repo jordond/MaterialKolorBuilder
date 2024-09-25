@@ -1,6 +1,5 @@
 package com.materialkolor.builder.ui.home.page.device.components.frame.status
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -8,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.NetworkCell
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Icon
@@ -51,7 +48,7 @@ fun PhotoFrameScope.IPhoneStatusBar(
         val date = Instant.fromEpochMilliseconds(time)
             .toLocalDateTime(TimeZone.currentSystemDefault())
 
-        "${date.hour}:${date.minute}"
+        "${date.hour}:${date.minute.toString().padStart(2, '0')}"
     }
 
     Box(
@@ -127,27 +124,7 @@ fun DynamicIsland(
                 .clip(RoundedCornerShape(20.dp))
                 .background(MaterialTheme.colorScheme.outlineVariant)
                 .padding(4.dp)
-        ) {
-            AnimatedVisibility(expanded) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Face,
-                        contentDescription = "Face ID",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Text(
-                        text = "Face ID",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontSize = 12.sp
-                    )
-                }
-            }
-        }
+        )
 
         Box(
             modifier = Modifier

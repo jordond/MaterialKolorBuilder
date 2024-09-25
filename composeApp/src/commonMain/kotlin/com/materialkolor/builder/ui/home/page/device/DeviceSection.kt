@@ -3,9 +3,11 @@ package com.materialkolor.builder.ui.home.page.device
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.materialkolor.builder.ui.home.page.device.components.content.PhoneContent
+import com.materialkolor.builder.ui.home.page.device.components.content.PhoneContentScreen
 import com.materialkolor.builder.ui.home.page.device.components.frame.AndroidPhoneFrame
 import com.materialkolor.builder.ui.home.page.device.components.frame.IosPhoneFrame
 
@@ -14,16 +16,20 @@ fun DeviceSection(
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.spacedBy(32.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier.fillMaxWidth(),
     ) {
         AndroidPhoneFrame {
-            Text("Android")
+            PhoneContent(
+                screen = PhoneContentScreen.Home,
+            )
         }
 
         IosPhoneFrame {
-            Text("iOS")
+            PhoneContent(
+                screen = PhoneContentScreen.Details,
+            )
         }
     }
 }

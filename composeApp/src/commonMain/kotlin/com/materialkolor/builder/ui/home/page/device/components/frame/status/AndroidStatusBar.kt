@@ -34,7 +34,7 @@ fun PhotoFrameScope.AndroidStatusBar(
         val date = Instant.fromEpochMilliseconds(time)
             .toLocalDateTime(TimeZone.currentSystemDefault())
 
-        "${date.hour}:${date.minute}"
+        "${date.hour}:${date.minute.toString().padStart(2, '0')}"
     }
 
     Row(

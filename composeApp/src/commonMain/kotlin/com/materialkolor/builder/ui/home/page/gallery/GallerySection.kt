@@ -85,20 +85,21 @@ fun GallerySection(
         }
 
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             maxItemsInEachRow = 3,
-            modifier = modifier,
+            modifier = modifier.fillMaxWidth(),
         ) {
             ActionGallery(
                 expanded = actionExpanded,
                 toggle = { actionExpanded = it },
+                width = 450.dp,
             )
 
             TextGallery(
                 expanded = textExpanded,
                 toggle = { textExpanded = it },
-                width = 500.dp,
+                width = 450.dp,
             )
 
             CommunicationGallery(
