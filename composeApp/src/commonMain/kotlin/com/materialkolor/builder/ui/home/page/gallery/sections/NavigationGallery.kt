@@ -95,26 +95,26 @@ fun NavigationGallery(
     ) {
         FlowRow(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column {
                 GalleryContainerChild(
                     title = "Bottom app bar",
-                    infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars#bottom"
+                    infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars#bottom",
                 ) {
                     GalleryBottomAppBar(minWidth, width, boxPadding)
                 }
 
                 GalleryContainerChild(
                     title = "Navigation bar",
-                    infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationbar"
+                    infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationbar",
                 ) {
                     GalleryNavigationBar(minWidth, width, boxPadding)
                 }
 
                 GalleryContainerChild(
                     title = "Tabs",
-                    infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.interaction.MutableInteractionSource)"
+                    infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.interaction.MutableInteractionSource)",
                 ) {
                     GalleryTabs(minWidth, width, boxPadding)
                 }
@@ -122,21 +122,21 @@ fun NavigationGallery(
 
             GalleryContainerChild(
                 title = "Navigation drawer",
-                infoUrl = "https://developer.android.com/jetpack/compose/components/drawer"
+                infoUrl = "https://developer.android.com/jetpack/compose/components/drawer",
             ) {
                 GalleryNavigationDrawer(minWidth, width, boxPadding)
             }
 
             GalleryContainerChild(
                 title = "Navigation rail",
-                infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail"
+                infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail",
             ) {
                 GalleryNavigationRail(minWidth, width, boxPadding)
             }
 
             GalleryContainerChild(
                 title = "Top app bars",
-                infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars"
+                infoUrl = "https://developer.android.com/jetpack/compose/components/app-bars",
             ) {
                 GalleryTopAppBars(minWidth, width, boxPadding)
             }
@@ -155,7 +155,7 @@ private fun GalleryBottomAppBar(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             BottomAppBar(
                 actions = {
@@ -171,11 +171,11 @@ private fun GalleryBottomAppBar(
                 },
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = { /* do something */ }
+                        onClick = { /* do something */ },
                     ) {
                         Icon(Icons.Filled.Add, contentDescription = null)
                     }
-                }
+                },
             )
         }
     }
@@ -192,7 +192,7 @@ private fun GalleryNavigationBar(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             var selected by remember { mutableStateOf(0) }
             NavigationBar {
@@ -202,10 +202,10 @@ private fun GalleryNavigationBar(
                     icon = {
                         Icon(
                             imageVector = if (selected == 0) Icons.Default.Explore else Icons.Outlined.Explore,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    label = { Text("Explore") }
+                    label = { Text("Explore") },
                 )
                 NavigationBarItem(
                     selected = selected == 1,
@@ -213,10 +213,10 @@ private fun GalleryNavigationBar(
                     icon = {
                         Icon(
                             imageVector = if (selected == 1) Icons.Default.Pets else Icons.Outlined.Pets,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    label = { Text("Pets") }
+                    label = { Text("Pets") },
                 )
                 NavigationBarItem(
                     selected = selected == 2,
@@ -224,10 +224,10 @@ private fun GalleryNavigationBar(
                     icon = {
                         Icon(
                             imageVector = if (selected == 2) Icons.Default.AccountBox else Icons.Outlined.AccountBox,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    label = { Text("Account") }
+                    label = { Text("Account") },
                 )
             }
         }
@@ -246,16 +246,16 @@ private fun GalleryNavigationDrawer(
                 .requiredWidthIn(minWidth)
                 .width(width)
                 .padding(boxPadding),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Surface(
-                border = BorderStroke(DividerDefaults.Thickness.value.dp, DividerDefaults.color)
+                border = BorderStroke(DividerDefaults.Thickness.value.dp, DividerDefaults.color),
             ) {
                 PermanentNavigationDrawer(
                     modifier = Modifier.width(300.dp),
                     drawerContent = {
                         PermanentDrawerSheet { NavigationDrawerContent() }
-                    }
+                    },
                 ) {}
             }
             val drawerState = LocalDrawerState.current
@@ -270,7 +270,7 @@ private fun GalleryNavigationDrawer(
                         }
                     }
                 },
-                content = { Text("Show modal navigation drawer") }
+                content = { Text("Show modal navigation drawer") },
             )
         }
     }
@@ -288,21 +288,21 @@ private fun GalleryNavigationRail(
                 .requiredWidthIn(minWidth)
                 .width(width)
                 .padding(boxPadding),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Surface(
-                shadowElevation = 8.dp
+                shadowElevation = 8.dp,
             ) {
                 var selected by remember { mutableStateOf(0) }
                 NavigationRail(
                     modifier = Modifier.padding(6.dp),
                     header = {
                         FloatingActionButton(
-                            onClick = { /* do something */ }
+                            onClick = { /* do something */ },
                         ) {
                             Icon(Icons.Filled.Edit, contentDescription = null)
                         }
-                    }
+                    },
                 ) {
                     Spacer(Modifier.size(40.dp))
                     NavigationRailItem(
@@ -311,10 +311,10 @@ private fun GalleryNavigationRail(
                         icon = {
                             Icon(
                                 imageVector = if (selected == 0) Icons.Default.Inbox else Icons.Outlined.Inbox,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         },
-                        label = { Text("Inbox") }
+                        label = { Text("Inbox") },
                     )
                     NavigationRailItem(
                         selected = selected == 1,
@@ -322,10 +322,10 @@ private fun GalleryNavigationRail(
                         icon = {
                             Icon(
                                 imageVector = if (selected == 1) Icons.AutoMirrored.Filled.Send else Icons.AutoMirrored.Outlined.Send,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         },
-                        label = { Text("Outbox") }
+                        label = { Text("Outbox") },
                     )
                     NavigationRailItem(
                         selected = selected == 2,
@@ -333,10 +333,10 @@ private fun GalleryNavigationRail(
                         icon = {
                             Icon(
                                 imageVector = if (selected == 2) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         },
-                        label = { Text("Favorite") }
+                        label = { Text("Favorite") },
                     )
                     NavigationRailItem(
                         selected = selected == 3,
@@ -344,10 +344,10 @@ private fun GalleryNavigationRail(
                         icon = {
                             Icon(
                                 imageVector = if (selected == 3) Icons.Default.Delete else Icons.Outlined.Delete,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         },
-                        label = { Text("Trash") }
+                        label = { Text("Trash") },
                     )
                     Spacer(Modifier.size(40.dp))
                 }
@@ -367,11 +367,11 @@ private fun GalleryTabs(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             var selected by remember { mutableStateOf(0) }
             TabRow(
-                selectedTabIndex = selected
+                selectedTabIndex = selected,
             ) {
                 Tab(
                     selected = selected == 0,
@@ -379,10 +379,10 @@ private fun GalleryTabs(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.Videocam,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    text = { Text("Video") }
+                    text = { Text("Video") },
                 )
                 Tab(
                     selected = selected == 1,
@@ -390,10 +390,10 @@ private fun GalleryTabs(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.Image,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    text = { Text("Photo") }
+                    text = { Text("Photo") },
                 )
                 Tab(
                     selected = selected == 2,
@@ -401,10 +401,10 @@ private fun GalleryTabs(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.MusicNote,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    text = { Text("Audio") }
+                    text = { Text("Audio") },
                 )
             }
             Spacer(Modifier.size(16.dp))
@@ -412,13 +412,13 @@ private fun GalleryTabs(
             var selected2 by remember { mutableStateOf(0) }
             val items = List(10) { "Tab #$it" }
             ScrollableTabRow(
-                selectedTabIndex = selected2
+                selectedTabIndex = selected2,
             ) {
                 items.forEachIndexed { i, item ->
                     Tab(
                         selected = selected2 == i,
                         onClick = { selected2 = i },
-                        text = { Text(item) }
+                        text = { Text(item) },
                     )
                 }
             }
@@ -437,115 +437,115 @@ private fun GalleryTopAppBars(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
                 title = { Text("CenterAligned") },
                 actions = {
                     IconButton(
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                }
+                },
             )
             Spacer(Modifier.size(16.dp))
 
             @Composable
             fun RowScope.Actions() {
                 IconButton(
-                    onClick = {}
+                    onClick = {},
                 ) {
                     Icon(
                         imageVector = Icons.Default.AttachFile,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 IconButton(
-                    onClick = {}
+                    onClick = {},
                 ) {
                     Icon(
                         imageVector = Icons.Default.Event,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 IconButton(
-                    onClick = {}
+                    onClick = {},
                 ) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
                 title = { Text("Small") },
-                actions = { Actions() }
+                actions = { Actions() },
             )
             Spacer(Modifier.size(16.dp))
             MediumTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
                 title = { Text("Medium") },
-                actions = { Actions() }
+                actions = { Actions() },
             )
             Spacer(Modifier.size(16.dp))
             LargeTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
                 title = { Text("Large") },
-                actions = { Actions() }
+                actions = { Actions() },
             )
         }
     }

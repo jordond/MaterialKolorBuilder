@@ -41,7 +41,7 @@ fun AboutInfo(
         else -> {
             AboutBottomSheet(
                 onDismiss = onDismiss,
-                modifier = modifier
+                modifier = modifier,
             )
         }
     }
@@ -60,14 +60,14 @@ private fun AboutDialog(
                 modifier = modifier
                     .fillMaxWidth(0.75f)
                     .fillMaxHeight(0.9f)
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 Column {
                     IconButton(
                         onClick = onDismiss,
                         modifier = Modifier
                             .align(Alignment.Start)
-                            .padding(8.dp)
+                            .padding(8.dp),
                     ) {
                         Icon(Icons.Default.Close, contentDescription = "Close")
                     }
@@ -81,7 +81,7 @@ private fun AboutDialog(
                     }
                 }
             }
-        }
+        },
     )
 }
 
@@ -100,7 +100,7 @@ private fun AboutBottomSheet(
                 onClick = onDismiss,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(8.dp)
+                    .padding(8.dp),
             ) {
                 Icon(Icons.Default.Close, contentDescription = "Close")
             }
@@ -109,7 +109,7 @@ private fun AboutBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp)
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 Column(
                     modifier = Modifier.verticalScroll(rememberScrollState()),

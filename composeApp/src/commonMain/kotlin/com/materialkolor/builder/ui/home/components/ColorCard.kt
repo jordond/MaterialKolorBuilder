@@ -40,12 +40,12 @@ fun ColorCard(
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ) {
             Box(
                 modifier = Modifier
                     .background(color, CircleShape)
-                    .size(50.dp)
+                    .size(50.dp),
             )
 
             Column(

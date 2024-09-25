@@ -51,7 +51,7 @@ fun ExpandedContent(
             onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
             processingImage = processingImage,
             windowSizeClass = windowSizeClass,
-            modifier = Modifier.weight(0.5f)
+            modifier = Modifier.weight(0.5f),
         )
 
         PreviewPage(
@@ -136,7 +136,7 @@ private fun WrappedContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(horizontal = 8.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         content()
     }

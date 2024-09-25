@@ -128,7 +128,7 @@ private fun HomeScreenScaffold(
                         onReset = dispatcher.relay(HomeAction.Reset),
                         onAboutClicked = { toggleAboutDialog(true) },
                     )
-                }
+                },
             )
         },
         bottomBar = {
@@ -151,7 +151,7 @@ private fun HomeScreenScaffold(
                     },
                 )
             }
-        }
+        },
     ) { innerPadding ->
         Box(
             modifier = Modifier.padding(innerPadding),

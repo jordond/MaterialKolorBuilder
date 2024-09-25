@@ -24,7 +24,7 @@ fun AboutInfoContent() {
         "MaterialKolor Builder is an interactive web application designed to help developers" +
             " and designers create Material 3 color schemes with ease. It leverages the power of" +
             " MaterialKolor, a Compose multiplatform library, to generate comprehensive color " +
-            "palettes from a single seed color."
+            "palettes from a single seed color.",
     )
 
     SectionHeader("Key Features")
@@ -34,23 +34,23 @@ fun AboutInfoContent() {
             "Random Color Generation: Explore new color possibilities with a random color generator.",
             "Image Color Extraction: Pick a color directly from an uploaded image.",
             "Color Overrides: Fine-tune your theme by overriding key colors like secondary and tertiary.",
-            "Live Preview: See your changes in real-time with our interactive preview."
-        )
+            "Live Preview: See your changes in real-time with our interactive preview.",
+        ),
     )
 
     SectionHeader("How It Works")
     Paragraph(
         "MaterialKolor Builder is powered by MaterialKolor, a Kotlin port of Google's " +
             "material-color-utilities library. This ensures that all generated color schemes " +
-            "adhere to Material 3 design principles and accessibility standards."
+            "adhere to Material 3 design principles and accessibility standards.",
     )
     NumberedList(
         listOf(
             "Select a seed color using one of our input methods.",
             "MaterialKolor processes this seed color to generate a full color scheme.",
             "Optionally override specific colors in the scheme.",
-            "View and interact with your new theme in the live preview."
-        )
+            "View and interact with your new theme in the live preview.",
+        ),
     )
 
     SectionHeader("Learn More")
@@ -64,7 +64,7 @@ fun AboutInfoContent() {
             },
             buildAnnotatedString {
                 appendLink("Material3 Documentation", UrlLink.Material3)
-            }
+            },
         ),
     )
 
@@ -74,10 +74,10 @@ fun AboutInfoContent() {
             " a designer exploring color options, MaterialKolor Builder streamlines the process" +
             " of creating beautiful, cohesive color schemes. It combines the precision of" +
             " programmatic color generation with the flexibility of manual adjustments, all" +
-            " in an intuitive, visual interface."
+            " in an intuitive, visual interface.",
     )
     Paragraph(
-        text = "Start exploring the world of Material 3 colors today with MaterialKolor Builder!"
+        text = "Start exploring the world of Material 3 colors today with MaterialKolor Builder!",
     )
 }
 
@@ -86,7 +86,7 @@ fun SectionHeader(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.headlineSmall,
-        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
     )
 }
 
@@ -95,7 +95,7 @@ fun Paragraph(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.padding(bottom = 8.dp)
+        modifier = Modifier.padding(bottom = 8.dp),
     )
 }
 
@@ -144,16 +144,16 @@ fun AnnotatedString.Builder.appendLink(text: String, url: UrlLink) {
         style = SpanStyle(
             color = MaterialTheme.colorScheme.primary,
             textDecoration = TextDecoration.Underline,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         ),
         start = startIndex,
-        end = this.length
+        end = this.length,
     )
     addStringAnnotation(
         tag = "URL",
         annotation = url.value,
         start = startIndex,
-        end = this.length
+        end = this.length,
     )
 }
 
@@ -171,6 +171,6 @@ fun ClickableTextWithLinks(
                 .firstOrNull()?.let { annotation ->
                     urlLauncher.launch(annotation.item)
                 }
-        }
+        },
     )
 }

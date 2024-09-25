@@ -20,7 +20,7 @@ val AppIcons.ResetImage: ImageVector
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
             viewportWidth = 960f,
-            viewportHeight = 960f
+            viewportHeight = 960f,
         ).apply {
             path(
                 fill = SolidColor(Color.Black),
@@ -31,7 +31,7 @@ val AppIcons.ResetImage: ImageVector
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Miter,
                 strokeLineMiter = 1.0f,
-                pathFillType = PathFillType.NonZero
+                pathFillType = PathFillType.NonZero,
             ) {
                 moveTo(120f, 360f)
                 verticalLineToRelative(-240f)

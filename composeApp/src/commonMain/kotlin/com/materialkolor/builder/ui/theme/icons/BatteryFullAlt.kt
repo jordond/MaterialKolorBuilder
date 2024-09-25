@@ -20,7 +20,7 @@ val Icons.BatteryFullAlt: ImageVector
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
             viewportWidth = 960f,
-            viewportHeight = 960f
+            viewportHeight = 960f,
         ).apply {
             path(
                 fill = SolidColor(Color.Black),
@@ -31,7 +31,7 @@ val Icons.BatteryFullAlt: ImageVector
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Miter,
                 strokeLineMiter = 1.0f,
-                pathFillType = PathFillType.NonZero
+                pathFillType = PathFillType.NonZero,
             ) {
                 moveTo(200f, 680f)
                 quadToRelative(-17f, 0f, -28.5f, -11.5f)

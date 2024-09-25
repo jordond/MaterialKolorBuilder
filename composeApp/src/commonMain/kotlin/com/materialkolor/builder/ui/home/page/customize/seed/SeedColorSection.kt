@@ -70,7 +70,7 @@ fun SeedColorSection(
                 IconButton(onClick = onRandomColor) {
                     Icon(Icons.Default.Shuffle, contentDescription = "Random color")
                 }
-            }
+            },
         )
     }
 }

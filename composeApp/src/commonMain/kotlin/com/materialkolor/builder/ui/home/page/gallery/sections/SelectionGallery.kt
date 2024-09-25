@@ -125,7 +125,7 @@ fun SelectionGallery(
     ) {
         FlowRow(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             GalleryContainerChild(title = "Checkboxes", checkboxesInfoUrl) {
                 CheckboxesDemo(minWidth, width, itemPadding)
@@ -167,13 +167,13 @@ private val colorsMap = mapOf(
     "Pink" to Color.Magenta,
     "Green" to Color.Green,
     "Yellow" to Color.Yellow,
-    "Grey" to Color.Gray
+    "Grey" to Color.Gray,
 )
 private val iconsMap = mapOf(
     "Smile" to Icons.Default.SentimentSatisfied,
     "Cloud" to Icons.Outlined.Cloud,
     "Brush" to Icons.Outlined.Brush,
-    "Heart" to Icons.Default.Favorite
+    "Heart" to Icons.Default.Favorite,
 )
 
 @Composable
@@ -199,7 +199,7 @@ private fun MenuDemo(
 
             DropdownMenu(
                 expanded = menuExpanded,
-                onDismissRequest = { menuExpanded = false }
+                onDismissRequest = { menuExpanded = false },
             ) {
                 items.forEach { item ->
                     key(item.first) {
@@ -208,7 +208,7 @@ private fun MenuDemo(
                             onClick = {},
                             leadingIcon = {
                                 Icon(imageVector = item.second, contentDescription = null)
-                            }
+                            },
                         )
                     }
                 }
@@ -224,7 +224,7 @@ private fun MenuDemo(
             val items = (1..3).map { "Menu $it" }
             DropdownMenu(
                 expanded = menuExpanded,
-                onDismissRequest = { menuExpanded = false }
+                onDismissRequest = { menuExpanded = false },
             ) {
                 items.forEachIndexed { ix, item ->
                     key(item) {
@@ -340,7 +340,7 @@ private fun MenuDemo(
         Icon(
             imageVector = iconsMap[selectedIcon] ?: iconsMap[iconsMap.keys.first()]!!,
             tint = colorsMap[selectedColor] ?: colorsMap["Grey"]!!,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 
@@ -354,7 +354,7 @@ private fun MenuDemo(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 DropDownMenuDemo()
             }
@@ -362,7 +362,7 @@ private fun MenuDemo(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 ExposedDropDownMenuDemo()
             }
@@ -388,7 +388,7 @@ private fun TimePickerDemo(
                 .padding(itemPadding),
         ) {
             OutlinedButton(
-                onClick = { openDialog = true }
+                onClick = { openDialog = true },
             ) {
                 Text("Show time picker")
             }
@@ -405,12 +405,12 @@ private fun TimePickerDemo(
                     TimePicker(
                         state,
                         layoutType = TimePickerLayoutType.Vertical,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
 
                     Row(
                         modifier = Modifier.align(Alignment.End),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.End,
                     ) {
                         TextButton(onClick = { openDialog = false }) {
                             Text("Cancel")
@@ -446,7 +446,7 @@ private fun SwitchesDemo(
                 var checked by remember { mutableStateOf(true) }
                 Switch(
                     checked = checked,
-                    onCheckedChange = { checked = it }
+                    onCheckedChange = { checked = it },
                 )
 
                 var checked2 by remember { mutableStateOf(true) }
@@ -469,7 +469,7 @@ private fun SwitchesDemo(
                                 modifier = Modifier.size(SwitchDefaults.IconSize),
                             )
                         }
-                    }
+                    },
                 )
             }
 
@@ -482,7 +482,7 @@ private fun SwitchesDemo(
                 Switch(
                     enabled = false,
                     checked = false,
-                    onCheckedChange = null
+                    onCheckedChange = null,
                 )
                 Switch(
                     enabled = false,
@@ -494,7 +494,7 @@ private fun SwitchesDemo(
                             contentDescription = null,
                             modifier = Modifier.size(SwitchDefaults.IconSize),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -517,7 +517,7 @@ private fun SlidersDemo(
             var sliderPosition by remember { mutableFloatStateOf(0f) }
             Slider(
                 value = sliderPosition,
-                onValueChange = { sliderPosition = it }
+                onValueChange = { sliderPosition = it },
             )
             Spacer(modifier = Modifier.height(32.dp))
             var sliderPosition2 by remember { mutableFloatStateOf(0f) }
@@ -525,7 +525,7 @@ private fun SlidersDemo(
                 value = sliderPosition2,
                 onValueChange = { sliderPosition2 = it },
                 steps = 5,
-                valueRange = 0f..100f
+                valueRange = 0f..100f,
             )
             Spacer(modifier = Modifier.height(32.dp))
             var sliderPosition3 by remember { mutableStateOf(0f..100f) }
@@ -538,7 +538,6 @@ private fun SlidersDemo(
         }
     }
 }
-
 
 private val radioOptions = listOf("Option 1", "Option 2", "Option 3")
 
@@ -569,7 +568,7 @@ private fun RadioButtonsDemo(
                             enabled = ix < 2,
                             selected = (text == selectedOption),
                             onClick = { onOptionSelected(text) },
-                            role = Role.RadioButton
+                            role = Role.RadioButton,
                         )
                         .padding(horizontal = 16.dp),
                 ) {
@@ -631,7 +630,7 @@ private fun DatePickerDemo(
             },
             content = {
                 DatePicker(state)
-            }
+            },
         )
     }
 }
@@ -658,9 +657,9 @@ private fun ChipsDemo(
                     Icon(
                         imageVector = Icons.Outlined.Event,
                         contentDescription = null,
-                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                        modifier = Modifier.size(AssistChipDefaults.IconSize),
                     )
-                }
+                },
             )
 
             FilterChip(
@@ -674,7 +673,7 @@ private fun ChipsDemo(
                         Icon(
                             imageVector = Icons.Filled.Done,
                             contentDescription = "Done icon",
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            modifier = Modifier.size(FilterChipDefaults.IconSize),
                         )
                     }
                 },
@@ -690,7 +689,7 @@ private fun ChipsDemo(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = null,
-                        modifier = Modifier.size(InputChipDefaults.IconSize)
+                        modifier = Modifier.size(InputChipDefaults.IconSize),
                     )
                 },
             )
@@ -698,7 +697,7 @@ private fun ChipsDemo(
             SuggestionChip(
                 enabled = enabled,
                 onClick = {},
-                label = { Text("Suggestion") }
+                label = { Text("Suggestion") },
             )
         }
     }
@@ -708,7 +707,7 @@ private fun ChipsDemo(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(itemPadding)
+                .padding(itemPadding),
         ) {
             ChipsRow(enabled = true)
             ChipsRow(enabled = false)
@@ -727,7 +726,7 @@ private fun CheckboxesDemo(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(itemPadding)
+                .padding(itemPadding),
         ) {
 
             val state1 = remember { mutableStateOf(true) }
@@ -743,7 +742,7 @@ private fun CheckboxesDemo(
                 Text("Option 1")
                 Checkbox(
                     checked = state1.value,
-                    onCheckedChange = null
+                    onCheckedChange = null,
                 )
             }
 
@@ -759,7 +758,7 @@ private fun CheckboxesDemo(
                 Text("Option 2")
                 TriStateCheckbox(
                     state = state2.value,
-                    onClick = null
+                    onClick = null,
                 )
             }
 
@@ -776,7 +775,7 @@ private fun CheckboxesDemo(
                 Text("Option 3")
                 TriStateCheckbox(
                     state = state3.value,
-                    onClick = null
+                    onClick = null,
                 )
             }
 
@@ -793,7 +792,7 @@ private fun CheckboxesDemo(
                 Checkbox(
                     checked = true,
                     enabled = false,
-                    onCheckedChange = null
+                    onCheckedChange = null,
                 )
             }
         }

@@ -77,21 +77,21 @@ fun ContainmentGallery(
     ) {
         GalleryContainerChild(
             title = "Dialog / Bottom Sheet",
-            infoUrl = modalBottomSheetInfoUrl
+            infoUrl = modalBottomSheetInfoUrl,
         ) {
             DialogsDemo(minWidth, width, boxPadding)
         }
 
         GalleryContainerChild(
             title = "Cards",
-            infoUrl = cardsInfoUrl
+            infoUrl = cardsInfoUrl,
         ) {
             CardsDemo(minWidth, width, boxPadding)
         }
 
         GalleryContainerChild(
             title = "Dividers",
-            infoUrl = dividersInfoUrl
+            infoUrl = dividersInfoUrl,
         ) {
             DividersDemo(minWidth, width)
         }
@@ -108,7 +108,7 @@ private fun DividersDemo(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(32.dp)
+                .padding(32.dp),
         ) {
             HorizontalDivider()
         }
@@ -129,7 +129,7 @@ private fun DialogsDemo(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             OutlinedButton(
                 enabled = true,
@@ -148,7 +148,7 @@ private fun DialogsDemo(
                 onClick = {
                     isModalSheetOpen = true
                 },
-                content = { Text("Bottom sheet", fontSize = 12.sp) }
+                content = { Text("Bottom sheet", fontSize = 12.sp) },
             )
         }
     }
@@ -175,7 +175,7 @@ private fun DialogsDemo(
                     onClick = { openAlertDialog.value = false },
                     content = { Text("Dismiss") },
                 )
-            }
+            },
         )
     }
 
@@ -212,7 +212,7 @@ private fun CardsDemo(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp, 5.dp, 5.dp, 10.dp)
+                    .padding(10.dp, 5.dp, 5.dp, 10.dp),
             ) {
                 Box(
                     contentAlignment = Alignment.BottomStart,
@@ -244,7 +244,7 @@ private fun CardsDemo(
             CardTemplate(
                 title = "Elevated",
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 3.dp),
-                colors = CardDefaults.elevatedCardColors()
+                colors = CardDefaults.elevatedCardColors(),
             )
             Spacer(modifier = Modifier.width(16.dp))
             CardTemplate(
@@ -257,7 +257,7 @@ private fun CardsDemo(
                 title = "Outlined",
                 elevation = CardDefaults.outlinedCardElevation(),
                 colors = CardDefaults.outlinedCardColors(),
-                border = BorderStroke(1.dp, Color.DarkGray)
+                border = BorderStroke(1.dp, Color.DarkGray),
             )
         }
     }
@@ -268,27 +268,27 @@ internal fun ColumnScope.BottomSheetContent() {
     Row(modifier = Modifier.padding(vertical = 20.dp).align(Alignment.CenterHorizontally)) {
         BottomSheetButton(
             title = "Share",
-            icon = Icons.Outlined.Share
+            icon = Icons.Outlined.Share,
         )
         BottomSheetButton(
             title = "Add to",
-            icon = Icons.Outlined.Add
+            icon = Icons.Outlined.Add,
         )
         BottomSheetButton(
             title = "Trash",
-            icon = Icons.Outlined.Delete
+            icon = Icons.Outlined.Delete,
         )
         BottomSheetButton(
             title = "Archive",
-            icon = Icons.Outlined.Archive
+            icon = Icons.Outlined.Archive,
         )
         BottomSheetButton(
             title = "Settings",
-            icon = Icons.Outlined.Settings
+            icon = Icons.Outlined.Settings,
         )
         BottomSheetButton(
             title = "Favorite",
-            icon = Icons.Outlined.FavoriteBorder
+            icon = Icons.Outlined.FavoriteBorder,
         )
     }
 }
@@ -304,9 +304,9 @@ private fun BottomSheetButton(
         icon = {
             Icon(
                 imageVector = icon,
-                contentDescription = null
+                contentDescription = null,
             )
         },
-        label = { Text(title) }
+        label = { Text(title) },
     )
 }

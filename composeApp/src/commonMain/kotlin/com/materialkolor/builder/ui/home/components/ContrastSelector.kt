@@ -78,7 +78,7 @@ private fun ContrastButton(
             .size(42.dp)
             .clip(CircleShape)
             .background(containerColor)
-            .clickable(enabled = !isSelected, onClick = onClick)
+            .clickable(enabled = !isSelected, onClick = onClick),
     ) {
         Icon(
             imageVector = contrast.icon(),

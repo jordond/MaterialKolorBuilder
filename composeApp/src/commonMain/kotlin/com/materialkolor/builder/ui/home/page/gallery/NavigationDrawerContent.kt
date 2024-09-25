@@ -51,7 +51,7 @@ private val labels = persistentListOf(
 @Composable
 fun NavigationDrawerContent() {
     Column(
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(8.dp),
     ) {
         var selected by remember { mutableIntStateOf(0) }
 
@@ -64,10 +64,10 @@ fun NavigationDrawerContent() {
                     val icon = if (selected == index) item.selectedIcon else item.unselectedIcon
                     Icon(
                         imageVector = icon,
-                        contentDescription = item.label
+                        contentDescription = item.label,
                     )
                 },
-                label = { Text(item.label) }
+                label = { Text(item.label) },
             )
         }
 
@@ -82,10 +82,10 @@ fun NavigationDrawerContent() {
                     val icon = if (selected == index + 4) item.selectedIcon else item.unselectedIcon
                     Icon(
                         imageVector = icon,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 },
-                label = { Text(item.label) }
+                label = { Text(item.label) },
             )
         }
     }

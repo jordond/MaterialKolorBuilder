@@ -6,6 +6,6 @@ import com.materialkolor.builder.settings.store.url.UrlSettingsStore
 actual fun DI.provideSettingsStore(): SettingsStore {
     return UrlSettingsStore(
         darkModeProvider = darkModeProvider,
-        scope = defaultScope
+        scope = defaultScope,
     )
 }

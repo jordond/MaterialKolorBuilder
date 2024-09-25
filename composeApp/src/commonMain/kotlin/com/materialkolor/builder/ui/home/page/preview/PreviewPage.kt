@@ -37,7 +37,7 @@ fun PreviewPage(
     Box(
         modifier = modifier
             .padding(horizontal = windowSizeClass.sidePadding())
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

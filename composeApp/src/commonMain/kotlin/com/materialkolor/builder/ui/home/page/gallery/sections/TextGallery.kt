@@ -45,7 +45,7 @@ fun TextGallery(
     ) {
         GalleryContainerChild(
             title = "Text fields",
-            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#textfield"
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#textfield",
         ) {
             TextFields(minWidth, width, itemPadding)
         }
@@ -63,7 +63,7 @@ private fun TextFields(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             var text by remember { mutableStateOf("") }
             TextField(
@@ -76,7 +76,7 @@ private fun TextFields(
                 trailingIcon = {
                     IconButton(
                         onClick = { text = "" },
-                        content = { Icon(Icons.Default.Close, null) }
+                        content = { Icon(Icons.Default.Close, null) },
                     )
                 },
                 placeholder = { Text("placeholder") },
@@ -95,7 +95,7 @@ private fun TextFields(
                     trailingIcon = {
                         IconButton(
                             onClick = { text = "" },
-                            content = { Icon(Icons.Default.Close, null) }
+                            content = { Icon(Icons.Default.Close, null) },
                         )
                     },
                     placeholder = { Text("placeholder", overflow = TextOverflow.Ellipsis, maxLines = 1) },
@@ -114,7 +114,7 @@ private fun TextFields(
                     trailingIcon = {
                         IconButton(
                             onClick = { text = "" },
-                            content = { Icon(Icons.Default.Close, null) }
+                            content = { Icon(Icons.Default.Close, null) },
                         )
                     },
                     placeholder = { Text("placeholder", overflow = TextOverflow.Ellipsis, maxLines = 1) },
@@ -135,7 +135,7 @@ private fun TextFields(
                 trailingIcon = {
                     IconButton(
                         onClick = { text2 = "" },
-                        content = { Icon(Icons.Default.Close, null) }
+                        content = { Icon(Icons.Default.Close, null) },
                     )
                 },
                 placeholder = { Text("placeholder") },
@@ -154,7 +154,7 @@ private fun TextFields(
                     trailingIcon = {
                         IconButton(
                             onClick = { text2 = "" },
-                            content = { Icon(Icons.Default.Close, null) }
+                            content = { Icon(Icons.Default.Close, null) },
                         )
                     },
                     placeholder = { Text("placeholder", overflow = TextOverflow.Ellipsis, maxLines = 1) },
@@ -171,14 +171,14 @@ private fun TextFields(
                     trailingIcon = {
                         IconButton(
                             onClick = { text2 = "" },
-                            content = { Icon(Icons.Default.Close, null) }
+                            content = { Icon(Icons.Default.Close, null) },
                         )
                     },
                     placeholder = { Text("placeholder", overflow = TextOverflow.Ellipsis, maxLines = 1) },
                     enabled = false,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(itemPadding)
+                        .padding(itemPadding),
                 )
             }
         }

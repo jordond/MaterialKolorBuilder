@@ -94,7 +94,7 @@ private fun ThemeSection(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = "${theme.name} Theme",
@@ -105,11 +105,11 @@ private fun ThemeSection(
             CompositionLocalProvider(LocalTextStyle provides ThemeSectionDefaults.TextStyle) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(SectionDivider),
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(SectionDivider),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(InnerDivider),
@@ -159,7 +159,7 @@ private fun ThemeSection(
 
                     Column(
                         verticalArrangement = Arrangement.spacedBy(SectionDivider),
-                        modifier = Modifier.weight(0.3f)
+                        modifier = Modifier.weight(0.3f),
                     ) {
                         ColorGroupContainer(Theme.Groups.Error, onClick)
 

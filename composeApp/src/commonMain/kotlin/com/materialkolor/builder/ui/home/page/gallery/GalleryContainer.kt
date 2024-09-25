@@ -53,13 +53,13 @@ fun GalleryContainer(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
             .animateContentSize()
-            .padding(boxPadding)
+            .padding(boxPadding),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
-                .clickableWithoutRipple(onClick = { toggle(!expanded) })
+                .clickableWithoutRipple(onClick = { toggle(!expanded) }),
         ) {
             Text(
                 text = title,

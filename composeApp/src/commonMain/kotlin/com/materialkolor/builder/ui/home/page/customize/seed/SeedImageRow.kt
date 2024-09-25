@@ -65,7 +65,7 @@ fun SeedImageRow(
             isSelected = selectedImage is SeedImage.Custom,
             onSelectImage = { onSelectImage(null) },
             showBorder = true,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             when {
                 selectedImage is SeedImage.Custom -> {
@@ -104,7 +104,7 @@ private fun RowScope.ImageBox(
     val isHovered by interactionSource.collectIsHoveredAsState()
 
     val scale by animateFloatAsState(
-        targetValue = if (isSelected) 1f else if (isHovered) 0.9f else 0.8f
+        targetValue = if (isSelected) 1f else if (isHovered) 0.9f else 0.8f,
     )
 
     val shape =
@@ -122,7 +122,7 @@ private fun RowScope.ImageBox(
             .conditional(showBorder) {
                 Modifier.border(2.dp, MaterialTheme.colorScheme.primary, shape)
             }
-            .clickable(onClick = onSelectImage)
+            .clickable(onClick = onSelectImage),
     ) {
         content()
 
@@ -132,7 +132,7 @@ private fun RowScope.ImageBox(
                 modifier = Modifier
                     .fillMaxSize(0.3f)
                     .aspectRatio(1f)
-                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
             ) {
                 Icon(
                     imageVector = Icons.Default.Check,
@@ -140,7 +140,7 @@ private fun RowScope.ImageBox(
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier
                         .fillMaxSize(0.6f)
-                        .aspectRatio(1f)
+                        .aspectRatio(1f),
                 )
             }
         }

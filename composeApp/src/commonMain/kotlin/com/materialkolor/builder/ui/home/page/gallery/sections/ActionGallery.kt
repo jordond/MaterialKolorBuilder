@@ -50,8 +50,10 @@ import kotlinx.collections.immutable.persistentListOf
 
 private const val buttonUrl = "https://developer.android.com/jetpack/compose/components/button"
 private const val fabUrl = "https://developer.android.com/jetpack/compose/components/fab"
-private const val iconButtonUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)"
-private const val segmentedButtonUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#(androidx.compose.material3.MultiChoiceSegmentedButtonRowScope).SegmentedButton(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.graphics.Shape,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.SegmentedButtonColors,androidx.compose.foundation.BorderStroke,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0,kotlin.Function0)"
+private const val iconButtonUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#IconButton(kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.IconButtonColors,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0)"
+private const val segmentedButtonUrl =
+    "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#(androidx.compose.material3.MultiChoiceSegmentedButtonRowScope).SegmentedButton(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.graphics.Shape,androidx.compose.ui.Modifier,kotlin.Boolean,androidx.compose.material3.SegmentedButtonColors,androidx.compose.foundation.BorderStroke,androidx.compose.foundation.interaction.MutableInteractionSource,kotlin.Function0,kotlin.Function0)"
 
 @Composable
 fun ActionGallery(
@@ -97,7 +99,7 @@ private fun CommonButtons(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .widthIn(minWidth, width)
-                .padding(itemPadding)
+                .padding(itemPadding),
         ) {
             Row {
                 ElevatedButton(
@@ -116,7 +118,7 @@ private fun CommonButtons(
                     },
                     modifier = Modifier
                         .itemPadding()
-                        .weight(1f)
+                        .weight(1f),
                 )
                 ElevatedButton(
                     enabled = false,
@@ -306,14 +308,14 @@ private fun IconButtons(
                 enabled = true,
                 content = {
                     Icon(Icons.Default.Settings, contentDescription = null)
-                }
+                },
             )
             IconButton(
                 onClick = {},
                 enabled = false,
                 content = {
                     Icon(Icons.Default.Settings, contentDescription = null)
-                }
+                },
             )
         }
     }
@@ -357,7 +359,7 @@ private fun SegmentedButtons(
                 persistentListOf(
                     Icons.Filled.StarBorder,
                     Icons.AutoMirrored.Filled.TrendingUp,
-                    Icons.Filled.BookmarkBorder
+                    Icons.Filled.BookmarkBorder,
                 )
             }
 
@@ -373,7 +375,7 @@ private fun SegmentedButtons(
                                 Icon(
                                     imageVector = icons[index],
                                     contentDescription = null,
-                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                    modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
                                 )
                             }
                         },

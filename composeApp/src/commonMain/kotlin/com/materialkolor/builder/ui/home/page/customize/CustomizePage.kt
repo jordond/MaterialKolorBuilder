@@ -48,7 +48,7 @@ fun CustomizePage(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
-            .verticalScroll(scrollState)
+            .verticalScroll(scrollState),
     ) {
         Text(
             text = "Generate your own Material 3 color scheme, to use with Jetpack Compose, or Compose Multiplatform.",

@@ -115,14 +115,14 @@ fun ColorPickerDialog(
             Card(
                 modifier = modifier
                     .requiredWidthIn(min = 300.dp, max = 400.dp)
-                    .requiredHeightIn(min = 500.dp, max = 700.dp)
+                    .requiredHeightIn(min = 500.dp, max = 700.dp),
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .padding(horizontal = 32.dp)
-                        .padding(top = 32.dp, bottom = 16.dp)
+                        .padding(top = 32.dp, bottom = 16.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Palette,
@@ -148,7 +148,7 @@ fun ColorPickerDialog(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(
                             text = state.keyColor.name(),
@@ -276,7 +276,7 @@ fun ColorPickerDialog(
                     }
                 }
             }
-        }
+        },
     )
 }
 
@@ -320,7 +320,7 @@ fun ColorPicker(
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.fillMaxSize(),
                             ) {
                                 if (currentState.loading) {
                                     CircularProgressIndicator(modifier = Modifier.size(24.dp))
@@ -345,7 +345,7 @@ fun ColorPicker(
                                 modifier = Modifier
                                     .background(MaterialTheme.colorScheme.surfaceContainerHighest)
                                     .fillMaxWidth()
-                                    .weight(1f)
+                                    .weight(1f),
                             )
 
                             IconButton(

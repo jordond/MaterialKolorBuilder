@@ -33,7 +33,7 @@ fun RowScope.TopBarActions(
         IconButton(onClick = onReset) {
             Icon(
                 imageVector = Icons.AutoMirrored.Outlined.Undo,
-                contentDescription = "Reset to default"
+                contentDescription = "Reset to default",
             )
         }
     }
@@ -45,14 +45,14 @@ fun RowScope.TopBarActions(
 
         Icon(
             imageVector = icon,
-            contentDescription = if (settings.isDarkMode) "Light mode" else "Dark mode"
+            contentDescription = if (settings.isDarkMode) "Light mode" else "Dark mode",
         )
     }
 
     IconButton(onClick = onAboutClicked) {
         Icon(
             imageVector = Icons.Outlined.QuestionMark,
-            contentDescription = "About MaterialKolor Builder"
+            contentDescription = "About MaterialKolor Builder",
         )
     }
 

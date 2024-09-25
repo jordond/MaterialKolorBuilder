@@ -32,12 +32,12 @@ fun HomeBottomBar(
                 icon = {
                     Icon(
                         imageVector = section.icon(),
-                        contentDescription = section.name
+                        contentDescription = section.name,
                     )
                 },
                 label = { Text(section.name) },
                 selected = section == selected,
-                onClick = { onSelected(section) }
+                onClick = { onSelected(section) },
             )
         }
     }
@@ -57,12 +57,12 @@ fun HomeNavRail(
                 icon = {
                     Icon(
                         imageVector = section.icon(),
-                        contentDescription = section.name
+                        contentDescription = section.name,
                     )
                 },
                 label = { Text(section.name) },
                 selected = section == selected,
-                onClick = { onSelected(section) }
+                onClick = { onSelected(section) },
             )
         }
     }

@@ -28,7 +28,7 @@ import kotlinx.collections.immutable.persistentListOf
 private val keyColors = (KeyColor.entries - KeyColor.Seed)
 
 private val steps = persistentListOf(
-    100, 99, 98, 95, 90, 80, 70, 60, 50, 40, 35, 30, 25, 20, 15, 10, 5, 0
+    100, 99, 98, 95, 90, 80, 70, 60, 50, 40, 35, 30, 25, 20, 15, 10, 5, 0,
 )
 
 @Composable
@@ -48,7 +48,7 @@ fun PaletteSection(
                 Text(text = palette.name, fontWeight = FontWeight.Normal)
 
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     steps.forEach { tone ->
                         val color = state.tone(palette, tone)
@@ -65,7 +65,7 @@ fun PaletteSection(
                                 text = "$tone",
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = textColor,
-                                    fontWeight = FontWeight.Normal
+                                    fontWeight = FontWeight.Normal,
                                 ),
                             )
                         }

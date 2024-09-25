@@ -43,7 +43,6 @@ val LocalDrawerState =
 val LocalBottomSheetScaffoldState =
     compositionLocalOf<BottomSheetScaffoldState> { error("BottomSheetScaffoldState is not found") }
 
-
 @Composable
 fun HomeScreen() {
     val model = viewModel { HomeModel() }
@@ -52,14 +51,14 @@ fun HomeScreen() {
     val scope = rememberCoroutineScope()
     val snackbar = remember { SnackbarHostState() }
     val scaffoldState = rememberBottomSheetScaffoldState(
-        rememberStandardBottomSheetState(SheetValue.Hidden, skipHiddenState = false)
+        rememberStandardBottomSheetState(SheetValue.Hidden, skipHiddenState = false),
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     val pickerLauncher = rememberFilePickerLauncher(
         type = FilePickerFileType.Image,
         selectionMode = FilePickerSelectionMode.Single,
-        onResult = { files -> model.handleImage(files.firstOrNull()) }
+        onResult = { files -> model.handleImage(files.firstOrNull()) },
     )
 
     HandleEvents(model) { event ->
@@ -101,7 +100,7 @@ fun HomeScreen() {
                         is HomeAction.ColorPicker -> model.handleColorPickerAction(action)
                         is Export -> {} // TODO: Implement export
                     }
-                }
+                },
             )
         }
     }

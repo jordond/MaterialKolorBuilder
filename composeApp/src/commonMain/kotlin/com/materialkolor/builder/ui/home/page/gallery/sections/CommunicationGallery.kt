@@ -58,25 +58,25 @@ fun CommunicationGallery(
         title = "Communication",
         expanded = expanded,
         toggle = toggle,
-        modifier = modifier
+        modifier = modifier,
     ) {
         GalleryContainerChild(
             title = "Badges",
-            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)"
+            infoUrl = "https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#Badge(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)",
         ) {
             Badges(minWidth, width, boxPadding)
         }
 
         GalleryContainerChild(
             title = "Progress indicators",
-            infoUrl = "https://developer.android.com/jetpack/compose/components/progress"
+            infoUrl = "https://developer.android.com/jetpack/compose/components/progress",
         ) {
             ProgressIndicators(minWidth, width, boxPadding)
         }
 
         GalleryContainerChild(
             title = "Snackbar",
-            infoUrl = "https://developer.android.com/jetpack/compose/components/snackbar"
+            infoUrl = "https://developer.android.com/jetpack/compose/components/snackbar",
         ) {
             SnackbarButton(minWidth, width, boxPadding)
         }
@@ -94,7 +94,7 @@ private fun Badges(
             modifier = Modifier
                 .requiredWidthIn(minWidth)
                 .width(width)
-                .padding(boxPadding)
+                .padding(boxPadding),
         ) {
             var selected by remember { mutableStateOf(0) }
             NavigationBar {
@@ -105,14 +105,15 @@ private fun Badges(
                         BadgedBox(
                             badge = {
                                 Badge { Text("999+") }
-                            }) {
+                            },
+                        ) {
                             Icon(
                                 imageVector = if (selected == 0) Icons.Default.Mail else Icons.Default.MailOutline,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                     },
-                    label = { Text("Mail") }
+                    label = { Text("Mail") },
                 )
                 NavigationBarItem(
                     selected = selected == 1,
@@ -121,14 +122,15 @@ private fun Badges(
                         BadgedBox(
                             badge = {
                                 Badge { Text("10") }
-                            }) {
+                            },
+                        ) {
                             Icon(
                                 imageVector = if (selected == 1) Icons.Default.ChatBubble else Icons.Default.ChatBubbleOutline,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                     },
-                    label = { Text("Chat") }
+                    label = { Text("Chat") },
                 )
                 NavigationBarItem(
                     selected = selected == 2,
@@ -137,14 +139,15 @@ private fun Badges(
                         BadgedBox(
                             badge = {
                                 Badge()
-                            }) {
+                            },
+                        ) {
                             Icon(
                                 imageVector = if (selected == 2) Icons.Default.People else Icons.Default.PeopleOutline,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                     },
-                    label = { Text("Room") }
+                    label = { Text("Room") },
                 )
                 NavigationBarItem(
                     selected = selected == 3,
@@ -153,14 +156,15 @@ private fun Badges(
                         BadgedBox(
                             badge = {
                                 Badge { Text("3") }
-                            }) {
+                            },
+                        ) {
                             Icon(
                                 imageVector = if (selected == 3) Icons.Default.Videocam else Icons.Outlined.Videocam,
-                                contentDescription = null
+                                contentDescription = null,
                             )
                         }
                     },
-                    label = { Text("Meet") }
+                    label = { Text("Meet") },
                 )
             }
         }
@@ -179,15 +183,15 @@ private fun ProgressIndicators(
                 .requiredWidthIn(minWidth)
                 .width(width)
                 .padding(boxPadding),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             var isProgress by remember { mutableStateOf(false) }
             IconButton(
-                onClick = { isProgress = !isProgress }
+                onClick = { isProgress = !isProgress },
             ) {
                 Icon(
                     imageVector = if (isProgress) Icons.Default.Pause else Icons.Default.PlayArrow,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
             Spacer(modifier = Modifier.size(16.dp))
@@ -219,7 +223,7 @@ private fun SnackbarButton(
                 .requiredWidthIn(minWidth)
                 .width(width)
                 .padding(boxPadding),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             val coroutineScope = rememberCoroutineScope()
             val snackbarHostState = LocalSnackbarHostState.current
@@ -228,10 +232,10 @@ private fun SnackbarButton(
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar(
                             message = "This is a snackbar",
-                            actionLabel = "Close"
+                            actionLabel = "Close",
                         )
                     }
-                }
+                },
             ) {
                 Text("Show snackbar")
             }

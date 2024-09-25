@@ -46,18 +46,18 @@ fun PhotoFrameScope.IPhoneStatusBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .height(60.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 16.dp)
+                .padding(start = 16.dp),
         ) {
             Text(
                 text = formattedTime,
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
             )
         }
 
@@ -68,22 +68,22 @@ fun PhotoFrameScope.IPhoneStatusBar(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .padding(end = 16.dp)
+                .padding(end = 16.dp),
         ) {
             Icon(
                 imageVector = Icons.Default.NetworkCell,
                 contentDescription = "Cell Signal",
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(16.dp),
             )
             Icon(
                 imageVector = Icons.Default.Wifi,
                 contentDescription = "WiFi",
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(16.dp),
             )
             Icon(
                 imageVector = Icons.BatteryFullAlt,
                 contentDescription = "Battery",
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(20.dp),
             )
         }
     }
@@ -96,13 +96,13 @@ fun DynamicIsland(
     var expanded by remember { mutableStateOf(false) }
     val width by animateDpAsState(
         targetValue = if (expanded) 175.dp else 125.dp,
-        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing)
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
     )
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .height(60.dp),
     ) {
         Box(
             modifier = Modifier
@@ -111,7 +111,7 @@ fun DynamicIsland(
                 .height(37.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .background(MaterialTheme.colorScheme.outlineVariant)
-                .padding(4.dp)
+                .padding(4.dp),
         )
 
         Box(
@@ -119,7 +119,7 @@ fun DynamicIsland(
                 .align(Alignment.TopCenter)
                 .width(200.dp)
                 .height(60.dp)
-                .clickableWithoutRipple { expanded = !expanded }
+                .clickableWithoutRipple { expanded = !expanded },
         )
     }
 }

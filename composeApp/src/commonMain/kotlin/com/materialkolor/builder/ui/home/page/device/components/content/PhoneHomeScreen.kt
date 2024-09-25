@@ -118,14 +118,14 @@ private fun Title(modifier: Modifier = Modifier) {
         Text(
             text = "Today",
             style = MaterialTheme.typography.displayMedium,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         FilledIconButton(
             onClick = {},
             modifier = Modifier
                 .width(48.dp)
-                .height(24.dp)
+                .height(24.dp),
         ) {
             Icon(Icons.Filled.Person, contentDescription = "Person")
         }
@@ -137,7 +137,7 @@ private fun DailyTip(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .background(colorScheme.tertiaryContainer, RoundedCornerShape(22.dp))
-            .clip(RoundedCornerShape(22.dp))
+            .clip(RoundedCornerShape(22.dp)),
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -145,20 +145,20 @@ private fun DailyTip(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .padding(start = 8.dp, end = 12.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             Icon(
                 imageVector = Icons.Filled.Lightbulb,
                 contentDescription = "Tip",
                 tint = colorScheme.onTertiaryContainer,
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(16.dp),
             )
             Text(
                 text = "During the winter your plants slow down and need less water",
                 color = colorScheme.onTertiaryContainer,
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Light,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         }
     }
@@ -209,7 +209,7 @@ private fun ListItem(
             Column(
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 16.dp)
-                    .weight(1f)
+                    .weight(1f),
             ) {
                 val hasEnoughContrast = colorScheme.primary
                     .hasEnoughContrast(colorScheme.secondaryContainer)
@@ -217,21 +217,21 @@ private fun ListItem(
                 val titleColor =
                     if (hasEnoughContrast) colorScheme.primary
                     else colorScheme.onSecondaryContainer
-                
+
                 Text(
                     text = details.room,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Light,
                     letterSpacing = 1.sp,
                     color = titleColor,
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier.padding(start = 16.dp),
                 )
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 ) {
                     details.options.forEach { option ->
                         Row(
@@ -244,15 +244,15 @@ private fun ListItem(
                                     onValueChange = {
                                         update(option.copy(selected = it))
                                     },
-                                    role = Role.Checkbox
+                                    role = Role.Checkbox,
                                 )
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .weight(1f)
+                                .weight(1f),
                         ) {
                             Checkbox(
                                 checked = option.selected,
-                                onCheckedChange = null
+                                onCheckedChange = null,
                             )
 
                             Column {
@@ -278,7 +278,7 @@ private fun ListItem(
                 contentDescription = details.options.first().title,
                 modifier = Modifier
                     .align(Alignment.Bottom)
-                    .padding(end = 8.dp)
+                    .padding(end = 8.dp),
             )
         }
     }

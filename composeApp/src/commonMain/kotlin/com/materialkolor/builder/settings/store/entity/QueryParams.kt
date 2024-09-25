@@ -33,7 +33,7 @@ fun SettingsEntity.toQueryParams(): String {
         }
         .joinToString(SEPARATOR)
 
-    val params= listOf(
+    val params = listOf(
         colors,
         isDarkMode.param(KEY_DARK_MODE),
         contrast.param(KEY_CONTRAST),

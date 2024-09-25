@@ -93,11 +93,11 @@ fun PhoneFrame(
             .aspectRatio(size.aspectRatio)
             .clip(RoundedCornerShape(framePadding.outer))
             .background(MaterialTheme.colorScheme.outlineVariant)
-            .padding(framePadding.thickness)
+            .padding(framePadding.thickness),
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            shape = RoundedCornerShape(framePadding.inner)
+            shape = RoundedCornerShape(framePadding.inner),
         ) {
             Column {
                 CompositionLocalProvider(
@@ -108,7 +108,7 @@ fun PhoneFrame(
 
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     content()
                 }

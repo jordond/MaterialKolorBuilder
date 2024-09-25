@@ -74,7 +74,7 @@ fun GallerySection(
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         if (showTitle) {
             Title(
@@ -142,7 +142,7 @@ private fun Title(
                 onClick = {
                     if (anyExpanded && !allExpanded) toggleAll(true)
                     else toggleAll(!anyExpanded)
-                }
+                },
             )
             .padding(16.dp),
     ) {

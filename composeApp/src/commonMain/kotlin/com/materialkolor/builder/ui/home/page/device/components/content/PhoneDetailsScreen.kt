@@ -105,7 +105,7 @@ fun PhoneDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             TopBar()
 
@@ -139,7 +139,7 @@ fun PhoneDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             Text(
                 text = "Care",
@@ -196,10 +196,10 @@ private fun DetailsList(modifier: Modifier = Modifier) {
                     containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 ),
                 shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.size(125.dp)
+                modifier = Modifier.size(125.dp),
             ) {
                 Column(
-                    modifier = Modifier.padding(12.dp)
+                    modifier = Modifier.padding(12.dp),
                 ) {
                     Icon(
                         imageVector = detail.icon,

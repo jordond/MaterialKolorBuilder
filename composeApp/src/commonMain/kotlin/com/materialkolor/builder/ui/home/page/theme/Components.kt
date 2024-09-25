@@ -98,7 +98,7 @@ fun ColorBox(
                 .background(themeColor.color())
                 .hoverable(interactionSource)
                 .clickable(onClick = { onClick(themeColor.title, color) })
-                .padding(BoxPadding)
+                .padding(BoxPadding),
         ) {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -168,7 +168,7 @@ private fun ContentColorWrapper(
     content: @Composable () -> Unit,
 ) {
     val contentColor by animateColorAsState(
-        textColor ?: contentColorFor(themeColor.color())
+        textColor ?: contentColorFor(themeColor.color()),
     )
 
     CompositionLocalProvider(LocalContentColor provides contentColor) {
