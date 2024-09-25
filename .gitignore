@@ -2,6 +2,8 @@
 .kotlin
 .gradle
 **/build/
+*.log
+.firebase
 xcuserdata
 !src/**/build/
 local.properties
@@ -16,3 +18,4 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+public/
