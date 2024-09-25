@@ -1,5 +1,6 @@
 package com.materialkolor.builder.ui.home.page.device.components.content
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Person
@@ -22,6 +24,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -36,13 +39,21 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import materialkolorbuilder.composeapp.generated.resources.Res
+import materialkolorbuilder.composeapp.generated.resources.cactus
+import materialkolorbuilder.composeapp.generated.resources.monstera
+import materialkolorbuilder.composeapp.generated.resources.snakegrass
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Stable
 data class CardDetails(
     val room: String,
+    val image: DrawableResource,
     val options: PersistentList<CardOption>,
 )
 
@@ -56,6 +67,7 @@ data class CardOption(
 private val Options = persistentListOf(
     CardDetails(
         room = "Living Room",
+        image = Res.drawable.monstera,
         options = persistentListOf(
             CardOption(title = "Water", description = "hoya australis"),
             CardOption(title = "Feed", description = "monstera siltepecana"),
@@ -63,16 +75,18 @@ private val Options = persistentListOf(
     ),
     CardDetails(
         room = "Kitchen",
+        image = Res.drawable.snakegrass,
         options = persistentListOf(
-            CardOption(title = "Water", description = "pilea peperomioides"),
+            CardOption(title = "Water", description = "clinacanthus nutans"),
             CardOption(title = "Water", description = "hoya australis"),
         ),
     ),
     CardDetails(
         room = "Bedroom",
+        image = Res.drawable.cactus,
         options = persistentListOf(
             CardOption(title = "Feed", description = "monstera siltepecana"),
-            CardOption(title = "Water", description = "philodendron brandi"),
+            CardOption(title = "Water", description = "opuntia basilaris "),
         ),
     ),
 )
@@ -87,8 +101,8 @@ fun PhoneHomeScreen(
             .fillMaxSize(),
     ) {
 
-        Title(modifier = Modifier.padding(top = 24.dp))
-        Spacer(modifier = Modifier.height(32.dp))
+        Title(modifier = Modifier.padding(top = 18.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         DailyTip()
         Spacer(modifier = Modifier.height(16.dp))
         List()
@@ -103,7 +117,7 @@ private fun Title(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Today",
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.weight(1f)
         )
 
@@ -122,8 +136,8 @@ private fun Title(modifier: Modifier = Modifier) {
 private fun DailyTip(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.shapes.large)
-            .clip(MaterialTheme.shapes.large)
+            .background(colorScheme.tertiaryContainer, RoundedCornerShape(22.dp))
+            .clip(RoundedCornerShape(22.dp))
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -136,12 +150,12 @@ private fun DailyTip(modifier: Modifier = Modifier) {
             Icon(
                 imageVector = Icons.Filled.Lightbulb,
                 contentDescription = "Tip",
-                tint = MaterialTheme.colorScheme.onTertiaryContainer,
+                tint = colorScheme.onTertiaryContainer,
                 modifier = Modifier.size(16.dp)
             )
             Text(
                 text = "During the winter your plants slow down and need less water",
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = colorScheme.onTertiaryContainer,
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.weight(1f)
@@ -184,57 +198,81 @@ private fun ListItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            containerColor = colorScheme.secondaryContainer,
         ),
         modifier = modifier,
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Text(
-                text = details.room,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Thin,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-            )
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 16.dp)
+                    .weight(1f)
+            ) {
+                Text(
+                    text = details.room,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Light,
+                    letterSpacing = 1.sp,
+                    color = colorScheme.primary,
+                    modifier = Modifier.padding(start = 16.dp)
+                )
 
-            details.options.forEach { option ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .toggleable(
-                            value = option.selected,
-                            onValueChange = {
-                                update(option.copy(selected = it))
-                            },
-                            role = Role.Checkbox
-                        )
+                        .weight(1f)
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
                 ) {
-                    Checkbox(
-                        checked = option.selected,
-                        onCheckedChange = null
-                    )
+                    details.options.forEach { option ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .toggleable(
+                                    value = option.selected,
+                                    onValueChange = {
+                                        update(option.copy(selected = it))
+                                    },
+                                    role = Role.Checkbox
+                                )
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .weight(1f)
+                        ) {
+                            Checkbox(
+                                checked = option.selected,
+                                onCheckedChange = null
+                            )
 
-                    Column {
-                        Text(
-                            text = option.title,
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = option.description,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontStyle = FontStyle.Italic,
-                        )
+                            Column {
+                                Text(
+                                    text = option.title,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Light,
+                                )
+                                Text(
+                                    text = option.description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Light,
+                                    fontStyle = FontStyle.Italic,
+                                )
+                            }
+                        }
                     }
                 }
             }
+
+            Image(
+                painter = painterResource(details.image),
+                contentDescription = details.options.first().title,
+                modifier = Modifier
+                    .align(Alignment.Bottom)
+                    .padding(end = 8.dp)
+            )
         }
     }
 }

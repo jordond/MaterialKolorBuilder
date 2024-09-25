@@ -4,13 +4,24 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontFamily
-import materialkolorbuilder.composeapp.generated.resources.PlayfairDisplay
+import androidx.compose.ui.text.font.FontWeight
+import materialkolorbuilder.composeapp.generated.resources.Halant_Bold
+import materialkolorbuilder.composeapp.generated.resources.Halant_Light
+import materialkolorbuilder.composeapp.generated.resources.Halant_Medium
+import materialkolorbuilder.composeapp.generated.resources.Halant_Regular
+import materialkolorbuilder.composeapp.generated.resources.Halant_SemiBold
 import materialkolorbuilder.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 private val Font: FontFamily
     @Composable
-    get() = FontFamily(Font(Res.font.PlayfairDisplay))
+    get() = FontFamily(
+        Font(Res.font.Halant_Light, weight = FontWeight.Light),
+        Font(Res.font.Halant_Medium, weight = FontWeight.Medium),
+        Font(Res.font.Halant_Regular, weight = FontWeight.Normal),
+        Font(Res.font.Halant_SemiBold, weight = FontWeight.SemiBold),
+        Font(Res.font.Halant_Bold, weight = FontWeight.Bold),
+    )
 
 val PhoneTypography: Typography
     @Composable
@@ -28,14 +39,5 @@ private fun createTypographyWith(family: FontFamily): Typography {
         headlineLarge = base.headlineLarge.copy(fontFamily = family),
         headlineMedium = base.headlineMedium.copy(fontFamily = family),
         headlineSmall = base.headlineSmall.copy(fontFamily = family),
-        titleLarge = base.titleLarge.copy(fontFamily = family),
-        titleMedium = base.titleMedium.copy(fontFamily = family),
-        titleSmall = base.titleSmall.copy(fontFamily = family),
-        bodyLarge = base.bodyLarge.copy(fontFamily = family),
-        bodyMedium = base.bodyMedium.copy(fontFamily = family),
-        bodySmall = base.bodySmall.copy(fontFamily = family),
-        labelLarge = base.labelLarge.copy(fontFamily = family),
-        labelMedium = base.labelMedium.copy(fontFamily = family),
-        labelSmall = base.labelSmall.copy(fontFamily = family),
     )
 }
