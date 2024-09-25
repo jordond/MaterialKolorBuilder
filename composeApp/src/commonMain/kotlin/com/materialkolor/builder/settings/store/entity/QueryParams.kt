@@ -33,7 +33,7 @@ fun SettingsEntity.toQueryParams(): String {
         }
         .joinToString(SEPARATOR)
 
-    return listOf(
+    val params= listOf(
         colors,
         isDarkMode.param(KEY_DARK_MODE),
         contrast.param(KEY_CONTRAST),
@@ -41,6 +41,8 @@ fun SettingsEntity.toQueryParams(): String {
         style.param(KEY_STYLE),
         isExtendedFidelity.param(KEY_EXTENDED_FIDELITY),
     ).filter { it.isNotEmpty() }.joinToString(SEPARATOR)
+
+    return "?$params"
 }
 
 fun String.toSettingsEntity(): SettingsEntity {

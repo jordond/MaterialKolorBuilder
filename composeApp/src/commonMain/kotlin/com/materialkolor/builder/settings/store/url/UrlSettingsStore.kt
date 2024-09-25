@@ -37,6 +37,9 @@ class UrlSettingsStore(
                 if (params != null) {
                     Logger.d { "Setting params: $params" }
                     updatePlatformQueryParams(params)
+                } else {
+                    Logger.d { "Clearing params" }
+                    updatePlatformQueryParams("")
                 }
             }
         }
@@ -54,6 +57,6 @@ class UrlSettingsStore(
     }
 
     override fun clear() {
-
+        store.update { null }
     }
 }
