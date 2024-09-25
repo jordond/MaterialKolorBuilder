@@ -7,11 +7,12 @@ on:
       - main
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   deploy:
+    name: Deploy web app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
