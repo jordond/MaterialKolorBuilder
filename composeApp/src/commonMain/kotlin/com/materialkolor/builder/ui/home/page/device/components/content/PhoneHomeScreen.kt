@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -278,6 +279,7 @@ private fun ListItem(
                 contentDescription = details.options.first().title,
                 modifier = Modifier
                     .align(Alignment.Bottom)
+                    .fillMaxHeight(0.6f)
                     .padding(end = 8.dp),
             )
         }

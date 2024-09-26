@@ -27,7 +27,7 @@ import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
 
 @Composable
-fun PreviewPage(
+fun PreviewSection(
     settings: Settings,
     onUpdateContrast: (Contrast) -> Unit,
     modifier: Modifier = Modifier,
@@ -57,7 +57,7 @@ fun PreviewPage(
                 )
             }
 
-            GallerySection(defaultExpanded = false)
+            GallerySection()
 
             PreviewSectionContainer(title = "Palettes", initialExpanded = false) {
                 PaletteSection()

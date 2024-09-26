@@ -87,7 +87,6 @@ fun GallerySection(
         FlowRow(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            maxItemsInEachRow = 3,
             modifier = modifier.fillMaxWidth(),
         ) {
             ActionGallery(

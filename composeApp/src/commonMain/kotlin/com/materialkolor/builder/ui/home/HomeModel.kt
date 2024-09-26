@@ -57,7 +57,10 @@ class HomeModel(
                 val state = ColorPickerState(action.key, action.initial)
                 updateState { it.copy(colorPickerState = state) }
             }
-            is HomeAction.PickImageForColor -> emit(Event.PickImage)
+            is HomeAction.PickImageForColor -> {
+                imageLoading(true)
+                emit(Event.PickImage)
+            }
             is HomeAction.TogglePickerMode -> updateState { state ->
                 val pickerState = state.colorPickerState?.toggleMode() ?: return@updateState state
                 state.copy(colorPickerState = pickerState)
@@ -103,7 +106,10 @@ class HomeModel(
     }
 
     fun handleImage(file: KmpFile?) {
-        if (file == null) return
+        if (file == null) {
+            imageLoading(false)
+            return
+        }
 
         imageLoading(true)
         viewModelScope.launch {

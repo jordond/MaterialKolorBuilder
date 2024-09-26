@@ -27,7 +27,7 @@ import com.materialkolor.builder.ui.home.page.device.DeviceSection
 import com.materialkolor.builder.ui.home.page.export.ExportPage
 import com.materialkolor.builder.ui.home.page.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.palette.PaletteSection
-import com.materialkolor.builder.ui.home.page.preview.PreviewPage
+import com.materialkolor.builder.ui.home.page.preview.PreviewSection
 import com.materialkolor.builder.ui.home.page.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 
@@ -54,7 +54,7 @@ fun ExpandedContent(
             modifier = Modifier.weight(0.5f),
         )
 
-        PreviewPage(
+        PreviewSection(
             settings = settings,
             onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
             onCopyColor = dispatcher.rememberRelayOf(::CopyColor),
