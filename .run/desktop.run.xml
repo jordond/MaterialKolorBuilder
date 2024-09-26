@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="composeApp:run" />
+          <option value="app:run" />
         </list>
       </option>
       <option name="vmOptions" />
