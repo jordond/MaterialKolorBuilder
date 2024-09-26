@@ -35,6 +35,7 @@ actual val platformContext: PlatformContext
     get() = PlatformContext.INSTANCE
 
 actual fun updatePlatformQueryParams(queryParams: String) {
+    // TODO: Add setting to enable/disable undo
     window.history.pushState(null, "", queryParams)
 }
 
