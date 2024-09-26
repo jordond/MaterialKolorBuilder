@@ -5,12 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import materialkolorbuilder.composeapp.generated.resources.Halant_Bold
-import materialkolorbuilder.composeapp.generated.resources.Halant_Light
-import materialkolorbuilder.composeapp.generated.resources.Halant_Medium
-import materialkolorbuilder.composeapp.generated.resources.Halant_Regular
-import materialkolorbuilder.composeapp.generated.resources.Halant_SemiBold
-import materialkolorbuilder.composeapp.generated.resources.Res
+import materialkolorbuilder.app.generated.resources.Halant_Bold
+import materialkolorbuilder.app.generated.resources.Halant_Light
+import materialkolorbuilder.app.generated.resources.Halant_Medium
+import materialkolorbuilder.app.generated.resources.Halant_Regular
+import materialkolorbuilder.app.generated.resources.Halant_SemiBold
+import materialkolorbuilder.app.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 val PhoneFont: FontFamily

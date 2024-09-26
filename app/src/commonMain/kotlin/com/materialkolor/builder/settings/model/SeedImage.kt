@@ -4,12 +4,12 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import kotlinx.collections.immutable.toPersistentList
-import materialkolorbuilder.composeapp.generated.resources.Res
-import materialkolorbuilder.composeapp.generated.resources.content_based_color_scheme_1
-import materialkolorbuilder.composeapp.generated.resources.content_based_color_scheme_2
-import materialkolorbuilder.composeapp.generated.resources.content_based_color_scheme_3
-import materialkolorbuilder.composeapp.generated.resources.content_based_color_scheme_4
-import materialkolorbuilder.composeapp.generated.resources.content_based_color_scheme_5
+import materialkolorbuilder.app.generated.resources.Res
+import materialkolorbuilder.app.generated.resources.content_based_color_scheme_1
+import materialkolorbuilder.app.generated.resources.content_based_color_scheme_2
+import materialkolorbuilder.app.generated.resources.content_based_color_scheme_3
+import materialkolorbuilder.app.generated.resources.content_based_color_scheme_4
+import materialkolorbuilder.app.generated.resources.content_based_color_scheme_5
 import org.jetbrains.compose.resources.DrawableResource
 
 @Immutable

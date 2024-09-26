@@ -46,7 +46,7 @@ rm -rf "$PUBLIC_DIR" || true
 mkdir -p "$PUBLIC_DIR"
 
 # Check if build dir exists and is not empty
-BUILD_DIR="$ROOT/composeApp/build/dist/wasmJs/productionExecutable"
+BUILD_DIR="$ROOT/app/build/dist/wasmJs/productionExecutable"
 if [ ! -d "$BUILD_DIR" ] || [ -z "$(ls -A "$BUILD_DIR")" ]; then
     echo "Error: $BUILD_DIR does not exist or is empty."
     echo "Please ensure you have built the project before deploying."

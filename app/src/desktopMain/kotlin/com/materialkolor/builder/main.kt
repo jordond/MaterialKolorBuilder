@@ -8,9 +8,10 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.materialkolor.builder.ui.App
-import materialkolorbuilder.composeapp.generated.resources.Res
-import materialkolorbuilder.composeapp.generated.resources.icon
+import materialkolorbuilder.app.generated.resources.Res
+import materialkolorbuilder.app.generated.resources.icon
 import org.jetbrains.compose.resources.painterResource
+import java.awt.Toolkit
 
 fun main() = application {
     Window(

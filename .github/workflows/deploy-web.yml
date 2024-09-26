@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wasm-js-dist
-          path: composeApp/build/dist/wasmJs/productionExecutable
+          path: app/build/dist/wasmJs/productionExecutable
 
   deploy:
     name: "Deploy"
@@ -58,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: wasm-js-dist
-          path: composeApp/build/dist/wasmJs/productionExecutable
+          path: app/build/dist/wasmJs/productionExecutable
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0

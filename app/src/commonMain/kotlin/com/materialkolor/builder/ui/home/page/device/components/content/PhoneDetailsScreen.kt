@@ -43,8 +43,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.persistentListOf
-import materialkolorbuilder.composeapp.generated.resources.Res
-import materialkolorbuilder.composeapp.generated.resources.monstera_details
+import materialkolorbuilder.app.generated.resources.Res
+import materialkolorbuilder.app.generated.resources.monstera_details
 import org.jetbrains.compose.resources.painterResource
 
 @Immutable

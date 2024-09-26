@@ -44,7 +44,7 @@ develocity {
     }
 }
 
-include(":composeApp")
+include(":app")
 
 includeBuild("library") {
     dependencySubstitution {

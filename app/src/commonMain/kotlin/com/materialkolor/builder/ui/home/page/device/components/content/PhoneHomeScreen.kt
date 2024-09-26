@@ -45,10 +45,10 @@ import com.materialkolor.ktx.hasEnoughContrast
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import materialkolorbuilder.composeapp.generated.resources.Res
-import materialkolorbuilder.composeapp.generated.resources.cactus
-import materialkolorbuilder.composeapp.generated.resources.monstera
-import materialkolorbuilder.composeapp.generated.resources.snakegrass
+import materialkolorbuilder.app.generated.resources.Res
+import materialkolorbuilder.app.generated.resources.cactus
+import materialkolorbuilder.app.generated.resources.monstera
+import materialkolorbuilder.app.generated.resources.snakegrass
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
