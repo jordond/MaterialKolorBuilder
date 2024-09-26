@@ -30,6 +30,7 @@ class QueryParamsTest {
         val queryParams = settingsEntity.toQueryParams()
 
         val expected = """
+            ?
             color_seed=FFFF0000&
             color_primary=FF00FF00&
             color_secondary=FF0000FF&
@@ -40,7 +41,7 @@ class QueryParamsTest {
             extended_fidelity=true
             """.trimIndent().replace("\n", "")
 
-        assertEquals(expected, queryParams.removePrefix("?"))
+        assertEquals(expected, queryParams)
     }
 
     @Test
@@ -106,7 +107,7 @@ class QueryParamsTest {
         val params = "?color_seed=FFCBDDEE"
         val entity = params.toSettingsEntity()
         assertTrue(entity.colors.containsKey(KeyColor.Seed))
-        assertEquals(0xFFCBDDEE, entity.colors[KeyColor.Seed]?.toLong())
+        assertEquals(0xFFCBDDEE.toInt(), entity.colors[KeyColor.Seed])
     }
 
     @Test
@@ -120,7 +121,7 @@ class QueryParamsTest {
             isExtendedFidelity = false,
         )
 
-        val queryParams = settingsEntity.toQueryParams().removePrefix("?")
+        val queryParams = settingsEntity.toQueryParams()
         val reconstructed = queryParams.toSettingsEntity()
 
         assertEquals(settingsEntity.colors.size, reconstructed.colors.size)
