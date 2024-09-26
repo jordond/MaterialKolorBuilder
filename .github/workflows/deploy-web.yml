@@ -8,7 +8,7 @@ on:
 #      - main
 #    paths-ignore:
 #      - "**.md"
-#      - "iosApp/**"
+#      - "ios/**"
 
 concurrency:
   group: deploy-${{ github.ref }}
