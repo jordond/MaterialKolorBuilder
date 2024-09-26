@@ -48,7 +48,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JORDOND_A4B2F }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MATERIALKOLOR }}
           projectId: jordond-a4b2f
           channelId: ${{ env.CHANNEL_ID }}
         id: firebase-deploy
