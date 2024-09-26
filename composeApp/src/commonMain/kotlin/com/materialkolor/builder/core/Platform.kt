@@ -3,6 +3,7 @@ package com.materialkolor.builder.core
 import com.mohamedrejeb.calf.core.PlatformContext
 import com.mohamedrejeb.calf.io.KmpFile
 import com.mohamedrejeb.calf.io.readByteArray
+import kotlinx.coroutines.flow.Flow
 
 expect val baseUrl: String
 
@@ -20,6 +21,8 @@ suspend fun KmpFile.readBytes(): ByteArray = readByteArray(platformContext)
 expect fun updatePlatformQueryParams(queryParams: String)
 
 expect fun readPlatformQueryParams(): String?
+
+expect fun observePlatformQueryParams(): Flow<String>
 
 expect val isMobile: Boolean
 

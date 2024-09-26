@@ -2,6 +2,7 @@ package com.materialkolor.builder.settings.store.url
 
 import co.touchlab.kermit.Logger
 import com.materialkolor.builder.core.DI
+import com.materialkolor.builder.core.observePlatformQueryParams
 import com.materialkolor.builder.core.readPlatformQueryParams
 import com.materialkolor.builder.core.updatePlatformQueryParams
 import com.materialkolor.builder.settings.DarkModeProvider
@@ -33,13 +34,26 @@ class UrlSettingsStore(
         }
 
         scope.launch {
+            observePlatformQueryParams().collect { params ->
+                Logger.d { "Detected new params: $params" }
+                store.update { params }
+            }
+        }
+
+        scope.launch {
             store.collect { params ->
-                if (params != null) {
-                    Logger.d { "Setting params: $params" }
-                    updatePlatformQueryParams(params)
-                } else {
-                    Logger.d { "Clearing params" }
-                    updatePlatformQueryParams("")
+                when {
+                    params == readPlatformQueryParams() -> {
+                        Logger.d { "Ignoring duplicate params" }
+                    }
+                    params != null -> {
+                        Logger.d { "Setting params: $params" }
+                        updatePlatformQueryParams(params)
+                    }
+                    else -> {
+                        Logger.d { "Clearing params" }
+                        updatePlatformQueryParams("")
+                    }
                 }
             }
         }
