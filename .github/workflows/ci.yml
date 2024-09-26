@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [ opened, synchronize, reopened, ready_for_review ]
     paths-ignore:
       - "assets/**"
       - "**.md"
@@ -79,7 +79,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: wasm-js-dist
+          name: web-app
           path: app/build/dist/wasmJs/productionExecutable
 
   deploy-preview:
@@ -96,7 +96,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: wasm-js-dist
+          name: web-app
           path: app/build/dist/wasmJs/productionExecutable
 
       - name: Deploy to Firebase
