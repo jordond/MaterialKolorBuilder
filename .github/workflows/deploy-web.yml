@@ -2,9 +2,10 @@ name: Deploy to Firebase Hosting on merge
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+#  TODO: Disabled until release
+#  push:
+#    branches:
+#      - main
 
 concurrency:
   group: deploy-${{ github.ref }}
