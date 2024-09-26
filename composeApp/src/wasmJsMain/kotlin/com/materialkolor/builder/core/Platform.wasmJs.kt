@@ -15,6 +15,12 @@ private val REGEX2 = Regex(
     options = setOf(RegexOption.IGNORE_CASE),
 )
 
+actual val baseUrl: String
+    get() = window.location.origin
+
+actual val isMobile: Boolean
+    get() = isMobileBrowser()
+
 /**
  * Only support exporting on desktops
  */
@@ -31,6 +37,12 @@ actual fun updatePlatformQueryParams(queryParams: String) {
 
 actual fun readPlatformQueryParams(): String? {
     return window.location.search.takeIf { it.isNotBlank() }
+}
+
+actual val shareToClipboard: Boolean = true
+
+actual fun shareUrl(url: String) {
+    copyTextToClipboard(url)
 }
 
 private fun isMobileBrowser(): Boolean {

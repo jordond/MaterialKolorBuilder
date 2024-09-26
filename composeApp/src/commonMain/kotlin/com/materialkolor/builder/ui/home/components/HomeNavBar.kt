@@ -2,7 +2,6 @@ package com.materialkolor.builder.ui.home.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Contrast
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.Smartphone
@@ -72,7 +71,6 @@ private fun HomeSection.icon(): ImageVector = when (this) {
     HomeSection.Customize -> Icons.Default.Tune
     HomeSection.Themes -> Icons.Default.Contrast
     HomeSection.Palettes -> Icons.Default.Palette
-    HomeSection.Export -> Icons.Default.Download
     HomeSection.Preview -> Icons.Default.Smartphone
     HomeSection.Components -> Icons.Default.Preview
 }

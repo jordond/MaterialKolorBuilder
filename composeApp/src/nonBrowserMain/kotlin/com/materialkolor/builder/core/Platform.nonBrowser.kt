@@ -9,3 +9,5 @@ actual fun updatePlatformQueryParams(queryParams: String) {
 actual fun readPlatformQueryParams(): String? {
     return cache?.takeIf { it.isNotBlank() }
 }
+
+actual val baseUrl: String = "https://materialkolor.com"

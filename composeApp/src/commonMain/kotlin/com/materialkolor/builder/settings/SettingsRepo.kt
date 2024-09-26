@@ -1,16 +1,23 @@
 package com.materialkolor.builder.settings
 
 import co.touchlab.kermit.Logger
+import com.materialkolor.builder.core.baseUrl
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.settings.store.SettingsStore
+import com.materialkolor.builder.settings.store.entity.toEntity
+import com.materialkolor.builder.settings.store.entity.toQueryParams
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
+val DESTINATION_QUERY_PARAM = "destination"
+
 interface SettingsRepo {
     val settings: StateFlow<Settings>
+
+    fun getUrl(name: String): String
 
     suspend fun update(block: (Settings) -> Settings)
 
@@ -33,6 +40,11 @@ class DefaultSettingsRepo(
         started = SharingStarted.Lazily,
         initialValue = SettingsStore.defaults(darkModeProvider.isDarkMode.value),
     )
+
+    override fun getUrl(name: String): String {
+        val queryParams = settings.value.toEntity().toQueryParams()
+        return "$baseUrl$queryParams&$DESTINATION_QUERY_PARAM=$name"
+    }
 
     override suspend fun update(block: (Settings) -> Settings) {
         val value = settings.value.let { settings ->

@@ -24,7 +24,6 @@ import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.page.customize.CustomizePage
 import com.materialkolor.builder.ui.home.page.device.DeviceSection
-import com.materialkolor.builder.ui.home.page.export.ExportPage
 import com.materialkolor.builder.ui.home.page.gallery.GallerySection
 import com.materialkolor.builder.ui.home.page.palette.PaletteSection
 import com.materialkolor.builder.ui.home.page.preview.PreviewSection
@@ -116,12 +115,6 @@ fun CompactContent(
                 WrappedContent {
                     PaletteSection(modifier = Modifier.padding(vertical = 16.dp))
                 }
-            }
-            HomeSection.Export -> {
-                ExportPage(
-                    settings = settings,
-                    modifier = modifier,
-                )
             }
         }
     }

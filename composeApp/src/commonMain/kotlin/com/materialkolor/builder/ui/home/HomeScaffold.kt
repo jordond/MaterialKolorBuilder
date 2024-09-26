@@ -1,14 +1,17 @@
 package com.materialkolor.builder.ui.home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -36,6 +39,7 @@ import com.materialkolor.builder.ui.components.AppSnackbarHost
 import com.materialkolor.builder.ui.components.ColorPickerDialog
 import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.home.HomeAction.Export
+import com.materialkolor.builder.ui.home.HomeAction.Share
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
@@ -56,12 +60,13 @@ fun HomeScreenScaffold(
     colorPickerState: ColorPickerState?,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
+    initialSection: HomeSection? = null,
     snackbarState: SnackbarHostState = remember { SnackbarHostState() },
     processingImage: Boolean = false,
     windowSizeClass: WindowSizeClass = windowSizeClass(),
 ) {
     var aboutDialogVisible by remember { mutableStateOf(false) }
-    var selectedSection by remember { mutableStateOf(HomeSection.Customize) }
+    var selectedSection by remember { mutableStateOf(initialSection ?: HomeSection.Customize) }
 
     CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
         HomeScreenScaffold(
@@ -140,15 +145,27 @@ private fun HomeScreenScaffold(
             }
         },
         floatingActionButton = {
-            AnimatedVisibility(exportSupported && windowSizeClass.widthIsExpanded()) {
-                ExtendedFloatingActionButton(
-                    onClick = dispatcher.relay(Export),
-                    text = {
-                        Text(text = "Export")
-                    },
-                    icon = {
-                        Icon(Icons.Default.Download, contentDescription = "Export")
-                    },
+            if (exportSupported) {
+                Crossfade(windowSizeClass.widthIsExpanded()) { isExpanded ->
+                    if (isExpanded) {
+                        ExtendedFloatingActionButton(
+                            onClick = dispatcher.rememberRelay(Export),
+                            icon = { Icon(Icons.Default.Download, contentDescription = "Export") },
+                            text = {
+                                Text(text = "Export")
+                            },
+                        )
+                    } else {
+                        FloatingActionButton(
+                            onClick = dispatcher.rememberRelay(Share(selectedSection)),
+                            content = { Icon(Icons.Default.Share, contentDescription = "Share") },
+                        )
+                    }
+                }
+            } else {
+                FloatingActionButton(
+                    onClick = dispatcher.rememberRelay(Share(selectedSection)),
+                    content = { Icon(Icons.Default.Share, contentDescription = "Share") },
                 )
             }
         },

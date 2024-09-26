@@ -8,12 +8,15 @@ import com.materialkolor.PaletteStyle
 import com.materialkolor.builder.core.Clipboard
 import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.core.readBytes
+import com.materialkolor.builder.core.shareToClipboard
+import com.materialkolor.builder.core.shareUrl
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.components.ColorPickerState
+import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.ktx.UiStateViewModel
 import com.materialkolor.ktx.themeColorOrNull
 import com.materialkolor.ktx.toHex
@@ -136,6 +139,16 @@ class HomeModel(
             } finally {
                 imageLoading(false)
             }
+        }
+    }
+
+    fun share(destination: HomeSection) {
+        val url = settingsRepo.getUrl(destination.name)
+        Logger.d { "Share URL: $url" }
+        shareUrl(url)
+
+        if (shareToClipboard) {
+            emit(Event.ShowSnackbar("URL copied to clipboard"))
         }
     }
 

@@ -1,6 +1,5 @@
 package com.materialkolor.builder.ui.home.page
 
-import com.materialkolor.builder.core.exportSupported
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -9,13 +8,10 @@ enum class HomeSection {
     Preview,
     Components,
     Themes,
-    Palettes,
-    Export;
+    Palettes;
 
     companion object {
 
-        val All: PersistentList<HomeSection> =
-            if (exportSupported) HomeSection.entries.toPersistentList()
-            else (HomeSection.entries - Export).toPersistentList()
+        val All: PersistentList<HomeSection> = entries.toPersistentList()
     }
 }

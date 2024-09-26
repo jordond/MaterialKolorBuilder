@@ -14,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(destination: String? = null) {
     val darkModeProvider = remember { DI.darkModeProvider }
     val isDarkMode = isSystemInDarkTheme()
     LaunchedEffect(Unit) {
@@ -28,6 +28,6 @@ fun App() {
         settings = state.settings,
         urlLauncher = model.urlLauncher,
     ) {
-        HomeScreen()
+        HomeScreen(destination)
     }
 }

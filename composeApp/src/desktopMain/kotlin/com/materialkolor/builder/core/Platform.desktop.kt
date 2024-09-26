@@ -9,3 +9,11 @@ actual val exportSupported: Boolean = true
 
 actual val platformContext: PlatformContext
     get() = PlatformContext.INSTANCE
+
+actual val isMobile: Boolean = false
+
+actual val shareToClipboard: Boolean = true
+
+actual fun shareUrl(url: String) {
+    copyTextToClipboard(url)
+}

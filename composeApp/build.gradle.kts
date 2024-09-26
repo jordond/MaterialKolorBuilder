@@ -130,6 +130,12 @@ kotlin {
             iosMain.get().dependsOn(this)
             desktopMain.dependsOn(this)
         }
+
+        val mobileMain by creating {
+            dependsOn(commonMain.get())
+            androidMain.get().dependsOn(this)
+            iosMain.get().dependsOn(this)
+        }
     }
 }
 

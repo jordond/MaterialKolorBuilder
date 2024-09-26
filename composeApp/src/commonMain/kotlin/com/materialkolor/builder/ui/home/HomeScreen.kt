@@ -24,9 +24,11 @@ import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.Reset
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
+import com.materialkolor.builder.ui.home.HomeAction.Share
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
+import com.materialkolor.builder.ui.home.page.HomeSection
 import com.materialkolor.builder.ui.home.page.gallery.NavigationDrawerContent
 import com.materialkolor.builder.ui.ktx.HandleEvents
 import com.materialkolor.builder.ui.ktx.launch
@@ -44,7 +46,7 @@ val LocalBottomSheetScaffoldState =
     compositionLocalOf<BottomSheetScaffoldState> { error("BottomSheetScaffoldState is not found") }
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(destination: String? = null) {
     val model = viewModel { HomeModel() }
     val state by model.state.collectAsStateWithLifecycle()
 
@@ -68,6 +70,10 @@ fun HomeScreen() {
         }
     }
 
+    val initialSection = remember {
+        destination?.let { runCatching { HomeSection.valueOf(it) }.getOrNull() }
+    }
+
     CompositionLocalProvider(
         LocalSnackbarHostState provides snackbar,
         LocalDrawerState provides drawerState,
@@ -84,6 +90,7 @@ fun HomeScreen() {
                 settings = state.settings,
                 colorPickerState = state.colorPickerState,
                 snackbarState = snackbar,
+                initialSection = initialSection,
                 processingImage = state.processingImage,
                 dispatcher = rememberDebounceDispatcher { action ->
                     when (action) {
@@ -99,6 +106,7 @@ fun HomeScreen() {
                         is CopyColor -> model.copyColorToClipboard(action.name, action.color)
                         is HomeAction.ColorPicker -> model.handleColorPickerAction(action)
                         is Export -> {} // TODO: Implement export
+                        is Share -> model.share(action.section)
                     }
                 },
             )

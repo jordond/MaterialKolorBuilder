@@ -4,6 +4,8 @@ import com.mohamedrejeb.calf.core.PlatformContext
 import com.mohamedrejeb.calf.io.KmpFile
 import com.mohamedrejeb.calf.io.readByteArray
 
+expect val baseUrl: String
+
 /**
  * Whether the platform supports exporting the current theme to code.
  *
@@ -18,3 +20,9 @@ suspend fun KmpFile.readBytes(): ByteArray = readByteArray(platformContext)
 expect fun updatePlatformQueryParams(queryParams: String)
 
 expect fun readPlatformQueryParams(): String?
+
+expect val isMobile: Boolean
+
+expect val shareToClipboard: Boolean
+
+expect fun shareUrl(url: String)

@@ -46,12 +46,7 @@ fun SettingsEntity.toQueryParams(): String {
 }
 
 fun String.toSettingsEntity(): SettingsEntity {
-    val params = replaceFirst("?", "").split(SEPARATOR)
-        .associate { param ->
-            val (key, value) = param.split("=")
-            key to value.decodeURLQueryComponent()
-        }
-
+    val params = splitQueryParams()
     val colors = KeyColor.entries
         .associateWith { keyColor -> params[keyColor.KEY]?.parseHexToColor()?.toArgb() }
         .filterValues { it != null }
@@ -64,6 +59,14 @@ fun String.toSettingsEntity(): SettingsEntity {
         style = params[KEY_STYLE]?.safeToPaletteStyle() ?: PaletteStyle.TonalSpot,
         isExtendedFidelity = params[KEY_EXTENDED_FIDELITY]?.toBooleanStrictOrNull() ?: false,
     )
+}
+
+fun String.splitQueryParams(): Map<String, String> {
+    return replaceFirst("?", "").split(SEPARATOR)
+        .associate { param ->
+            val (key, value) = param.split("=")
+            key to value.decodeURLQueryComponent()
+        }
 }
 
 private fun Any?.param(key: String): String {
