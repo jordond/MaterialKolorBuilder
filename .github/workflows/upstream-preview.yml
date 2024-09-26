@@ -3,14 +3,6 @@ name: Upstream Preview
 on:
   repository_dispatch:
     types: [trigger-upstream-preview]
-  workflow_dispatch:
-    inputs:
-      commit_hash:
-        description: "Commit hash from MaterialKolor"
-        required: true
-      pr_number:
-        description: "PR number (if applicable)"
-        required: false
 
 jobs:
   build-and-deploy:
@@ -25,10 +17,10 @@ jobs:
         run: |
           git submodule update --init --recursive
           cd library
-          git fetch origin ${{ github.event.client_payload.commit_hash || github.event.inputs.commit_hash }}
-          git checkout ${{ github.event.client_payload.commit_hash || github.event.inputs.commit_hash }}
+          git fetch origin ${{ github.event.client_payload.commit_hash }}
+          git checkout ${{ github.event.client_payload.commit_hash }}
 
-      - name: setup-java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: 17
@@ -45,10 +37,10 @@ jobs:
 
       - name: Set Channel ID
         run: |
-          if [ -n "${{ github.event.client_payload.pr_number || github.event.inputs.pr_number }}" ]; then
-            echo "CHANNEL_ID=upstream-pr-${{ github.event.client_payload.pr_number || github.event.inputs.pr_number }}" >> $GITHUB_ENV
+          if [ -n "${{ github.event.client_payload.pr_number }}" ]; then
+            echo "CHANNEL_ID=upstream-pr-${{ github.event.client_payload.pr_number }}" >> $GITHUB_ENV
           else
-            echo "CHANNEL_ID=upstream-${{ github.event.client_payload.commit_hash || github.event.inputs.commit_hash }}" >> $GITHUB_ENV
+            echo "CHANNEL_ID=upstream-${{ github.event.client_payload.commit_hash }}" >> $GITHUB_ENV
           fi
 
       - name: Deploy to Firebase
@@ -58,3 +50,47 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JORDOND_A4B2F }}
           projectId: jordond-a4b2f
           channelId: ${{ env.CHANNEL_ID }}
+        id: firebase-deploy
+
+      - name: Comment on PR
+        if: github.event.client_payload.pr_number
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.MATERIALKOLOR_PR_COMMENT_TOKEN }}
+          script: |
+            const prNumber = ${{ github.event.client_payload.pr_number }};
+            const previewUrl = '${{ steps.firebase-deploy.outputs.details_url }}';
+            const expirationTime = '${{ steps.firebase-deploy.outputs.expire_time_formatted }}';
+            const commitHash = '${{ github.event.client_payload.commit_hash }}';
+            
+            const commentBody = `Visit the preview URL for this PR (updated for commit ${commitHash.substring(0, 7)}):
+
+            [${previewUrl}](${previewUrl})
+
+            <sub>(expires ${expirationTime})</sub>`;
+            
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: 'jordond',
+              repo: 'MaterialKolor',
+              issue_number: prNumber
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('Visit the preview URL for this PR')
+            );
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: 'MaterialKolor-repo-owner',
+                repo: 'MaterialKolor',
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: 'MaterialKolor-repo-owner',
+                repo: 'MaterialKolor',
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }
