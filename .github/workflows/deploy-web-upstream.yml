@@ -1,4 +1,4 @@
-name: Upstream Preview
+name: Deploy Upstream Preview
 
 on:
   repository_dispatch:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
+    if: !github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -81,14 +82,14 @@ jobs:
             
             if (botComment) {
               await github.rest.issues.updateComment({
-                owner: 'MaterialKolor-repo-owner',
+                owner: 'jordond',
                 repo: 'MaterialKolor',
                 comment_id: botComment.id,
                 body: commentBody
               });
             } else {
               await github.rest.issues.createComment({
-                owner: 'MaterialKolor-repo-owner',
+                owner: 'jordond',
                 repo: 'MaterialKolor',
                 issue_number: prNumber,
                 body: commentBody
