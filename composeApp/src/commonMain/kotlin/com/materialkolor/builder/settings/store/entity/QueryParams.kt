@@ -46,7 +46,7 @@ fun SettingsEntity.toQueryParams(): String {
 }
 
 fun String.toSettingsEntity(): SettingsEntity {
-    val params = this.split(SEPARATOR)
+    val params = replaceFirst("?", "").split(SEPARATOR)
         .associate { param ->
             val (key, value) = param.split("=")
             key to value.decodeURLQueryComponent()

@@ -9,27 +9,13 @@ import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class SettingsEntity(
-    @SerialName("colors")
     val colors: Map<KeyColor, Int?>,
-
-    @SerialName("is_dark_mode")
     val isDarkMode: Boolean? = null,
-
-    @SerialName("contrast")
     val contrast: Double = Contrast.Default.value,
-
-    @SerialName("selected_preset_id")
     val selectedPresetId: String? = null,
-
-    @SerialName("style")
     val style: PaletteStyle = PaletteStyle.TonalSpot,
-
-    @SerialName("is_extended_fidelity")
     val isExtendedFidelity: Boolean = false,
 )
 

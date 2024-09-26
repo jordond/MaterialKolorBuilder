@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -59,7 +58,6 @@ kotlin {
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
-                optIn("kotlinx.serialization.ExperimentalSerializationApi")
             }
         }
 
@@ -84,25 +82,17 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.collections)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
             implementation(libs.kstore)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.contentNegotiation)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.serialization.json)
+            implementation(libs.ktor.http)
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.stateHolder)
             implementation(libs.stateHolder.compose)
-            implementation(libs.stateHolder.voyager)
             implementation(libs.materialKolor)
             implementation(libs.compose.colorpicker)
             implementation(libs.calf.filePicker)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.bundles.voyager)
         }
 
         commonTest.dependencies {
@@ -117,7 +107,6 @@ kotlin {
             implementation(libs.androidx.core)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.kotlinx.coroutines.guava)
-            implementation(libs.koin.android)
             implementation(libs.kstore.file)
         }
 

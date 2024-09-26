@@ -8,6 +8,7 @@ import com.materialkolor.builder.settings.model.KeyColor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class QueryParamsTest {
 
@@ -88,7 +89,7 @@ class QueryParamsTest {
 
     @Test
     fun testStringToSettingsEntityWithMissingValues() {
-        val queryParams = "color_seed=FF0000&contrast=0.5&style=Neutral"
+        val queryParams = "color_seed=FFFF0000&contrast=0.5&style=Neutral"
 
         val settingsEntity = queryParams.toSettingsEntity()
 
@@ -98,6 +99,14 @@ class QueryParamsTest {
         assertEquals(null, settingsEntity.selectedPresetId)
         assertEquals(PaletteStyle.Neutral, settingsEntity.style)
         assertEquals(false, settingsEntity.isExtendedFidelity)
+    }
+
+    @Test
+    fun testParsingWithQuestionMark() {
+        val params = "?color_seed=FFCBDDEE"
+        val entity = params.toSettingsEntity()
+        assertTrue(entity.colors.containsKey(KeyColor.Seed))
+        assertEquals(0xFFCBDDEE, entity.colors[KeyColor.Seed]?.toLong())
     }
 
     @Test

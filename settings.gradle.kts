@@ -45,6 +45,7 @@ develocity {
 }
 
 include(":composeApp")
+
 includeBuild("library") {
     dependencySubstitution {
         substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
