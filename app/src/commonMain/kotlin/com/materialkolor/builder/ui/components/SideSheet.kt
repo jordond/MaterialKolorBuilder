@@ -27,11 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
+import com.materialkolor.builder.ui.ktx.conditional
 
 // TODO: Replace when Material3 includes the SideSheet component
 @Composable
@@ -41,6 +44,8 @@ fun SideSheet(
     maxWidthFraction: Float = 1f / 2.5f,
     minWidth: Dp = 200.dp,
     visibleWidth: Dp = 60.dp,
+    includePadding: Boolean = false,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     sheetContent: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -63,15 +68,19 @@ fun SideSheet(
                 content()
             }
 
-            val surfaceColor = MaterialTheme.colorScheme.surfaceContainer
+            val shape =
+                if (includePadding) RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
+                else RectangleShape
 
             Surface(
-                color = surfaceColor,
-                shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp),
+                color = containerColor,
+                shape = shape,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .width(sheetWidth)
-                    .padding(vertical = 32.dp)
+                    .conditional(includePadding) {
+                        Modifier.padding(vertical = 32.dp)
+                    }
                     .fillMaxHeight()
                     .clipToBounds()
                     .layout { measurable, constraints ->
@@ -85,23 +94,19 @@ fun SideSheet(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     Box(
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     ) {
                         sheetContent()
                     }
 
-                    val tabColor by animateColorAsState(
-                        if (isExpanded) surfaceColor else MaterialTheme.colorScheme.surfaceContainerHighest,
-                    )
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .width(visibleWidth)
                             .fillMaxHeight()
-                            .background(tabColor),
                     ) {
                         IconButton(
                             onClick = { isExpanded = !isExpanded },
