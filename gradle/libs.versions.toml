@@ -1,6 +1,6 @@
 [versions]
 app-name = "com.materialkolor.builder"
-app-version = "0.1.0"
+app-version = "1.0.0"
 app-code = "100"
 android-compileSdk = "34"
 android-targetSdk = "34"
@@ -67,3 +67,4 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" 
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version = "0.15.2" }

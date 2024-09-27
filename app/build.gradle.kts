@@ -1,3 +1,5 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.INT
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -9,6 +11,17 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.buildKonfig)
+}
+
+buildkonfig {
+    packageName = libs.versions.app.name.get()
+
+    defaultConfigs {
+        buildConfigField(STRING, "VERSION_NAME", libs.versions.app.version.get())
+        buildConfigField(INT, "VERSION_CODE", libs.versions.app.code.get())
+        buildConfigField(STRING, "MATERIAL_KOLOR_VERSION", libs.versions.materialKolor.get())
+    }
 }
 
 kotlin {
@@ -34,7 +47,7 @@ kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -155,6 +168,15 @@ android {
         versionName = libs.versions.app.version.get()
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = project.rootDir.resolve("keystore.key")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEYSTORE_KEY_ALIAS")
+            keyPassword = System.getenv("KEYSTORE_KEY_PASSWORD")
+        }
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -163,13 +185,14 @@ android {
 
     buildTypes {
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
         }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -187,8 +210,8 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = libs.versions.app.name.get()
-            packageVersion = "1.0.0"
+            packageName = "MaterialKolorBuilder"
+            packageVersion = libs.versions.app.version.get()
         }
     }
 }

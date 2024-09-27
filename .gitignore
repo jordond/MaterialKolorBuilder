@@ -19,3 +19,9 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 public/
+keystore.key
+*.aab
+*.apk
+*.msi
+*.deb
+*.dmg
