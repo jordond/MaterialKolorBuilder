@@ -66,4 +66,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MATERIALKOLOR }}
           channelId: live
-          projectId: jordond-a4b2f
+          projectId: materialkolor
