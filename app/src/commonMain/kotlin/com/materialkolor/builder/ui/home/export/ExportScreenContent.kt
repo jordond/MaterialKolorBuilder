@@ -76,7 +76,8 @@ fun ExportExpandedContent(
     SideSheet(
         position = SideSheetPosition.End,
         initialExpanded = true,
-        includePadding = true,
+        isFloating = true,
+        displayOverContent = false,
         sheetContent = {
             CustomizeSection(
                 settings = settings,

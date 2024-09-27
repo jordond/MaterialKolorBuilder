@@ -1,6 +1,8 @@
 package com.materialkolor.builder.ui.components
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -33,7 +35,7 @@ import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 import com.materialkolor.builder.ui.ktx.conditional
-import com.materialkolor.builder.ui.ktx.debugBorder
+import com.materialkolor.builder.ui.ktx.whenNotNull
 
 enum class SideSheetPosition {
     Start,
@@ -49,8 +51,10 @@ fun SideSheet(
     maxWidthFraction: Float = 1f / 2.5f,
     minWidth: Dp = 200.dp,
     visibleWidth: Dp = 60.dp,
-    includePadding: Boolean = false,
+    isFloating: Boolean = false,
+    displayOverContent: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surface,
+    contentContainerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow,
     sheetContent: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -64,11 +68,19 @@ fun SideSheet(
             targetValue = if (isExpanded) 1f else 0f,
         )
 
+        val currentSheetWidth = (visibleWidth + (sheetWidth - visibleWidth) * animatedOffsetX)
+
+        val contentWidth =
+            if (displayOverContent) null
+            else animateDpAsState(targetValue = maxWidth - currentSheetWidth)
+
         Box(modifier = modifier.fillMaxSize()) {
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.whenNotNull(contentWidth) { Modifier.width(it.value) },
             ) {
-                content()
+                Surface(color = contentContainerColor) {
+                    content()
+                }
             }
 
             val shape = when (position) {
@@ -76,56 +88,64 @@ fun SideSheet(
                 SideSheetPosition.End -> RoundedCornerShape(topStart = 25.dp, bottomStart = 25.dp)
             }
 
-            Surface(
-                color = containerColor,
-                shape = shape,
+            Box(
                 modifier = Modifier
                     .align(
                         if (position == SideSheetPosition.Start) Alignment.CenterStart
                         else Alignment.CenterEnd,
                     )
-                    .width(sheetWidth)
-                    .conditional(includePadding) {
-                        Modifier.padding(vertical = 32.dp)
-                    }
-                    .clipToBounds()
-                    .layout { measurable, constraints ->
-                        val placeable = measurable.measure(constraints)
-                        layout(placeable.width, placeable.height) {
-                            val xOffset = when (position) {
-                                SideSheetPosition.Start -> -((1 - animatedOffsetX) * (sheetWidth - visibleWidth).toPx()).toInt()
-                                SideSheetPosition.End -> ((1 - animatedOffsetX) * (sheetWidth - visibleWidth).toPx()).toInt()
-                            }
-                            placeable.place(xOffset, 0)
-                        }
+                    .conditional(isFloating) {
+                        Modifier
+                            .background(color = contentContainerColor)
+                            .padding(vertical = 32.dp)
                     },
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxSize()
+                Surface(
+                    color = containerColor,
+                    shape = shape,
+                    modifier = Modifier
+                        .width(sheetWidth)
+                        .clipToBounds()
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(constraints)
+                            layout(placeable.width, placeable.height) {
+                                val offset =
+                                    ((1 - animatedOffsetX) * (sheetWidth - visibleWidth).toPx()).toInt()
+                                val xOffset = when (position) {
+                                    SideSheetPosition.Start -> -offset
+                                    SideSheetPosition.End -> offset
+                                }
+                                placeable.place(xOffset, 0)
+                            }
+                        },
                 ) {
-                    if (position == SideSheetPosition.End) {
-                        ExpandCollapseButton(
-                            isExpanded = isExpanded,
-                            onClick = { isExpanded = !isExpanded },
-                            sheetPosition = position,
-                            visibleWidth = visibleWidth,
-                        )
-                    }
-
-                    Box(
-                        modifier = Modifier.weight(1f),
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxSize(),
                     ) {
-                        sheetContent()
-                    }
+                        if (position == SideSheetPosition.End) {
+                            ExpandCollapseButton(
+                                isExpanded = isExpanded,
+                                onClick = { isExpanded = !isExpanded },
+                                sheetPosition = position,
+                                visibleWidth = visibleWidth,
+                            )
+                        }
 
-                    if (position == SideSheetPosition.Start) {
-                        ExpandCollapseButton(
-                            isExpanded = isExpanded,
-                            onClick = { isExpanded = !isExpanded },
-                            sheetPosition = position,
-                            visibleWidth = visibleWidth,
-                        )
+                        Box(
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            sheetContent()
+                        }
+
+                        if (position == SideSheetPosition.Start) {
+                            ExpandCollapseButton(
+                                isExpanded = isExpanded,
+                                onClick = { isExpanded = !isExpanded },
+                                sheetPosition = position,
+                                visibleWidth = visibleWidth,
+                            )
+                        }
                     }
                 }
             }
