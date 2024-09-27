@@ -1,10 +1,14 @@
 package com.materialkolor.builder.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -25,10 +29,22 @@ fun AppTopBar(
     onReset: () -> Unit,
     toggleAboutDialog: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    showBackButton: Boolean = false,
+    onBack: () -> Unit = {},
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
     TopAppBar(
         modifier = modifier,
+        navigationIcon = {
+            AnimatedVisibility(visible = showBackButton) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = "Back",
+                    )
+                }
+            }
+        },
         title = {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),

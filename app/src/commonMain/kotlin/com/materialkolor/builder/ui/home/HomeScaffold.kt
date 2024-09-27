@@ -28,7 +28,6 @@ import com.materialkolor.builder.ui.components.AppSnackbarHost
 import com.materialkolor.builder.ui.components.AppTopBar
 import com.materialkolor.builder.ui.components.ColorPickerDialog
 import com.materialkolor.builder.ui.components.ColorPickerState
-import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.Share
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
@@ -61,6 +60,8 @@ fun HomeScreenScaffold(
         topBar = {
             AppTopBar(
                 settings = settings,
+                showBackButton = screen == HomeScreens.Export,
+                onBack = dispatcher.relay(HomeAction.Nav(HomeScreens.Preview)),
                 toggleDarkMode = dispatcher.relay(ToggleDarkMode),
                 onReset = dispatcher.relay(HomeAction.Reset),
                 toggleAboutDialog = { aboutDialogVisible = true },
@@ -80,7 +81,7 @@ fun HomeScreenScaffold(
                     Crossfade(windowSizeClass.widthIsExpanded()) { isExpanded ->
                         if (isExpanded) {
                             ExtendedFloatingActionButton(
-                                onClick = dispatcher.rememberRelay(Export),
+                                onClick = dispatcher.rememberRelay(HomeAction.Nav(HomeScreens.Export)),
                                 icon = { Icon(Icons.Default.Download, contentDescription = "Export") },
                                 text = {
                                     Text(text = "Export")

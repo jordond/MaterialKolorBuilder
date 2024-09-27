@@ -21,8 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.materialkolor.builder.core.rememberDebounceDispatcher
+import com.materialkolor.builder.ui.home.HomeAction.ColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
-import com.materialkolor.builder.ui.home.HomeAction.Export
+import com.materialkolor.builder.ui.home.HomeAction.Nav
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.Reset
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
@@ -109,8 +110,8 @@ fun HomeScreen(destination: String? = null) {
                         is RandomColor -> model.randomColor()
                         is Reset -> model.reset()
                         is CopyColor -> model.copyColorToClipboard(action.name, action.color)
-                        is HomeAction.ColorPicker -> model.handleColorPickerAction(action)
-                        is Export -> screen = HomeScreens.Export
+                        is ColorPicker -> model.handleColorPickerAction(action)
+                        is Nav -> screen = action.screen
                         is Share -> model.share(action.section)
                     }
                 },

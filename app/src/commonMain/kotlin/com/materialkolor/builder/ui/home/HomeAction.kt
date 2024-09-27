@@ -17,7 +17,7 @@ sealed interface HomeAction {
     data class SelectImage(val image: SeedImage.Resource?) : HomeAction
     data class CopyColor(val name: String, val color: Color) : HomeAction
     data object RandomColor : HomeAction
-    data object Export : HomeAction
+    data class Nav(val screen: HomeScreens) : HomeAction
     data class Share(val section: PreviewSection) : HomeAction
 
     data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker

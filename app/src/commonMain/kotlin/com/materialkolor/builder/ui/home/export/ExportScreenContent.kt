@@ -20,6 +20,7 @@ import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.LocalWindowSizeClass
 import com.materialkolor.builder.ui.components.SideSheet
+import com.materialkolor.builder.ui.components.SideSheetPosition
 import com.materialkolor.builder.ui.home.HomeAction
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
@@ -73,7 +74,9 @@ fun ExportExpandedContent(
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
     SideSheet(
+        position = SideSheetPosition.End,
         initialExpanded = true,
+        includePadding = true,
         sheetContent = {
             CustomizeSection(
                 settings = settings,
