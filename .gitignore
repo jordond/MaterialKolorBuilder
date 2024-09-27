@@ -19,6 +19,7 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 public/
+dist/
 keystore.key
 *.aab
 *.apk

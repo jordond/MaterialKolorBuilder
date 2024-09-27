@@ -1,0 +1,177 @@
+name: Release Workflow
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      version_name:
+        description: "Version name (e.g., 1.0.0)"
+        required: true
+      version_code:
+        description: "Version code (optional)"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        target: [android, web]
+    name: "Build ${{ matrix.target }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "VERSION_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          else
+            echo "VERSION_NAME=${{ github.event.inputs.version_name }}" >> $GITHUB_ENV
+            if [ -n "${{ github.event.inputs.version_code }}" ]; then
+            echo "VERSION_CODE=${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
+            fi
+          fi
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: adopt
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Build for ${{ matrix.target }}
+        run: ./scripts/build ${{ matrix.target }} ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: dist
+          if-no-files-found: error
+
+  build-desktop:
+    strategy:
+      matrix:
+        os: [ubuntu, windows, macos]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: adopt
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Set up environment
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "VERSION_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          else
+            echo "VERSION_NAME=${{ github.event.inputs.version_name }}" >> $GITHUB_ENV
+            if [ -n "${{ github.event.inputs.version_code }}" ]; then
+              echo "VERSION_CODE=${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
+            fi
+          fi
+
+      - name: Build for ${{ matrix.os }}
+        run: ./scripts/build desktop ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.os }}
+          path: dist
+          if-no-files-found: error
+
+  release:
+    needs: [build, build-desktop]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            git fetch --tags
+            if git rev-parse -q --verify "refs/tags/${{ github.event.inputs.version_name }}" >/dev/null; then
+              echo "Tag exists"
+              echo "tag_exists=true" >> $GITHUB_OUTPUT
+            else
+              echo "Tag does not exist"
+              echo "tag_exists=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Display downloaded files
+        run: ls -R
+
+      - name: Skip update release if tag does not exist
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        run: echo "Skipping update release as tag does not exist"
+
+      - name: Update Release with assets
+        if: steps.check_tag.outputs.tag_exists == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs').promises;
+            const path = require('path');
+
+            let release;
+            if (context.payload.release) {
+              // Automatic trigger from a new release
+              release = context.payload.release;
+            } else {
+              // Manual trigger, find release by tag (VERSION_NAME)
+              const { data: releaseData } = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: process.env.VERSION_NAME
+              });
+              release = releaseData;
+            }
+
+            const distPath = process.cwd();
+            const files = await fs.readdir(distPath);
+
+            for (const file of files) {
+              const filePath = path.join(distPath, file);
+              const stats = await fs.stat(filePath);
+              
+              if (stats.isFile()) {
+                console.log(`Uploading ${file} to release...`);
+                await github.rest.repos.uploadReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: release.id,
+                  name: file,
+                  data: await fs.readFile(filePath)
+                });
+              }
+            }
+
+            console.log('All assets uploaded successfully.');
