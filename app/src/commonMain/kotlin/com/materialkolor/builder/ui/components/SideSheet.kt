@@ -124,7 +124,7 @@ fun SideSheet(
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         if (position == SideSheetPosition.End) {
-                            ExpandCollapseButton(
+                            ExpandCollapsePanel(
                                 isExpanded = isExpanded,
                                 onClick = { isExpanded = !isExpanded },
                                 sheetPosition = position,
@@ -139,7 +139,7 @@ fun SideSheet(
                         }
 
                         if (position == SideSheetPosition.Start) {
-                            ExpandCollapseButton(
+                            ExpandCollapsePanel(
                                 isExpanded = isExpanded,
                                 onClick = { isExpanded = !isExpanded },
                                 sheetPosition = position,
@@ -154,7 +154,7 @@ fun SideSheet(
 }
 
 @Composable
-private fun ExpandCollapseButton(
+private fun ExpandCollapsePanel(
     isExpanded: Boolean,
     onClick: () -> Unit,
     visibleWidth: Dp,
