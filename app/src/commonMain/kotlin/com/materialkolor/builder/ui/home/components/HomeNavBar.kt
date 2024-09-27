@@ -15,18 +15,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.materialkolor.builder.ui.home.page.HomeSection
+import com.materialkolor.builder.ui.home.preview.PreviewSection
 
 @Composable
 fun HomeBottomBar(
-    selected: HomeSection,
-    onSelected: (HomeSection) -> Unit,
+    selected: PreviewSection,
+    onSelected: (PreviewSection) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavigationBar(
         modifier = modifier,
     ) {
-        HomeSection.All.forEach { section ->
+        PreviewSection.All.forEach { section ->
             val name = section.name()
             NavigationBarItem(
                 icon = {
@@ -45,14 +45,14 @@ fun HomeBottomBar(
 
 @Composable
 fun HomeNavRail(
-    selected: HomeSection,
-    onSelected: (HomeSection) -> Unit,
+    selected: PreviewSection,
+    onSelected: (PreviewSection) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavigationRail(
         modifier = modifier,
     ) {
-        HomeSection.All.forEach { section ->
+        PreviewSection.All.forEach { section ->
             val name = section.name()
             NavigationRailItem(
                 icon = {
@@ -70,21 +70,21 @@ fun HomeNavRail(
 }
 
 @Composable
-private fun HomeSection.icon(): ImageVector = remember(this) {
+private fun PreviewSection.icon(): ImageVector = remember(this) {
     when (this) {
-        HomeSection.Customize -> Icons.Default.Tune
-        HomeSection.Themes -> Icons.Default.Contrast
-        HomeSection.Preview -> Icons.Default.Smartphone
-        HomeSection.Components -> Icons.Default.Preview
+        PreviewSection.Customize -> Icons.Default.Tune
+        PreviewSection.Themes -> Icons.Default.Contrast
+        PreviewSection.Preview -> Icons.Default.Smartphone
+        PreviewSection.Components -> Icons.Default.Preview
     }
 }
 
 @Composable
-private fun HomeSection.name(): String = remember(this) {
+private fun PreviewSection.name(): String = remember(this) {
     when (this) {
-        HomeSection.Customize,
-        HomeSection.Themes,
-        HomeSection.Preview -> this.name
-        HomeSection.Components -> "Gallery"
+        PreviewSection.Customize,
+        PreviewSection.Themes,
+        PreviewSection.Preview -> this.name
+        PreviewSection.Components -> "Gallery"
     }
 }

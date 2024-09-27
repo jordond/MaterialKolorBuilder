@@ -16,7 +16,7 @@ import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.components.ColorPickerState
-import com.materialkolor.builder.ui.home.page.HomeSection
+import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.ktx.UiStateViewModel
 import com.materialkolor.ktx.themeColorOrNull
 import com.materialkolor.ktx.toHex
@@ -142,7 +142,7 @@ class HomeModel(
         }
     }
 
-    fun share(destination: HomeSection) {
+    fun share(destination: PreviewSection) {
         val url = settingsRepo.getUrl(destination.name)
         Logger.d { "Share URL: $url" }
         shareUrl(url)
