@@ -60,7 +60,7 @@ jobs:
   build-desktop:
     strategy:
       matrix:
-        os: [ubuntu, windows, macos]
+        os: [ubuntu, macos]
     name: "Build desktop-${{ matrix.os }}"
     runs-on: ${{ matrix.os }}-latest
     steps:
