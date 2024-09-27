@@ -34,8 +34,8 @@ import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
 import com.materialkolor.builder.ui.home.export.ExportScreenContent
-import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.home.preview.PreviewScreenContent
+import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
@@ -112,11 +112,14 @@ fun HomeScreenScaffold(
                     updateSelectedSection = { selectedSection = it },
                     dispatcher = dispatcher,
                     processingImage = processingImage,
+                    windowSizeClass = windowSizeClass,
                 )
             } else {
                 ExportScreenContent(
                     settings = settings,
+                    processingImage = processingImage,
                     dispatcher = dispatcher,
+                    windowSizeClass = windowSizeClass,
                 )
             }
         }

@@ -72,7 +72,7 @@ fun HomeScreen(destination: String? = null) {
         }
     }
 
-    var screen by remember { mutableStateOf<HomeScreens>(HomeScreens.Preview) }
+    var screen by remember { mutableStateOf(HomeScreens.Export) }
 
     val initialSection = remember {
         destination?.let { runCatching { PreviewSection.valueOf(it) }.getOrNull() }
