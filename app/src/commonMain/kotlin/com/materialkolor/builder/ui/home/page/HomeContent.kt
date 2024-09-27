@@ -4,7 +4,9 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -107,13 +109,11 @@ fun CompactContent(
                     ThemeSection(
                         settings = settings,
                         onCopyColor = dispatcher.rememberRelayOf(::CopyColor),
-                        modifier = Modifier.padding(vertical = 16.dp),
+                        modifier = Modifier.padding(top = 16.dp),
                     )
-                }
-            }
-            HomeSection.Palettes -> {
-                WrappedContent {
-                    PaletteSection(modifier = Modifier.padding(vertical = 16.dp))
+
+                    PaletteSection(modifier = Modifier.padding(bottom = 16.dp))
+
                 }
             }
         }
@@ -132,5 +132,7 @@ private fun WrappedContent(
             .verticalScroll(rememberScrollState()),
     ) {
         content()
+
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }

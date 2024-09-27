@@ -1,4 +1,4 @@
-package com.materialkolor.builder.ui.home.components
+package com.materialkolor.builder.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope

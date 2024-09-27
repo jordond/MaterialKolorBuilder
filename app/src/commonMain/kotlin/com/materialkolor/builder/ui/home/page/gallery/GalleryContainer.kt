@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.ui.home.LocalWindowSizeClass
+import com.materialkolor.builder.ui.LocalWindowSizeClass
 import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.theme.LocalUrlLauncher

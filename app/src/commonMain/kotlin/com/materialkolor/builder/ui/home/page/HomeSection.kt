@@ -7,8 +7,7 @@ enum class HomeSection {
     Customize,
     Preview,
     Components,
-    Themes,
-    Palettes;
+    Themes;
 
     companion object {
 
