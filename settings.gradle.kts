@@ -46,9 +46,14 @@ develocity {
 
 include(":app")
 
-includeBuild("library") {
-    dependencySubstitution {
-        substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
-        substitute(module("com.materialkolor:material-color-utilities")).using(project(":material-color-utilities"))
+// When the CI is building release versions of the app we want to use only published versions of the
+// MaterialKolor library.
+val isCiRelease = System.getenv("IS_CI_RELEASE").toBoolean()
+if (!isCiRelease) {
+    includeBuild("library") {
+        dependencySubstitution {
+            substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
+            substitute(module("com.materialkolor:material-color-utilities")).using(project(":material-color-utilities"))
+        }
     }
 }

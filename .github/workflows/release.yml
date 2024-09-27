@@ -15,6 +15,14 @@ on:
 permissions:
   contents: write
 
+env:
+  VERSION_NAME: ${{ github.event.release.tag_name || github.event.inputs.version_name }}
+  VERSION_CODE: ${{ github.event.inputs.version_code }}
+  KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+  KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+
 jobs:
   build:
     strategy:
@@ -25,17 +33,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up environment
-        run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            echo "VERSION_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          else
-            echo "VERSION_NAME=${{ github.event.inputs.version_name }}" >> $GITHUB_ENV
-            if [ -n "${{ github.event.inputs.version_code }}" ]; then
-            echo "VERSION_CODE=${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
-            fi
-          fi
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -63,6 +60,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, windows, macos]
+    name: "Build desktop-${{ matrix.os }}"
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout
@@ -79,17 +77,6 @@ jobs:
 
       - name: Gradle Wrapper Validation
         uses: gradle/actions/wrapper-validation@v3
-
-      - name: Set up environment
-        run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            echo "VERSION_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          else
-            echo "VERSION_NAME=${{ github.event.inputs.version_name }}" >> $GITHUB_ENV
-            if [ -n "${{ github.event.inputs.version_code }}" ]; then
-              echo "VERSION_CODE=${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
-            fi
-          fi
 
       - name: Build for ${{ matrix.os }}
         run: ./scripts/build desktop ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
@@ -111,7 +98,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             git fetch --tags
-            if git rev-parse -q --verify "refs/tags/${{ github.event.inputs.version_name }}" >/dev/null; then
+            if git rev-parse -q --verify "refs/tags/${{ env.VERSION_NAME }}" >/dev/null; then
               echo "Tag exists"
               echo "tag_exists=true" >> $GITHUB_OUTPUT
             else
