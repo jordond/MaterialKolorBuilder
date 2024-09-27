@@ -119,17 +119,23 @@ fun SideSheet(
                             }
                         },
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        if (position == SideSheetPosition.End) {
+                    val panel: @Composable () -> Unit = remember(isExpanded) {
+                        {
                             ExpandCollapsePanel(
                                 isExpanded = isExpanded,
                                 onClick = { isExpanded = !isExpanded },
                                 sheetPosition = position,
                                 visibleWidth = visibleWidth,
                             )
+                        }
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        if (position == SideSheetPosition.End) {
+                            panel()
                         }
 
                         Box(
@@ -139,12 +145,7 @@ fun SideSheet(
                         }
 
                         if (position == SideSheetPosition.Start) {
-                            ExpandCollapsePanel(
-                                isExpanded = isExpanded,
-                                onClick = { isExpanded = !isExpanded },
-                                sheetPosition = position,
-                                visibleWidth = visibleWidth,
-                            )
+                            panel()
                         }
                     }
                 }
@@ -159,10 +160,11 @@ private fun ExpandCollapsePanel(
     onClick: () -> Unit,
     visibleWidth: Dp,
     sheetPosition: SideSheetPosition,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .width(visibleWidth)
             .clickableWithoutRipple(onClick)
             .fillMaxHeight(),
