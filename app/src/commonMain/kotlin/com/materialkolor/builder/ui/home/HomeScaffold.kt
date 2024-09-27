@@ -57,35 +57,6 @@ fun HomeScreenScaffold(
     var aboutDialogVisible by remember { mutableStateOf(false) }
     var selectedSection by remember { mutableStateOf(initialSection ?: HomeSection.Customize) }
 
-    HomeScreenScaffold(
-        settings = settings,
-        colorPickerState = colorPickerState,
-        dispatcher = dispatcher,
-        snackbarState = snackbarState,
-        processingImage = processingImage,
-        aboutDialogVisible = aboutDialogVisible,
-        toggleAboutDialog = { aboutDialogVisible = it },
-        selectedSection = selectedSection,
-        onSelectedSection = { selectedSection = it },
-        windowSizeClass = windowSizeClass,
-        modifier = modifier,
-    )
-}
-
-@Composable
-private fun HomeScreenScaffold(
-    colorPickerState: ColorPickerState?,
-    settings: Settings,
-    dispatcher: Dispatcher<HomeAction>,
-    snackbarState: SnackbarHostState,
-    processingImage: Boolean,
-    aboutDialogVisible: Boolean,
-    toggleAboutDialog: (Boolean) -> Unit,
-    selectedSection: HomeSection,
-    onSelectedSection: (HomeSection) -> Unit,
-    windowSizeClass: WindowSizeClass,
-    modifier: Modifier = Modifier,
-) {
     Scaffold(
         modifier = modifier,
         snackbarHost = { AppSnackbarHost(snackbarState) },
@@ -94,14 +65,14 @@ private fun HomeScreenScaffold(
                 settings = settings,
                 toggleDarkMode = dispatcher.relay(ToggleDarkMode),
                 onReset = dispatcher.relay(HomeAction.Reset),
-                toggleAboutDialog = { toggleAboutDialog(true) },
+                toggleAboutDialog = { aboutDialogVisible = true },
             )
         },
         bottomBar = {
             AnimatedVisibility(windowSizeClass.widthIsCompact()) {
                 HomeBottomBar(
                     selected = selectedSection,
-                    onSelected = { onSelectedSection(it) },
+                    onSelected = { selectedSection = it },
                 )
             }
         },
@@ -147,7 +118,7 @@ private fun HomeScreenScaffold(
                     Row {
                         HomeNavRail(
                             selected = selectedSection,
-                            onSelected = { onSelectedSection(it) },
+                            onSelected = { selectedSection = it },
                         )
                         CompactContent(
                             settings = settings,
@@ -172,7 +143,7 @@ private fun HomeScreenScaffold(
 
         AboutInfo(
             visible = aboutDialogVisible,
-            onDismiss = { toggleAboutDialog(false) },
+            onDismiss = { aboutDialogVisible = false },
             windowSizeClass = windowSizeClass,
         )
 
