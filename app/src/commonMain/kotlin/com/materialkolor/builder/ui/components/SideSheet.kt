@@ -2,8 +2,6 @@ package com.materialkolor.builder.ui.components
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.DecayAnimationSpec
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -29,11 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -44,9 +38,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
-import co.touchlab.kermit.Logger
 import com.materialkolor.builder.ui.ktx.conditional
-import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.ktx.whenNotNull
 import kotlin.math.roundToInt
 
@@ -76,24 +68,6 @@ fun SideSheet(
         val maxSheetWidth = maxWidth * maxWidthFraction
         val sheetWidth = min(max(minWidth, maxSheetWidth), maxWidth)
 
-        var isExpanded by remember { mutableStateOf(initialExpanded) }
-
-        val animatedOffsetX by animateFloatAsState(
-            targetValue = if (isExpanded) 1f else 0f,
-        )
-
-        val currentSheetWidth = if (displayOverContent) {
-            (visibleWidth + (sheetWidth - visibleWidth) * animatedOffsetX)
-        } else {
-            if (isExpanded) sheetWidth else visibleWidth
-        }
-
-        val contentWidth = if (displayOverContent) {
-            null
-        } else {
-            animateDpAsState(targetValue = maxWidth - currentSheetWidth)
-        }
-
         val density = LocalDensity.current
         val anchors = remember(sheetWidth, visibleWidth, position) {
             DraggableAnchors {
@@ -111,9 +85,10 @@ fun SideSheet(
         }
 
         val velocityThreshold = AnchoredDraggableDefaults.VelocityThreshold()
-        val draggableState = remember(position) {
+
+        val state = remember(position) {
             AnchoredDraggableState(
-                initialValue = if (isExpanded) DragValue.Expanded else DragValue.Collapsed,
+                initialValue = if (initialExpanded) DragValue.Expanded else DragValue.Collapsed,
                 anchors = anchors,
                 positionalThreshold = AnchoredDraggableDefaults.PositionalThreshold,
                 velocityThreshold = velocityThreshold,
@@ -122,8 +97,19 @@ fun SideSheet(
             )
         }
 
-        LaunchedEffect(draggableState.currentValue) {
-            isExpanded = draggableState.currentValue == DragValue.Expanded
+        val currentSheetWidth = if (displayOverContent) {
+            (visibleWidth + (sheetWidth - visibleWidth) * state.progress(
+                state.settledValue,
+                state.targetValue,
+            ))
+        } else {
+            visibleWidth + (sheetWidth - visibleWidth) * state.progress(state.settledValue, state.targetValue)
+        }
+
+        val contentWidth = if (displayOverContent) {
+            null
+        } else {
+            maxWidth - currentSheetWidth
         }
 
         Box(modifier = modifier.fillMaxSize()) {
@@ -134,13 +120,14 @@ fun SideSheet(
 
             Box(
                 contentAlignment = contentAlignment,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Cyan)
             ) {
                 Surface(
-                    color = contentContainerColor,
+                    color = Color.Red,
                     modifier = Modifier
-                        .debugBorder(Color.Blue)
-                        .whenNotNull(contentWidth) { Modifier.width(it.value) },
+                        .whenNotNull(contentWidth) { Modifier.width(it) }
                 ) {
                     content()
                 }
@@ -158,19 +145,17 @@ fun SideSheet(
                         else Alignment.CenterEnd,
                     )
                     .conditional(isFloating) {
-                        Modifier
-                            .background(color = Color.Yellow)
-                            .padding(vertical = 32.dp)
+                        Modifier.padding(vertical = 32.dp)
                     }
                     .anchoredDraggable(
-                        state = draggableState,
+                        state = state,
                         orientation = Orientation.Horizontal,
                         reverseDirection = position == SideSheetPosition.End,
                         enabled = true,
                     ),
             ) {
                 Surface(
-                    color = containerColor,
+                    color = Color.Yellow,
                     shape = shape,
                     modifier = Modifier
                         .width(sheetWidth)
@@ -178,29 +163,23 @@ fun SideSheet(
                         .offset {
                             IntOffset(
                                 x = when (position) {
-                                    SideSheetPosition.Start -> draggableState.offset.roundToInt()
-                                    SideSheetPosition.End -> -draggableState.offset.roundToInt()
+                                    SideSheetPosition.Start -> state.offset.roundToInt()
+                                    SideSheetPosition.End -> -state.offset.roundToInt()
                                 },
                                 y = 0,
                             )
                         },
                 ) {
-                    val panel: @Composable () -> Unit = remember(isExpanded) {
-                        {
-                            ExpandCollapsePanel(
-                                isExpanded = isExpanded,
-                                visibleWidth = visibleWidth,
-                                sheetPosition = position,
-                            )
-                        }
-                    }
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         if (position == SideSheetPosition.End) {
-                            panel()
+                            ExpandCollapsePanel(
+                                isExpanded = state.currentValue == DragValue.Expanded,
+                                visibleWidth = visibleWidth,
+                                sheetPosition = position,
+                            )
                         }
 
                         Box(
@@ -210,7 +189,11 @@ fun SideSheet(
                         }
 
                         if (position == SideSheetPosition.Start) {
-                            panel()
+                            ExpandCollapsePanel(
+                                isExpanded = state.currentValue == DragValue.Expanded,
+                                visibleWidth = visibleWidth,
+                                sheetPosition = position,
+                            )
                         }
                     }
                 }

@@ -78,7 +78,7 @@ fun ExportExpandedContent(
     SideSheet(
         position = SideSheetPosition.Start,
         initialExpanded = true,
-        isFloating = false,
+        isFloating = true,
         displayOverContent = false,
         sheetContent = {
             CustomizeSection(
@@ -96,9 +96,7 @@ fun ExportExpandedContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = modifier
-                .fillMaxSize()
-                .background(Color.Cyan.copy(0.6f))
+            modifier = modifier.fillMaxSize()
         ) {
             Text("Export Section")
         }
