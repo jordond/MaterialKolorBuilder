@@ -74,7 +74,7 @@ fun ExportExpandedContent(
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
     SideSheet(
-        position = SideSheetPosition.End,
+        position = SideSheetPosition.Start,
         initialExpanded = true,
         isFloating = true,
         displayOverContent = false,

@@ -1,13 +1,23 @@
 package com.materialkolor.builder.ui.components
 
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.exponentialDecay
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,10 +26,10 @@ import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,14 +38,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
-import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 import com.materialkolor.builder.ui.ktx.conditional
 import com.materialkolor.builder.ui.ktx.whenNotNull
+import kotlin.math.roundToInt
 
 enum class SideSheetPosition {
     Start,
@@ -43,6 +54,7 @@ enum class SideSheetPosition {
 }
 
 // TODO: Replace when Material3 includes the SideSheet component
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SideSheet(
     modifier: Modifier = Modifier,
@@ -74,6 +86,38 @@ fun SideSheet(
             if (displayOverContent) null
             else animateDpAsState(targetValue = maxWidth - currentSheetWidth)
 
+        val density = LocalDensity.current
+        val anchors = remember(sheetWidth, visibleWidth, position) {
+            DraggableAnchors {
+                when (position) {
+                    SideSheetPosition.Start -> {
+                        DragValue.Collapsed at with(density) { -sheetWidth.toPx() + visibleWidth.toPx() }
+                        DragValue.Expanded at 0f
+                    }
+                    SideSheetPosition.End -> {
+                        DragValue.Expanded at with(density) { -sheetWidth.toPx() + visibleWidth.toPx() }
+                        DragValue.Collapsed at 0f
+                    }
+                }
+            }
+        }
+
+        val velocityThreshold = AnchoredDraggableDefaults.VelocityThreshold()
+        val draggableState = remember(position) {
+            AnchoredDraggableState(
+                initialValue = if (isExpanded) DragValue.Expanded else DragValue.Collapsed,
+                anchors = anchors,
+                positionalThreshold = AnchoredDraggableDefaults.PositionalThreshold,
+                velocityThreshold = velocityThreshold,
+                snapAnimationSpec = AnchoredDraggableDefaults.SnapAnimationSpec,
+                decayAnimationSpec = AnchoredDraggableDefaults.DecayAnimationSpec,
+            )
+        }
+
+        LaunchedEffect(draggableState.currentValue) {
+            isExpanded = draggableState.currentValue == DragValue.Expanded
+        }
+
         Box(modifier = modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier.whenNotNull(contentWidth) { Modifier.width(it.value) },
@@ -98,7 +142,13 @@ fun SideSheet(
                         Modifier
                             .background(color = contentContainerColor)
                             .padding(vertical = 32.dp)
-                    },
+                    }
+                    .anchoredDraggable(
+                        state = draggableState,
+                        orientation = Orientation.Horizontal,
+                        reverseDirection = position == SideSheetPosition.End,
+                        enabled = true,
+                    ),
             ) {
                 Surface(
                     color = containerColor,
@@ -106,26 +156,22 @@ fun SideSheet(
                     modifier = Modifier
                         .width(sheetWidth)
                         .clipToBounds()
-                        .layout { measurable, constraints ->
-                            val placeable = measurable.measure(constraints)
-                            layout(placeable.width, placeable.height) {
-                                val offset =
-                                    ((1 - animatedOffsetX) * (sheetWidth - visibleWidth).toPx()).toInt()
-                                val xOffset = when (position) {
-                                    SideSheetPosition.Start -> -offset
-                                    SideSheetPosition.End -> offset
-                                }
-                                placeable.place(xOffset, 0)
-                            }
+                        .offset {
+                            IntOffset(
+                                x = when (position) {
+                                    SideSheetPosition.Start -> draggableState.offset.roundToInt()
+                                    SideSheetPosition.End -> -draggableState.offset.roundToInt()
+                                },
+                                y = 0,
+                            )
                         },
                 ) {
                     val panel: @Composable () -> Unit = remember(isExpanded) {
                         {
                             ExpandCollapsePanel(
                                 isExpanded = isExpanded,
-                                onClick = { isExpanded = !isExpanded },
-                                sheetPosition = position,
                                 visibleWidth = visibleWidth,
+                                sheetPosition = position,
                             )
                         }
                     }
@@ -154,10 +200,15 @@ fun SideSheet(
     }
 }
 
+private enum class DragValue {
+    Expanded,
+    Collapsed
+}
+
+// Update ExpandCollapsePanel to remove the click handler
 @Composable
 private fun ExpandCollapsePanel(
     isExpanded: Boolean,
-    onClick: () -> Unit,
     visibleWidth: Dp,
     sheetPosition: SideSheetPosition,
     modifier: Modifier = Modifier,
@@ -166,22 +217,37 @@ private fun ExpandCollapsePanel(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .width(visibleWidth)
-            .clickableWithoutRipple(onClick)
             .fillMaxHeight(),
     ) {
-        IconButton(
-            onClick = onClick,
-        ) {
-            val icon = when (sheetPosition) {
-                SideSheetPosition.Start -> if (isExpanded) Default.ChevronLeft else Default.ChevronRight
-                SideSheetPosition.End -> if (isExpanded) Default.ChevronRight else Default.ChevronLeft
-            }
-
-            Icon(
-                imageVector = icon,
-                contentDescription = if (isExpanded) "Collapse" else "Expand",
-                modifier = Modifier.size(32.dp),
-            )
+        val icon = when (sheetPosition) {
+            SideSheetPosition.Start -> if (isExpanded) Default.ChevronLeft else Default.ChevronRight
+            SideSheetPosition.End -> if (isExpanded) Default.ChevronRight else Default.ChevronLeft
         }
+
+        Icon(
+            imageVector = icon,
+            contentDescription = if (isExpanded) "Collapse" else "Expand",
+            modifier = Modifier.size(32.dp),
+        )
     }
 }
+
+object AnchoredDraggableDefaults {
+
+    /** The default spec for snapping, a tween spec */
+    val SnapAnimationSpec: AnimationSpec<Float> = tween()
+
+    /** The default positional threshold, 50% of the distance */
+    val PositionalThreshold: (Float) -> Float = { distance -> distance * 0.5f }
+
+    /** The default velocity threshold, 125 dp per second */
+    @Composable
+    fun VelocityThreshold(): () -> Float {
+        val density = LocalDensity.current
+        return { with(density) { 125.dp.toPx() } }
+    }
+
+    /** The default spec for decaying, an exponential decay */
+    val DecayAnimationSpec: DecayAnimationSpec<Float> = exponentialDecay()
+}
+
