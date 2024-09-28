@@ -44,7 +44,9 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
+import co.touchlab.kermit.Logger
 import com.materialkolor.builder.ui.ktx.conditional
+import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.ktx.whenNotNull
 import kotlin.math.roundToInt
 
@@ -80,11 +82,21 @@ fun SideSheet(
             targetValue = if (isExpanded) 1f else 0f,
         )
 
-        val currentSheetWidth = (visibleWidth + (sheetWidth - visibleWidth) * animatedOffsetX)
+        val currentSheetWidth = if (displayOverContent) {
+            (visibleWidth + (sheetWidth - visibleWidth) * animatedOffsetX)
+        } else {
+            if (isExpanded) sheetWidth else visibleWidth
+        }
 
-        val contentWidth =
-            if (displayOverContent) null
-            else animateDpAsState(targetValue = maxWidth - currentSheetWidth)
+        val contentWidth = if (displayOverContent) {
+            null
+        } else {
+            animateDpAsState(targetValue = maxWidth - currentSheetWidth)
+        }
+
+        LaunchedEffect(contentWidth, currentSheetWidth) {
+            Logger.d { "contentWidth: ${contentWidth?.value}, currentSheetWidth: $currentSheetWidth" }
+        }
 
         val density = LocalDensity.current
         val anchors = remember(sheetWidth, visibleWidth, position) {
@@ -119,10 +131,21 @@ fun SideSheet(
         }
 
         Box(modifier = modifier.fillMaxSize()) {
+            val contentAlignment = when (position) {
+                SideSheetPosition.Start -> Alignment.CenterEnd
+                SideSheetPosition.End -> Alignment.CenterStart
+            }
+
             Box(
-                modifier = Modifier.whenNotNull(contentWidth) { Modifier.width(it.value) },
+                contentAlignment = contentAlignment,
+                modifier = Modifier.fillMaxSize().debugBorder(),
             ) {
-                Surface(color = contentContainerColor) {
+                Surface(
+                    color = contentContainerColor,
+                    modifier = Modifier
+                        .debugBorder(Color.Blue)
+                        .whenNotNull(contentWidth) { Modifier.width(it.value) },
+                ) {
                     content()
                 }
             }
