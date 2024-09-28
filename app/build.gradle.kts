@@ -70,6 +70,7 @@ kotlin {
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
+                optIn("androidx.compose.foundation.ExperimentalFoundationApi")
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }

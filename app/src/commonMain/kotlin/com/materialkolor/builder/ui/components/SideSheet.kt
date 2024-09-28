@@ -4,12 +4,13 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +45,7 @@ import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.materialkolor.builder.ui.ktx.conditional
 import com.materialkolor.builder.ui.ktx.whenNotNull
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 enum class SideSheetPosition {
@@ -51,7 +54,6 @@ enum class SideSheetPosition {
 }
 
 // TODO: Replace when Material3 includes the SideSheet component
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SideSheet(
     modifier: Modifier = Modifier,
@@ -60,6 +62,7 @@ fun SideSheet(
     maxWidthFraction: Float = 1f / 2.5f,
     minWidth: Dp = 200.dp,
     visibleWidth: Dp = 60.dp,
+    sheetCornerRadius: Dp = 25.dp,
     isFloating: Boolean = false,
     displayOverContent: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surface,
@@ -67,6 +70,7 @@ fun SideSheet(
     sheetContent: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
     val density = LocalDensity.current
     var lastDragState by remember {
         mutableStateOf(if (initialExpanded) DragValue.Expanded else DragValue.Collapsed)
@@ -95,7 +99,6 @@ fun SideSheet(
         }
 
         val velocityThreshold = AnchoredDraggableDefaults.VelocityThreshold()
-
         val state = remember(position, sheetWidth, maxWidth) {
             AnchoredDraggableState(
                 initialValue = lastDragState,
@@ -130,20 +133,15 @@ fun SideSheet(
                 contentAlignment = contentAlignment,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Cyan),
+                    .background(contentContainerColor),
             ) {
                 Surface(
-                    color = Color.Red,
+                    color = contentContainerColor,
                     modifier = Modifier
                         .whenNotNull(contentWidth) { Modifier.width(it) },
                 ) {
                     content()
                 }
-            }
-
-            val shape = when (position) {
-                SideSheetPosition.Start -> RoundedCornerShape(topEnd = 25.dp, bottomEnd = 25.dp)
-                SideSheetPosition.End -> RoundedCornerShape(topStart = 25.dp, bottomStart = 25.dp)
             }
 
             Box(
@@ -163,50 +161,56 @@ fun SideSheet(
                     ),
             ) {
                 Surface(
-                    color = Color.Yellow,
-                    shape = shape,
+                    color = containerColor,
+                    shape = position.sheetShape(sheetCornerRadius),
                     modifier = Modifier
                         .width(sheetWidth)
                         .clipToBounds()
                         .offset {
                             IntOffset(
+                                y = 0,
                                 x = when (position) {
                                     SideSheetPosition.Start -> state.offset.roundToInt()
                                     SideSheetPosition.End -> -state.offset.roundToInt()
                                 },
-                                y = 0,
                             )
                         },
                 ) {
+                    val panel = @Composable {
+                        ExpandCollapsePanel(
+                            value = state.currentValue,
+                            visibleWidth = visibleWidth,
+                            sheetPosition = position,
+                            onClick = {
+                                scope.launch {
+                                    state.animateTo(state.currentValue.opposite)
+                                }
+                            },
+                        )
+                    }
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxSize(),
                     ) {
-                        if (position == SideSheetPosition.End) {
-                            ExpandCollapsePanel(
-                                isExpanded = state.currentValue == DragValue.Expanded,
-                                visibleWidth = visibleWidth,
-                                sheetPosition = position,
-                            )
-                        }
+                        if (position == SideSheetPosition.End) panel()
 
-                        Box(
-                            modifier = Modifier.weight(1f),
-                        ) {
+                        Box(modifier = Modifier.weight(1f)) {
                             sheetContent()
                         }
 
-                        if (position == SideSheetPosition.Start) {
-                            ExpandCollapsePanel(
-                                isExpanded = state.currentValue == DragValue.Expanded,
-                                visibleWidth = visibleWidth,
-                                sheetPosition = position,
-                            )
-                        }
+                        if (position == SideSheetPosition.Start) panel()
                     }
                 }
             }
         }
+    }
+}
+
+private fun SideSheetPosition.sheetShape(radius: Dp): RoundedCornerShape {
+    return when (this) {
+        SideSheetPosition.Start -> RoundedCornerShape(topEnd = radius, bottomEnd = radius)
+        SideSheetPosition.End -> RoundedCornerShape(topStart = radius, bottomStart = radius)
     }
 }
 
@@ -215,23 +219,32 @@ private enum class DragValue {
     Collapsed
 }
 
+private val DragValue.opposite: DragValue
+    get() = when (this) {
+        DragValue.Expanded -> DragValue.Collapsed
+        DragValue.Collapsed -> DragValue.Expanded
+    }
+
 // Update ExpandCollapsePanel to remove the click handler
 @Composable
 private fun ExpandCollapsePanel(
-    isExpanded: Boolean,
+    value: DragValue,
     visibleWidth: Dp,
     sheetPosition: SideSheetPosition,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val isExpanded = value == DragValue.Expanded
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .width(visibleWidth)
+            .clickable(onClick = onClick)
             .fillMaxHeight(),
     ) {
         val icon = when (sheetPosition) {
             SideSheetPosition.Start -> if (isExpanded) Default.ChevronLeft else Default.ChevronRight
-            SideSheetPosition.End -> if (isExpanded) Default.ChevronRight else Default.ChevronLeft
+            SideSheetPosition.End -> if (!isExpanded) Default.ChevronRight else Default.ChevronLeft
         }
 
         Icon(
