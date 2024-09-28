@@ -94,10 +94,6 @@ fun SideSheet(
             animateDpAsState(targetValue = maxWidth - currentSheetWidth)
         }
 
-        LaunchedEffect(contentWidth, currentSheetWidth) {
-            Logger.d { "contentWidth: ${contentWidth?.value}, currentSheetWidth: $currentSheetWidth" }
-        }
-
         val density = LocalDensity.current
         val anchors = remember(sheetWidth, visibleWidth, position) {
             DraggableAnchors {
@@ -138,7 +134,7 @@ fun SideSheet(
 
             Box(
                 contentAlignment = contentAlignment,
-                modifier = Modifier.fillMaxSize().debugBorder(),
+                modifier = Modifier.fillMaxSize(),
             ) {
                 Surface(
                     color = contentContainerColor,
@@ -163,7 +159,7 @@ fun SideSheet(
                     )
                     .conditional(isFloating) {
                         Modifier
-                            .background(color = contentContainerColor)
+                            .background(color = Color.Yellow)
                             .padding(vertical = 32.dp)
                     }
                     .anchoredDraggable(

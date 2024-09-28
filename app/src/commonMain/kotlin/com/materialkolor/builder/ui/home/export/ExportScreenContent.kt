@@ -14,6 +14,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
@@ -28,6 +29,7 @@ import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.preview.customize.CustomizeSection
+import com.materialkolor.builder.ui.ktx.debugBorder
 
 @Composable
 fun ExportScreenContent(
@@ -74,9 +76,9 @@ fun ExportExpandedContent(
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
     SideSheet(
-        position = SideSheetPosition.End,
+        position = SideSheetPosition.Start,
         initialExpanded = true,
-        isFloating = true,
+        isFloating = false,
         displayOverContent = false,
         sheetContent = {
             CustomizeSection(
@@ -96,7 +98,7 @@ fun ExportExpandedContent(
             verticalArrangement = Arrangement.Center,
             modifier = modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surfaceContainerLow),
+                .background(Color.Cyan.copy(0.6f))
         ) {
             Text("Export Section")
         }
