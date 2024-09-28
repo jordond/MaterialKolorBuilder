@@ -27,7 +27,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -64,11 +67,18 @@ fun SideSheet(
     sheetContent: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
+    val density = LocalDensity.current
+    var lastDragState by remember {
+        mutableStateOf(if (initialExpanded) DragValue.Expanded else DragValue.Collapsed)
+    }
+
     BoxWithConstraints {
         val maxSheetWidth = maxWidth * maxWidthFraction
         val sheetWidth = min(max(minWidth, maxSheetWidth), maxWidth)
 
-        val density = LocalDensity.current
+        val maxWidthPx = with(density) { maxWidth.toPx() }
+        val sheetWidthPx = with(density) { sheetWidth.toPx() }
+
         val anchors = remember(sheetWidth, visibleWidth, position) {
             DraggableAnchors {
                 when (position) {
@@ -86,30 +96,28 @@ fun SideSheet(
 
         val velocityThreshold = AnchoredDraggableDefaults.VelocityThreshold()
 
-        val state = remember(position) {
+        val state = remember(position, sheetWidth, maxWidth) {
             AnchoredDraggableState(
-                initialValue = if (initialExpanded) DragValue.Expanded else DragValue.Collapsed,
+                initialValue = lastDragState,
                 anchors = anchors,
                 positionalThreshold = AnchoredDraggableDefaults.PositionalThreshold,
                 velocityThreshold = velocityThreshold,
                 snapAnimationSpec = AnchoredDraggableDefaults.SnapAnimationSpec,
                 decayAnimationSpec = AnchoredDraggableDefaults.DecayAnimationSpec,
+                confirmValueChange = { newValue ->
+                    lastDragState = newValue
+                    true
+                },
             )
         }
 
-        val currentSheetWidth = if (displayOverContent) {
-            (visibleWidth + (sheetWidth - visibleWidth) * state.progress(
-                state.settledValue,
-                state.targetValue,
-            ))
-        } else {
-            visibleWidth + (sheetWidth - visibleWidth) * state.progress(state.settledValue, state.targetValue)
-        }
-
-        val contentWidth = if (displayOverContent) {
-            null
-        } else {
-            maxWidth - currentSheetWidth
+        val contentWidth = remember(maxWidthPx, sheetWidthPx, state.offset) {
+            if (displayOverContent) null
+            else {
+                val visibleSheetWidth = sheetWidthPx + state.offset
+                val contentWidthPx = maxWidthPx - visibleSheetWidth
+                (contentWidthPx / density.density).dp
+            }
         }
 
         Box(modifier = modifier.fillMaxSize()) {
@@ -122,12 +130,12 @@ fun SideSheet(
                 contentAlignment = contentAlignment,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Cyan)
+                    .background(Color.Cyan),
             ) {
                 Surface(
                     color = Color.Red,
                     modifier = Modifier
-                        .whenNotNull(contentWidth) { Modifier.width(it) }
+                        .whenNotNull(contentWidth) { Modifier.width(it) },
                 ) {
                     content()
                 }
