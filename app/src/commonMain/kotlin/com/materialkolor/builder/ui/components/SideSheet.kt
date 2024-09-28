@@ -85,16 +85,8 @@ fun SideSheet(
 
         val anchors = remember(sheetWidth, visibleWidth, position) {
             DraggableAnchors {
-                when (position) {
-                    SideSheetPosition.Start -> {
-                        DragValue.Collapsed at with(density) { -sheetWidth.toPx() + visibleWidth.toPx() }
-                        DragValue.Expanded at 0f
-                    }
-                    SideSheetPosition.End -> {
-                        DragValue.Expanded at with(density) { -sheetWidth.toPx() + visibleWidth.toPx() }
-                        DragValue.Collapsed at 0f
-                    }
-                }
+                DragValue.Collapsed at with(density) { -sheetWidth.toPx() + visibleWidth.toPx() }
+                DragValue.Expanded at 0f
             }
         }
 
@@ -244,7 +236,7 @@ private fun ExpandCollapsePanel(
     ) {
         val icon = when (sheetPosition) {
             SideSheetPosition.Start -> if (isExpanded) Default.ChevronLeft else Default.ChevronRight
-            SideSheetPosition.End -> if (!isExpanded) Default.ChevronRight else Default.ChevronLeft
+            SideSheetPosition.End -> if (isExpanded) Default.ChevronRight else Default.ChevronLeft
         }
 
         Icon(
