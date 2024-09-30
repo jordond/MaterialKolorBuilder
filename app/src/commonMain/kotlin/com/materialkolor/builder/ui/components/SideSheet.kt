@@ -35,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.materialkolor.builder.ui.ktx.conditional
+import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.ktx.whenNotNull
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -115,7 +117,11 @@ fun SideSheet(
             }
         }
 
-        Box(modifier = modifier.fillMaxSize()) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(contentContainerColor)
+        ) {
             val contentAlignment = when (position) {
                 SideSheetPosition.Start -> Alignment.CenterEnd
                 SideSheetPosition.End -> Alignment.CenterStart
@@ -123,76 +129,70 @@ fun SideSheet(
 
             Box(
                 contentAlignment = contentAlignment,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(contentContainerColor),
+                modifier = Modifier.background(contentContainerColor),
             ) {
                 Surface(
                     color = contentContainerColor,
-                    modifier = Modifier
-                        .whenNotNull(contentWidth) { Modifier.width(it) },
+                    modifier = Modifier.whenNotNull(contentWidth) { Modifier.width(it) },
                 ) {
                     content()
                 }
             }
 
-            Box(
+            Surface(
+                color = containerColor,
+                shape = position.sheetShape(sheetCornerRadius),
                 modifier = Modifier
                     .align(
                         if (position == SideSheetPosition.Start) Alignment.CenterStart
                         else Alignment.CenterEnd,
                     )
+                    .width(sheetWidth)
+                    .clipToBounds()
                     .conditional(isFloating) {
                         Modifier.padding(vertical = 32.dp)
+                    }
+                    .offset {
+                        IntOffset(
+                            y = 0,
+                            x = when (position) {
+                                SideSheetPosition.Start -> state.offset.roundToInt()
+                                SideSheetPosition.End -> -state.offset.roundToInt()
+                            },
+                        )
                     }
                     .anchoredDraggable(
                         state = state,
                         orientation = Orientation.Horizontal,
                         reverseDirection = position == SideSheetPosition.End,
                         enabled = true,
-                    ),
+                    )
+                    .clip(position.sheetShape(sheetCornerRadius))
             ) {
-                Surface(
-                    color = containerColor,
-                    shape = position.sheetShape(sheetCornerRadius),
-                    modifier = Modifier
-                        .width(sheetWidth)
-                        .clipToBounds()
-                        .offset {
-                            IntOffset(
-                                y = 0,
-                                x = when (position) {
-                                    SideSheetPosition.Start -> state.offset.roundToInt()
-                                    SideSheetPosition.End -> -state.offset.roundToInt()
-                                },
-                            )
+                val panel = @Composable {
+                    ExpandCollapsePanel(
+                        value = state.currentValue,
+                        visibleWidth = visibleWidth,
+                        sheetPosition = position,
+                        onClick = {
+                            scope.launch {
+                                state.animateTo(state.currentValue.opposite)
+                            }
                         },
+                    )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxSize(),
                 ) {
-                    val panel = @Composable {
-                        ExpandCollapsePanel(
-                            value = state.currentValue,
-                            visibleWidth = visibleWidth,
-                            sheetPosition = position,
-                            onClick = {
-                                scope.launch {
-                                    state.animateTo(state.currentValue.opposite)
-                                }
-                            },
-                        )
+                    if (position == SideSheetPosition.End) panel()
+
+                    Box(modifier = Modifier.weight(1f)) {
+                        sheetContent()
                     }
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        if (position == SideSheetPosition.End) panel()
-
-                        Box(modifier = Modifier.weight(1f)) {
-                            sheetContent()
-                        }
-
-                        if (position == SideSheetPosition.Start) panel()
-                    }
+                    if (position == SideSheetPosition.Start) panel()
                 }
             }
         }
