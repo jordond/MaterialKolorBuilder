@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.ui.LocalWindowSizeClass
@@ -111,6 +113,13 @@ fun ExportExpandedContent(
             Text("Export Options")
 
             var selected by remember { mutableStateOf(options.files.first()) }
+            LaunchedEffect(options.files) {
+                selected = options.files.first { it.name == selected.name }
+            }
+            LaunchedEffect(selected) {
+                Logger.d { "Selected file ${selected.name}\n${selected.content}" }
+            }
+
             val clipboard = LocalClipboardManager.current
             val snackbar = LocalSnackbarHostState.current
             val scope = rememberCoroutineScope()

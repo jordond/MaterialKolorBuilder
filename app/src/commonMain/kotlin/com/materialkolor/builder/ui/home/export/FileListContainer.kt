@@ -1,6 +1,5 @@
 package com.materialkolor.builder.ui.home.export
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
@@ -9,10 +8,13 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -24,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -31,6 +34,7 @@ import co.touchlab.kermit.Logger
 import com.materialkolor.builder.export.ExportFile
 import com.materialkolor.builder.ui.components.CopyIcon
 import com.materialkolor.builder.ui.components.code.CodeTextView
+import com.materialkolor.builder.ui.theme.JetBrainsMono
 import com.materialkolor.builder.ui.theme.LocalThemeIsDark
 import dev.snipme.highlights.Highlights
 import dev.snipme.highlights.model.SyntaxThemes
@@ -54,13 +58,16 @@ fun FileListContainer(
     OutlinedCard(
         modifier = modifier,
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+        ) {
             files.forEach { file ->
                 Tab(
                     file = file,
                     isSelected = selected.name == file.name,
                     onClick = { onSelected(file) },
-                    modifier = Modifier.weight(1f),
                 )
             }
         }
@@ -96,6 +103,10 @@ fun FileListContainer(
                     CodeTextView(
                         highlights = highlights,
                         modifier = Modifier.fillMaxSize(),
+                        style = LocalTextStyle.current.copy(
+                            fontFamily = JetBrainsMono,
+                            fontWeight = FontWeight.Light,
+                        ),
                     )
 
                     CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
@@ -112,30 +123,32 @@ private fun Tab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor by animateColorAsState(
-        if (isSelected) CardDefaults.outlinedCardColors().containerColor
-        else MaterialTheme.colorScheme.surfaceVariant,
-    )
+    val backgroundColor =
+        if (isSelected) MaterialTheme.colorScheme.surface
+        else MaterialTheme.colorScheme.surfaceVariant
 
-    val contentColor by animateColorAsState(
-        if (isSelected) contentColorFor(CardDefaults.outlinedCardColors().contentColor)
-        else contentColorFor(MaterialTheme.colorScheme.onSurfaceVariant),
+    val shape = RoundedCornerShape(
+        topStart = 8.dp,
+        topEnd = 8.dp,
     )
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .background(backgroundColor)
+            .background(backgroundColor, shape)
+            .clip(shape)
             .clickable(enabled = !isSelected, onClick = onClick)
-            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .padding(vertical = 12.dp, horizontal = 16.dp)
             .widthIn(max = 200.dp),
     ) {
         Text(
             text = file.name,
-            color = contentColor,
+            color = contentColorFor(backgroundColor).copy(if (isSelected) 1f else 0.8f),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            fontWeight = if (isSelected) FontWeight.Normal else FontWeight.Thin,
+            style = LocalTextStyle.current.copy(
+                fontFamily = JetBrainsMono,
+                fontWeight = if (isSelected) FontWeight.Normal else FontWeight.Thin,
+            ),
         )
     }
 }

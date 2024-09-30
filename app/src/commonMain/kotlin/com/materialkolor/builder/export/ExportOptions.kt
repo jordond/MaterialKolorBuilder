@@ -14,7 +14,6 @@ sealed interface ExportOptions {
     val packageName: String
     val files: PersistentList<ExportFile>
 
-    @Immutable
     data class Standard(
         override val settings: Settings,
         override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
@@ -25,7 +24,6 @@ sealed interface ExportOptions {
         override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
     }
 
-    @Immutable
     data class MaterialKolor(
         override val settings: Settings,
         override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,

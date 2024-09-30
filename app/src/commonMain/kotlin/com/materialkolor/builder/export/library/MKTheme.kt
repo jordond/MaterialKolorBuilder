@@ -61,5 +61,5 @@ private fun Boolean.parameter(name: String) = if (this) "$name = true" else null
 
 private fun Color?.parameter(name: String): String? {
     if (this == null) return null
-    return "${name.lowercase()} = ${name.capitalize()}"
+    return "${name.lowercase()} = ${name.replaceFirstChar { it.uppercase() }}"
 }

@@ -1,12 +1,13 @@
 package com.materialkolor.builder.ui.components.code
 
-import androidx.compose.foundation.background
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import dev.snipme.highlights.Highlights
@@ -22,10 +23,10 @@ import dev.snipme.highlights.model.ColorHighlight
 fun CodeTextView(
     highlights: Highlights,
     modifier: Modifier = Modifier,
+    style: TextStyle = LocalTextStyle.current,
 ) {
-    Text(
-        modifier = modifier.background(Color.Transparent),
-        text = buildAnnotatedString {
+    val text = remember(highlights) {
+        buildAnnotatedString {
             append(highlights.getCode())
 
             highlights.getHighlights()
@@ -47,6 +48,11 @@ fun CodeTextView(
                         end = highlight.location.end,
                     )
                 }
-        },
+        }
+    }
+    Text(
+        modifier = modifier,
+        style = style,
+        text = text,
     )
 }
