@@ -3,6 +3,9 @@ package com.materialkolor.builder.ui.home.export
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,14 +24,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.materialkolor.builder.export.ExportFile
+import com.materialkolor.builder.ui.components.CopyIcon
 import com.materialkolor.builder.ui.components.code.CodeTextView
-import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.theme.LocalThemeIsDark
 import dev.snipme.highlights.Highlights
 import dev.snipme.highlights.model.SyntaxThemes
@@ -76,19 +78,28 @@ fun FileListContainer(
                 )
             }
 
+            val interactionSource = remember { MutableInteractionSource() }
+            val isHovered by interactionSource.collectIsHoveredAsState()
+
             Card(
                 onClick = onClick,
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
                 ),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
-                CodeTextView(
-                    highlights = highlights,
+                Box(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxSize()
-                )
+                        .hoverable(interactionSource),
+                ) {
+                    CodeTextView(
+                        highlights = highlights,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+
+                    CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
+                }
             }
         }
     }

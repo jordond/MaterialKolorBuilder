@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import com.materialkolor.builder.ui.components.CopyIcon
 import com.materialkolor.builder.ui.home.model.ThemeColor
 import com.materialkolor.builder.ui.home.model.ThemeGroup
 import com.materialkolor.builder.ui.home.model.ThemePair
@@ -113,17 +114,7 @@ fun ColorBox(
                 Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
             }
 
-            AnimatedVisibility(
-                visible = isHovered,
-                enter = fadeIn(),
-                exit = fadeOut(),
-                modifier = Modifier.align(Alignment.TopEnd),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ContentCopy,
-                    contentDescription = "Copy color code",
-                )
-            }
+            CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
         }
     }
 }
