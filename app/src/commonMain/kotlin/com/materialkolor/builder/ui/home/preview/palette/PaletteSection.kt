@@ -78,7 +78,6 @@ fun PaletteSection(
 
 @Composable
 private fun DynamicMaterialThemeState.tone(palette: KeyColor, tone: Int): Color {
-    // TODO: Once MaterialKolor is released, replace this with referencing the m3Colors itself.
     val colors = m3Colors
     val scheme = dynamicScheme
     return remember(this, palette, tone) {

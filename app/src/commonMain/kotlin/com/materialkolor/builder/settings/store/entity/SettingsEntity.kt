@@ -9,40 +9,42 @@ import com.materialkolor.builder.settings.model.ImagePresets
 import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.settings.model.SettingsDefaults
 
 data class SettingsEntity(
     val colors: Map<KeyColor, Int?>,
-    val isDarkMode: Boolean? = null,
-    val contrast: Double = Contrast.Default.value,
+    val contrast: Double = SettingsDefaults.contrast.value,
     val selectedPresetId: String? = null,
-    val style: PaletteStyle = PaletteStyle.TonalSpot,
-    val isExtendedFidelity: Boolean = false,
+    val style: PaletteStyle = SettingsDefaults.style,
+    val isExtendedFidelity: Boolean = SettingsDefaults.isExtendedFidelity,
+    val isAmoled: Boolean = SettingsDefaults.isAmoled,
 )
 
 fun Settings.toEntity(): SettingsEntity {
     val presetId = (selectedImage as? SeedImage.Resource)?.id
     return SettingsEntity(
         colors = colors.toEntity(),
-        isDarkMode = isDarkMode,
         contrast = contrast.value,
         selectedPresetId = presetId,
         style = style,
         isExtendedFidelity = isExtendedFidelity,
+        isAmoled = isAmoled,
     )
 }
 
-fun SettingsEntity.toModel(isDarkModeFallback: Boolean): Settings {
+fun SettingsEntity.toModel(isDarkMode: Boolean): Settings {
     val preset = selectedPresetId?.let { id ->
         ImagePresets.all.find { it.id == id }
     }
 
     return Settings(
         colors = colors.toModel(),
-        isDarkMode = isDarkMode ?: isDarkModeFallback,
+        isDarkMode = isDarkMode,
         contrast = contrast.parseContrast(),
         selectedImage = preset,
         style = style,
         isExtendedFidelity = isExtendedFidelity,
+        isAmoled = isAmoled,
     )
 }
 

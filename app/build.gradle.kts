@@ -102,6 +102,7 @@ kotlin {
             implementation(libs.stateHolder)
             implementation(libs.stateHolder.compose)
             implementation(libs.materialKolor)
+            implementation(libs.materialKolor.utilities)
             implementation(libs.compose.colorpicker)
             implementation(libs.calf.filePicker)
             implementation(libs.androidx.lifecycle.viewmodel)

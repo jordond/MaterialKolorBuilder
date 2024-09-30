@@ -56,6 +56,7 @@ material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adap
 material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "compose-multiplatform" }
 material3-windowSizeClass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "compose-multiplatform" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
+materialKolor-utilities = { module = "com.materialkolor:material-color-utilities", version.ref = "materialKolor" }
 stateHolder = { module = "dev.stateholder:core", version.ref = "stateHolder" }
 stateHolder-compose = { module = "dev.stateholder:extensions-compose", version.ref = "stateHolder" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }

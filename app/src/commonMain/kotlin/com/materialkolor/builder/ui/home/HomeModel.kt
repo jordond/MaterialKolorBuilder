@@ -10,6 +10,7 @@ import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.core.readBytes
 import com.materialkolor.builder.core.shareToClipboard
 import com.materialkolor.builder.core.shareUrl
+import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets
@@ -33,11 +34,13 @@ class HomeModel(
     private val settingsRepo: SettingsRepo = DI.settingsRepo,
     private val clipboard: Clipboard = DI.clipboard,
     private val random: Random = Random.Default,
-) : UiStateViewModel<HomeModel.State, HomeModel.Event>(State(settingsRepo.settings.value)) {
+) : UiStateViewModel<HomeModel.State, HomeModel.Event>(
+    State(ExportOptions.default(settingsRepo.settings.value)),
+) {
 
     init {
         settingsRepo.settings.collectToState { state, value ->
-            state.copy(settings = value)
+            state.copy(exportOptions = state.exportOptions.update(settings = value))
         }
     }
 
@@ -166,11 +169,14 @@ class HomeModel(
     }
 
     data class State(
-        val settings: Settings,
+        val exportOptions: ExportOptions,
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
         val colorPickerState: ColorPickerState? = null,
-    )
+    ) {
+
+        val settings = exportOptions.settings
+    }
 
     sealed interface Event {
         data class ShowSnackbar(val message: String) : Event
