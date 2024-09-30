@@ -24,6 +24,6 @@ fun mkColorsKt(
     
     import androidx.compose.ui.graphics.Color
     
-    ${colorList.joinToString("\n")}
+    ${colorList.joinToString("\n    ")}
     """.trimIndent()
 }

@@ -1,6 +1,8 @@
 package com.materialkolor.builder.export.library
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.decapitalize
+import androidx.compose.ui.text.intl.Locale
 import com.materialkolor.Contrast
 import com.materialkolor.builder.export.Header
 import com.materialkolor.builder.settings.model.Settings
@@ -25,7 +27,7 @@ fun mkThemeKt(
         settings.colors.error.parameter("Error"),
         settings.colors.neutral.parameter("Neutral"),
         settings.colors.neutralVariant.parameter("NeutralVariant"),
-    ).joinToString(",\n          ")
+    ).joinToString(",\n            ")
 
     return """
     $Header
@@ -45,7 +47,7 @@ fun mkThemeKt(
         val dynamicThemeState = rememberDynamicMaterialThemeState(
             isDark = isDarkTheme,
             style = PaletteStyle.${settings.style},
-            $params
+            $params,
         )
         
         DynamicMaterialTheme(
@@ -61,5 +63,5 @@ private fun Boolean.parameter(name: String) = if (this) "$name = true" else null
 
 private fun Color?.parameter(name: String): String? {
     if (this == null) return null
-    return "${name.lowercase()} = ${name.replaceFirstChar { it.uppercase() }}"
+    return "${name.decapitalize(Locale("EN"))} = ${name.replaceFirstChar { it.uppercase() }}"
 }
