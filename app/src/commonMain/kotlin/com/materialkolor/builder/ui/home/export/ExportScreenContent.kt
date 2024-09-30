@@ -6,14 +6,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
@@ -27,7 +35,9 @@ import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
+import com.materialkolor.builder.ui.home.LocalSnackbarHostState
 import com.materialkolor.builder.ui.home.preview.customize.CustomizeSection
+import com.materialkolor.builder.ui.ktx.launch
 
 @Composable
 fun ExportScreenContent(
@@ -94,11 +104,26 @@ fun ExportExpandedContent(
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(32.dp)
         ) {
             Text("Export Options")
 
-            Text("Export Files")
+            var selected by remember { mutableStateOf(options.files.first()) }
+            val clipboard = LocalClipboardManager.current
+            val snackbar = LocalSnackbarHostState.current
+            val scope = rememberCoroutineScope()
+            FileListContainer(
+                selected = selected,
+                files = options.files,
+                onSelected = { selected = it },
+                onClick = {
+                    clipboard.setText(AnnotatedString(selected.content))
+                    snackbar.launch(scope, "Copied the contents of ${selected.name} to clipboard")
+                },
+                modifier = Modifier.padding(32.dp)
+            )
         }
     }
 }

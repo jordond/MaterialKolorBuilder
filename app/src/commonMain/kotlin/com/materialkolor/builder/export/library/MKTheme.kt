@@ -16,7 +16,6 @@ fun mkThemeKt(
 
     val params = listOfNotNull(
         contrast,
-        animate.parameter("animate"),
         settings.isAmoled.parameter("isAmoled"),
         settings.isExtendedFidelity.parameter("extendedFidelity"),
         if (settings.colors.primary == null) settings.colors.seed.parameter("Seed")
@@ -26,7 +25,7 @@ fun mkThemeKt(
         settings.colors.error.parameter("Error"),
         settings.colors.neutral.parameter("Neutral"),
         settings.colors.neutralVariant.parameter("NeutralVariant"),
-    ).joinToString(",\n        ")
+    ).joinToString(",\n          ")
 
     return """
     $Header
@@ -34,19 +33,27 @@ fun mkThemeKt(
     
     import androidx.compose.foundation.isSystemInDarkTheme
     import androidx.compose.runtime.Composable
-    import androidx.compose.ui.graphics.Color
+    import com.materialkolor.DynamicMaterialTheme
     import com.materialkolor.PaletteStyle
     import com.materialkolor.rememberDynamicMaterialThemeState
     
     @Composable
     fun $themeName(
         isDarkTheme: Boolean = isSystemInDarkTheme(),
+        content: @Composable () -> Unit,
     ) {
         val dynamicThemeState = rememberDynamicMaterialThemeState(
             isDark = isDarkTheme,
             style = PaletteStyle.${settings.style},
             $params
         )
+        
+        DynamicMaterialTheme(
+            state = dynamicThemeState,
+            animate = $animate,
+            content = content,
+        )
+    }
     """.trimIndent()
 }
 

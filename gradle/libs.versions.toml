@@ -11,6 +11,7 @@ androidx-activityCompose = "1.9.2"
 androidx-core = "1.13.1"
 androidx-lifecycle = "2.8.2"
 calfFilePicker = "0.5.5"
+highlights = "0.9.2"
 kotlin = "2.1.0-Beta1"
 compose-multiplatform = "1.7.0-beta02"
 kotlinx-coroutines = "1.9.0"
@@ -26,6 +27,7 @@ materialKolor = "1.7.0"
 composeIcons = "1.1.1"
 stateHolder = "1.2.0"
 colorpicker = "1.1.2"
+buildKonfig = "0.15.2"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
@@ -38,6 +40,7 @@ calf-filePicker = { module = "com.mohamedrejeb.calf:calf-file-picker", version.r
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+highlights = { module = "dev.snipme:highlights", version.ref = "highlights" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
 kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }
@@ -68,4 +71,4 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" 
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-buildKonfig = { id = "com.codingfeline.buildkonfig", version = "0.15.2" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }

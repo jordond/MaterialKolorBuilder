@@ -1,16 +1,20 @@
 package com.materialkolor.builder.export
 
+import androidx.compose.runtime.Immutable
 import com.materialkolor.builder.export.library.createFiles
 import com.materialkolor.builder.export.standard.createFiles
 import com.materialkolor.builder.settings.model.Settings
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 
 sealed interface ExportOptions {
     val settings: Settings
     val multiplatform: Boolean
     val themeName: String
     val packageName: String
-    val files: List<ExportFile>
+    val files: PersistentList<ExportFile>
 
+    @Immutable
     data class Standard(
         override val settings: Settings,
         override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
@@ -18,9 +22,10 @@ sealed interface ExportOptions {
         override val packageName: String = DEFAULT_PACKAGE_NAME,
         val generateAllContrastOptions: Boolean = false,
     ) : ExportOptions {
-        override val files: List<ExportFile> = createFiles()
+        override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
     }
 
+    @Immutable
     data class MaterialKolor(
         override val settings: Settings,
         override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
@@ -29,7 +34,7 @@ sealed interface ExportOptions {
         val useVersionCatalog: Boolean = true,
         val animate: Boolean = true,
     ) : ExportOptions {
-        override val files: List<ExportFile> = createFiles()
+        override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
     }
 
     fun update(settings: Settings): ExportOptions {
