@@ -173,10 +173,7 @@ class HomeModel(
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
         val colorPickerState: ColorPickerState? = null,
-    ) {
-
-        val settings = exportOptions.settings
-    }
+    )
 
     sealed interface Event {
         data class ShowSnackbar(val message: String) : Event

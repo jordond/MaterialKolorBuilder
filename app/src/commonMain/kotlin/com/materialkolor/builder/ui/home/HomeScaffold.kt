@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.core.exportSupported
+import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.about.AboutInfo
 import com.materialkolor.builder.ui.components.AppSnackbarHost
@@ -41,7 +42,7 @@ import com.materialkolor.builder.ui.ktx.windowSizeClass
 
 @Composable
 fun HomeScreenScaffold(
-    settings: Settings,
+    options: ExportOptions,
     colorPickerState: ColorPickerState?,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
@@ -59,7 +60,7 @@ fun HomeScreenScaffold(
         snackbarHost = { AppSnackbarHost(snackbarState) },
         topBar = {
             AppTopBar(
-                settings = settings,
+                settings = options.settings,
                 showBackButton = screen == HomeScreens.Export,
                 onBack = dispatcher.relay(HomeAction.Nav(HomeScreens.Preview)),
                 toggleDarkMode = dispatcher.relay(ToggleDarkMode),
@@ -108,7 +109,7 @@ fun HomeScreenScaffold(
         ) {
             if (screen == HomeScreens.Preview) {
                 PreviewScreenContent(
-                    settings = settings,
+                    settings = options.settings,
                     selectedSection = selectedSection,
                     updateSelectedSection = { selectedSection = it },
                     dispatcher = dispatcher,
@@ -117,7 +118,7 @@ fun HomeScreenScaffold(
                 )
             } else {
                 ExportScreenContent(
-                    settings = settings,
+                    settings = options.settings,
                     processingImage = processingImage,
                     dispatcher = dispatcher,
                     windowSizeClass = windowSizeClass,

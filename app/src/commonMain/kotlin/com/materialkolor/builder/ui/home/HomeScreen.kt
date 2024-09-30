@@ -92,7 +92,7 @@ fun HomeScreen(destination: String? = null) {
             },
         ) {
             HomeScreenScaffold(
-                settings = state.settings,
+                options = state.exportOptions,
                 colorPickerState = state.colorPickerState,
                 snackbarState = snackbar,
                 initialSection = initialSection,

@@ -1,8 +1,8 @@
 package com.materialkolor.builder.ui.home.export
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -14,11 +14,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
-import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.ui.LocalWindowSizeClass
 import com.materialkolor.builder.ui.components.SideSheet
 import com.materialkolor.builder.ui.components.SideSheetPosition
@@ -29,11 +28,10 @@ import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.preview.customize.CustomizeSection
-import com.materialkolor.builder.ui.ktx.debugBorder
 
 @Composable
 fun ExportScreenContent(
-    settings: Settings,
+    options: ExportOptions,
     processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
@@ -42,7 +40,7 @@ fun ExportScreenContent(
     when (windowSizeClass.widthSizeClass) {
         WindowWidthSizeClass.Expanded -> {
             ExportExpandedContent(
-                settings = settings,
+                options = options,
                 modifier = modifier,
                 dispatcher = dispatcher,
                 processingImage = processingImage,
@@ -69,7 +67,7 @@ fun ExportScreenContent(
 
 @Composable
 fun ExportExpandedContent(
-    settings: Settings,
+    options: ExportOptions,
     processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
@@ -82,7 +80,7 @@ fun ExportExpandedContent(
         displayOverContent = false,
         sheetContent = {
             CustomizeSection(
-                settings = settings,
+                settings = options.settings,
                 onSelectImage = dispatcher.rememberRelayOf(::SelectImage),
                 onRandomColor = dispatcher.rememberRelay(RandomColor),
                 openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
@@ -93,12 +91,14 @@ fun ExportExpandedContent(
             )
         },
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier.fillMaxSize()
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.fillMaxSize(),
         ) {
-            Text("Export Section")
+            Text("Export Options")
+
+            Text("Export Files")
         }
     }
 }
