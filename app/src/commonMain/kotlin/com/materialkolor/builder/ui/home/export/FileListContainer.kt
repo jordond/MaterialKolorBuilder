@@ -87,7 +87,6 @@ fun FileListContainer(
                     highlights = highlights,
                     modifier = Modifier
                         .padding(16.dp)
-                        .debugBorder()
                         .fillMaxSize()
                 )
             }

@@ -11,6 +11,7 @@ import com.materialkolor.ktx.toHex
 import io.ktor.http.decodeURLQueryComponent
 import io.ktor.http.encodeURLQueryComponent
 
+private const val KEY_DARK_MODE = "dark_mode"
 private const val KEY_IS_AMOLED = "is_amoled"
 private const val KEY_CONTRAST = "contrast"
 private const val KEY_SELECTED_PRESET_ID = "selected_preset_id"
@@ -36,6 +37,7 @@ fun SettingsEntity.toQueryParams(): String {
 
     val params = listOfNotNull(
         colors,
+        "${KEY_DARK_MODE}=${isDarkMode ?: false}",
         style.param(KEY_STYLE, SettingsDefaults.style),
         selectedPresetId.param(KEY_SELECTED_PRESET_ID),
         contrast.param(KEY_CONTRAST, SettingsDefaults.contrast.value),
@@ -54,6 +56,7 @@ fun String.toSettingsEntity(): SettingsEntity {
 
     return SettingsEntity(
         colors = colors,
+        isDarkMode = params[KEY_DARK_MODE]?.toBooleanStrictOrNull(),
         contrast = params[KEY_CONTRAST]?.toDoubleOrNull() ?: Contrast.Default.value,
         selectedPresetId = params[KEY_SELECTED_PRESET_ID]?.takeIf { it.isNotBlank() },
         style = params[KEY_STYLE]?.safeToPaletteStyle() ?: PaletteStyle.TonalSpot,

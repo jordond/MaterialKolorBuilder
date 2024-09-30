@@ -13,6 +13,7 @@ import com.materialkolor.builder.settings.model.SettingsDefaults
 
 data class SettingsEntity(
     val colors: Map<KeyColor, Int?>,
+    val isDarkMode: Boolean? = null,
     val contrast: Double = SettingsDefaults.contrast.value,
     val selectedPresetId: String? = null,
     val style: PaletteStyle = SettingsDefaults.style,
@@ -25,6 +26,7 @@ fun Settings.toEntity(): SettingsEntity {
     return SettingsEntity(
         colors = colors.toEntity(),
         contrast = contrast.value,
+        isDarkMode = isDarkMode,
         selectedPresetId = presetId,
         style = style,
         isExtendedFidelity = isExtendedFidelity,
@@ -32,14 +34,14 @@ fun Settings.toEntity(): SettingsEntity {
     )
 }
 
-fun SettingsEntity.toModel(isDarkMode: Boolean): Settings {
+fun SettingsEntity.toModel(isDarkModeFallback: Boolean): Settings {
     val preset = selectedPresetId?.let { id ->
         ImagePresets.all.find { it.id == id }
     }
 
     return Settings(
         colors = colors.toModel(),
-        isDarkMode = isDarkMode,
+        isDarkMode = isDarkMode ?: isDarkModeFallback,
         contrast = contrast.parseContrast(),
         selectedImage = preset,
         style = style,
