@@ -1,6 +1,5 @@
 package com.materialkolor.builder.export
 
-import androidx.compose.runtime.Immutable
 import com.materialkolor.builder.export.library.createFiles
 import com.materialkolor.builder.export.standard.createFiles
 import com.materialkolor.builder.settings.model.Settings
@@ -19,7 +18,6 @@ sealed interface ExportOptions {
         override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
         override val themeName: String = DEFAULT_THEME_NAME,
         override val packageName: String = DEFAULT_PACKAGE_NAME,
-        val generateAllContrastOptions: Boolean = false,
     ) : ExportOptions {
         override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
     }

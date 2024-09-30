@@ -19,6 +19,7 @@ sealed interface HomeAction {
     data object RandomColor : HomeAction
     data class Nav(val screen: HomeScreens) : HomeAction
     data class Share(val section: PreviewSection) : HomeAction
+    data object ToggleExportMode : HomeAction
 
     data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker
     data class UpdateColor(val color: Color) : ColorPicker

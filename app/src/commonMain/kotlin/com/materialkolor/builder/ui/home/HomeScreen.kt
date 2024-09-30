@@ -21,16 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.materialkolor.builder.core.rememberDebounceDispatcher
-import com.materialkolor.builder.ui.home.HomeAction.ColorPicker
-import com.materialkolor.builder.ui.home.HomeAction.CopyColor
-import com.materialkolor.builder.ui.home.HomeAction.Nav
-import com.materialkolor.builder.ui.home.HomeAction.RandomColor
-import com.materialkolor.builder.ui.home.HomeAction.Reset
-import com.materialkolor.builder.ui.home.HomeAction.SelectImage
-import com.materialkolor.builder.ui.home.HomeAction.Share
-import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
-import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
-import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
+import com.materialkolor.builder.ui.home.HomeAction.*
 import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.home.preview.gallery.NavigationDrawerContent
 import com.materialkolor.builder.ui.ktx.HandleEvents
@@ -113,6 +104,7 @@ fun HomeScreen(destination: String? = null) {
                         is ColorPicker -> model.handleColorPickerAction(action)
                         is Nav -> screen = action.screen
                         is Share -> model.share(action.section)
+                        is ToggleExportMode -> model.toggleExportMode()
                     }
                 },
             )

@@ -90,6 +90,7 @@ fun ExportExpandedContent(
         initialExpanded = true,
         isFloating = true,
         displayOverContent = false,
+        maxWidthFraction = 0.3f,
         sheetContent = {
             CustomizeSection(
                 settings = options.settings,
@@ -108,13 +109,16 @@ fun ExportExpandedContent(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxSize()
-                .padding(32.dp)
+                .padding(32.dp),
         ) {
-            Text("Export Options")
+            ExportOptionsCard(
+                options = options,
+                toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
+            )
 
             var selected by remember { mutableStateOf(options.files.first()) }
             LaunchedEffect(options.files) {
-                selected = options.files.first { it.name == selected.name }
+                selected = options.files.firstOrNull { it.name == selected.name } ?: options.files.first()
             }
             LaunchedEffect(selected) {
                 Logger.d { "Selected file ${selected.name}\n${selected.content}" }
@@ -131,7 +135,9 @@ fun ExportExpandedContent(
                     clipboard.setText(AnnotatedString(selected.content))
                     snackbar.launch(scope, "Copied the contents of ${selected.name} to clipboard")
                 },
-                modifier = Modifier.padding(32.dp)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
             )
         }
     }

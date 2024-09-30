@@ -21,17 +21,16 @@ fun standardColorsKt(
 
 
     return """
-    $Header
-    package $packageName
-    
-    import androidx.compose.ui.graphics.Color
-    
-    ${settings.colors.seed.variable("Seed")}
-    
-    ${map.toColorVariables(scheme = light)}
-    
-    ${map.toColorVariables(scheme = dark)}
-    """.trimIndent()
+$Header
+package $packageName
+
+import androidx.compose.ui.graphics.Color
+
+${settings.colors.seed.variable("Seed")}
+
+${map.toColorVariables(scheme = light)}
+${map.toColorVariables(scheme = dark)}
+""".trimIndent()
 }
 
 /**
@@ -42,16 +41,16 @@ fun standardColorsKt(
  * "primaryLight" to "primary"
  * ```
  */
-fun lightVariableNamePairs(settings: Settings): Map<String, String> {
+fun lightVariableNamePairs(settings: Settings): List<String> {
     val list = MaterialDynamicColors(settings.isExtendedFidelity).colorList()
     val light = createScheme(isDark = false, settings = settings)
-    return list.variableNamePair(light).mapValues { it.value.name.snakeToCamelCase() }
+    return list.variableNamePair(light).map { it.key }
 }
 
-fun darkVariableNamePairs(settings: Settings): Map<String, String> {
+fun darkVariableNamePairs(settings: Settings): List<String> {
     val list = MaterialDynamicColors(settings.isExtendedFidelity).colorList()
     val dark = createScheme(isDark = true, settings = settings)
-    return list.variableNamePair(dark).mapValues { it.value.name.snakeToCamelCase() }
+    return list.variableNamePair(dark).map { it.key }
 }
 
 private fun createScheme(
