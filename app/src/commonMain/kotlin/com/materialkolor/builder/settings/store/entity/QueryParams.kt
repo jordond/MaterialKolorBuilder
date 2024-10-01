@@ -33,10 +33,10 @@ fun SettingsEntity.toQueryParams(): String {
                 )
                 .param(key.KEY)
         }
-        .joinToString(SEPARATOR)
 
+    val colorParams = if (colors.isEmpty()) null else colors.joinToString(SEPARATOR)
     val params = listOfNotNull(
-        colors,
+        colorParams,
         "${KEY_DARK_MODE}=${isDarkMode ?: false}",
         style.param(KEY_STYLE, SettingsDefaults.style),
         selectedPresetId.param(KEY_SELECTED_PRESET_ID),
