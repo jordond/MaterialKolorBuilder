@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.materialkolor.builder.ui.ktx.conditional
+import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.ktx.whenNotNull
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -128,7 +129,9 @@ fun SideSheet(
 
             Box(
                 contentAlignment = contentAlignment,
-                modifier = Modifier.background(contentContainerColor),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(contentContainerColor),
             ) {
                 Surface(
                     color = contentContainerColor,
@@ -143,8 +146,10 @@ fun SideSheet(
                 shape = position.sheetShape(sheetCornerRadius),
                 modifier = Modifier
                     .align(
-                        if (position == SideSheetPosition.Start) Alignment.CenterStart
-                        else Alignment.CenterEnd,
+                        when (position) {
+                            SideSheetPosition.Start -> Alignment.CenterStart
+                            SideSheetPosition.End -> Alignment.CenterEnd
+                        }
                     )
                     .width(sheetWidth)
                     .clipToBounds()
@@ -216,7 +221,6 @@ private val DragValue.opposite: DragValue
         DragValue.Collapsed -> DragValue.Expanded
     }
 
-// Update ExpandCollapsePanel to remove the click handler
 @Composable
 private fun ExpandCollapsePanel(
     value: DragValue,
