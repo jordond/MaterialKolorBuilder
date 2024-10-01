@@ -1,13 +1,13 @@
 # MaterialKolor Builder
 
-[![Kotlin](https://img.shields.io/badge/kotlin-v2.1.0-Beta1-blue.svg?logo=kotlin)](http://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/kotlin-v2.1.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Build](https://github.com/jordond/materialkolorbuilder/actions/workflows/ci.yml/badge.svg)](https://github.com/jordond/materialkolorbuilder/actions/workflows/ci.yml)
 [![Release](https://github.com/jordond/materialkolorbuilder/actions/workflows/release.yml/badge.svg)](https://github.com/jordond/materialkolorbuilder/actions/workflows/release.yml)
 [![License](https://img.shields.io/github/license/jordond/MaterialKolorBuilder)](https://opensource.org/license/mit/)
 
-[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.7.0-rc01-blue)](https://github.com/JetBrains/compose-multiplatform)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.7.0-blue)](https://github.com/JetBrains/compose-multiplatform)
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
-![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
+![badge-desktop](http://img.shields.io/badge/platform-desktop-3750FF.svg?style=flat)
 ![badge-wasm](http://img.shields.io/badge/platform-js%2Fwasm-FDD835.svg?style=flat)
 
 A Material3 Theme builder powered by [MaterialKolor](https://github.com/jordond/MaterialKolor).
