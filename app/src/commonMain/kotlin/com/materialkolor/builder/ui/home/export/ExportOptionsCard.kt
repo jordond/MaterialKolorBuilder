@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -39,12 +43,13 @@ fun ExportOptionsCard(
             .animateContentSize(),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = "Options",
                 style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(bottom = 8.dp),
             )
 
             SingleChoiceSegmentedButtonRow(
@@ -72,7 +77,7 @@ fun ExportOptionsCard(
 
             AnimatedVisibility(visible = options.type == ExportType.MaterialKolor) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     OptionSwitch(
                         text = "Animate",
@@ -113,6 +118,15 @@ private fun OptionSwitch(
         Switch(
             checked = value,
             onCheckedChange = { onValueChange(it) },
+            thumbContent = {
+                if (value) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(0.8f)
+                    )
+                }
+            },
         )
     }
 }

@@ -108,7 +108,7 @@ fun ColorBox(
                 Text(text = themeColor.swatchNumber, modifier = Modifier.align(Alignment.End))
             }
 
-            CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
+            CopyIcon(visble = isHovered, modifier = Modifier.align(Alignment.TopEnd))
         }
     }
 }

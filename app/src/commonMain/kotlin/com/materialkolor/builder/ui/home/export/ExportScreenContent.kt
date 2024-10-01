@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.ui.LocalWindowSizeClass
@@ -87,7 +86,7 @@ fun ExportExpandedContent(
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
     SideSheet(
-        position = SideSheetPosition.End,
+        position = SideSheetPosition.Start,
         initialExpanded = true,
         isFloating = true,
         displayOverContent = false,
@@ -111,19 +110,9 @@ fun ExportExpandedContent(
                 .fillMaxSize()
                 .padding(16.dp),
         ) {
-            ExportOptionsCard(
-                options = options,
-                toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
-                updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
-                modifier = Modifier.widthIn(max = 300.dp),
-            )
-
             var selected by remember { mutableStateOf(options.files.first()) }
             LaunchedEffect(options.files) {
                 selected = options.files.firstOrNull { it.name == selected.name } ?: options.files.first()
-            }
-            LaunchedEffect(selected) {
-                Logger.d { "Selected file ${selected.name}\n${selected.content}" }
             }
 
             val clipboard = LocalClipboardManager.current
@@ -140,6 +129,13 @@ fun ExportExpandedContent(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 16.dp),
+            )
+
+            ExportOptionsCard(
+                options = options,
+                toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
+                updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
+                modifier = Modifier.widthIn(max = 300.dp),
             )
         }
     }

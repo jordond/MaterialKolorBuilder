@@ -2,9 +2,6 @@ package com.materialkolor.builder.ui.home.export
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,14 +10,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -87,11 +90,7 @@ fun FileListContainer(
                 )
             }
 
-            val interactionSource = remember { MutableInteractionSource() }
-            val isHovered by interactionSource.collectIsHoveredAsState()
-
             Card(
-                onClick = onClick,
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
@@ -99,21 +98,38 @@ fun FileListContainer(
             ) {
                 Box(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .hoverable(interactionSource),
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
                 ) {
-                    CodeTextView(
-                        highlights = highlights,
-                        style = LocalTextStyle.current.copy(
-                            fontFamily = JetBrainsMono,
-                            fontWeight = FontWeight.Light,
-                        ),
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
-                    )
 
-                    CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
+                    SelectionContainer {
+                        CodeTextView(
+                            highlights = highlights,
+                            style = LocalTextStyle.current.copy(
+                                fontFamily = JetBrainsMono,
+                                fontWeight = FontWeight.Light,
+                            ),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState()),
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier.align(Alignment.TopEnd),
+                    ) {
+                        TooltipBox(
+                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            tooltip = { PlainTooltip { Text("Copy whole file to clipboard") } },
+                            state = rememberTooltipState(),
+                        ) {
+                            FilledTonalIconButton(
+                                onClick = onClick,
+                            ) {
+                                CopyIcon(visble = true)
+                            }
+                        }
+                    }
                 }
             }
         }
