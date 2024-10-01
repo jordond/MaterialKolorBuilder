@@ -1,10 +1,10 @@
-package com.materialkolor.builder.export.library
+package com.materialkolor.builder.export.model.library
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.decapitalize
 import androidx.compose.ui.text.intl.Locale
 import com.materialkolor.Contrast
-import com.materialkolor.builder.export.header
+import com.materialkolor.builder.export.model.header
 import com.materialkolor.builder.settings.model.Settings
 
 fun mkThemeKt(

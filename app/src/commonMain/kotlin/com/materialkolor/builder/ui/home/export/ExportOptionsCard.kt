@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.export.ExportOptions
-import com.materialkolor.builder.export.ExportType
+import com.materialkolor.builder.export.model.ExportOptions
+import com.materialkolor.builder.export.model.ExportType
 import com.materialkolor.builder.ui.ktx.clickableWithoutRipple
 
 @Composable

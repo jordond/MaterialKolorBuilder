@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.ui.components.SideSheet
 import com.materialkolor.builder.ui.components.SideSheetPosition
 import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker

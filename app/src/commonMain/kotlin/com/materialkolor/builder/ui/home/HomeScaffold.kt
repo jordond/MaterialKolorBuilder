@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.core.exportSupported
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.ui.about.AboutInfo
 import com.materialkolor.builder.ui.components.AppSnackbarHost
 import com.materialkolor.builder.ui.components.AppTopBar

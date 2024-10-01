@@ -1,7 +1,7 @@
-package com.materialkolor.builder.export.standard
+package com.materialkolor.builder.export.model.standard
 
 import com.materialkolor.Contrast
-import com.materialkolor.builder.export.header
+import com.materialkolor.builder.export.model.header
 import com.materialkolor.builder.settings.model.Settings
 
 private val androidImports = """

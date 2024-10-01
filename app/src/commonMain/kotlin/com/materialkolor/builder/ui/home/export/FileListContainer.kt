@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
-import com.materialkolor.builder.export.ExportFile
+import com.materialkolor.builder.export.model.ExportFile
 import com.materialkolor.builder.ui.components.CopyIcon
 import com.materialkolor.builder.ui.components.code.CodeTextView
 import com.materialkolor.builder.ui.theme.JetBrainsMono

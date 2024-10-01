@@ -1,4 +1,4 @@
-package com.materialkolor.builder.export
+package com.materialkolor.builder.export.model
 
 import com.materialkolor.builder.BuildKonfig
 import com.materialkolor.builder.core.baseUrl

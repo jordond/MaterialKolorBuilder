@@ -10,7 +10,7 @@ import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.core.readBytes
 import com.materialkolor.builder.core.shareToClipboard
 import com.materialkolor.builder.core.shareUrl
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.ImagePresets

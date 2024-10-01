@@ -1,7 +1,7 @@
-package com.materialkolor.builder.export.library
+package com.materialkolor.builder.export.model.library
 
-import com.materialkolor.builder.export.ExportFile
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportFile
+import com.materialkolor.builder.export.model.ExportOptions
 import dev.snipme.highlights.model.SyntaxLanguage
 
 fun ExportOptions.createMaterialKolorFiles(): List<ExportFile> {

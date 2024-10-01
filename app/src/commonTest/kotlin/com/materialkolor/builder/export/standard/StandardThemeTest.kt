@@ -2,7 +2,8 @@ package com.materialkolor.builder.export.standard
 
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.Contrast
-import com.materialkolor.builder.export.header
+import com.materialkolor.builder.export.model.header
+import com.materialkolor.builder.export.model.standard.standardThemeKt
 import com.materialkolor.builder.settings.model.ColorSettings
 import com.materialkolor.builder.settings.model.Settings
 import kotlin.test.Test

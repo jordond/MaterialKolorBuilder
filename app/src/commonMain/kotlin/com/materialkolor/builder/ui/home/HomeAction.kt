@@ -3,7 +3,7 @@ package com.materialkolor.builder.ui.home
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.ui.home.preview.PreviewSection

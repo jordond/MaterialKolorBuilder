@@ -1,4 +1,4 @@
-package com.materialkolor.builder.export.standard
+package com.materialkolor.builder.export.model.standard
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.ui.text.decapitalize

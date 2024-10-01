@@ -1,4 +1,4 @@
-package com.materialkolor.builder.export
+package com.materialkolor.builder.export.model
 
 import androidx.compose.runtime.Stable
 import dev.snipme.highlights.model.SyntaxLanguage

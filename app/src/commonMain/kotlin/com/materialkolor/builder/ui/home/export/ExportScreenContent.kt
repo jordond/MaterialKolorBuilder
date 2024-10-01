@@ -26,7 +26,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.ui.LocalWindowSizeClass
 import com.materialkolor.builder.ui.home.HomeAction
 import com.materialkolor.builder.ui.home.HomeAction.UpdateExportOptions

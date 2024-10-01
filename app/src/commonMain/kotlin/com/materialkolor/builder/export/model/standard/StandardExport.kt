@@ -1,7 +1,7 @@
-package com.materialkolor.builder.export.standard
+package com.materialkolor.builder.export.model.standard
 
-import com.materialkolor.builder.export.ExportFile
-import com.materialkolor.builder.export.ExportOptions
+import com.materialkolor.builder.export.model.ExportFile
+import com.materialkolor.builder.export.model.ExportOptions
 
 fun ExportOptions.createStandardFiles(): List<ExportFile> {
     val colors = standardColorsKt(packageName = packageName, settings = settings)

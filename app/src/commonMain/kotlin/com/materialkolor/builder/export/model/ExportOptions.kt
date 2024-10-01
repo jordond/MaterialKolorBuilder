@@ -1,7 +1,7 @@
-package com.materialkolor.builder.export
+package com.materialkolor.builder.export.model
 
-import com.materialkolor.builder.export.library.createMaterialKolorFiles
-import com.materialkolor.builder.export.standard.createStandardFiles
+import com.materialkolor.builder.export.model.library.createMaterialKolorFiles
+import com.materialkolor.builder.export.model.standard.createStandardFiles
 import com.materialkolor.builder.settings.model.Settings
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
