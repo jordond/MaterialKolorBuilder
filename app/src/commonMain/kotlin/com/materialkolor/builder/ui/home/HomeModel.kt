@@ -10,6 +10,7 @@ import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.core.readBytes
 import com.materialkolor.builder.core.shareToClipboard
 import com.materialkolor.builder.core.shareUrl
+import com.materialkolor.builder.export.ExportRepo
 import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.ColorSettings
@@ -25,6 +26,7 @@ import com.mohamedrejeb.calf.io.KmpFile
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.decodeToImageBitmap
@@ -32,11 +34,14 @@ import kotlin.random.Random
 
 class HomeModel(
     private val settingsRepo: SettingsRepo = DI.settingsRepo,
+    private val exportRepo: ExportRepo = DI.exportRepo,
     private val clipboard: Clipboard = DI.clipboard,
     private val random: Random = Random.Default,
 ) : UiStateViewModel<HomeModel.State, HomeModel.Event>(
     State(ExportOptions.default(settingsRepo.settings.value)),
 ) {
+
+    private var exportJob: Job? = null
 
     init {
         settingsRepo.settings.collectToState { state, value ->
@@ -165,6 +170,27 @@ class HomeModel(
         updateState { it.copy(exportOptions = options) }
     }
 
+    fun export() {
+        if (state.value.exporting) return
+
+        updateState { it.copy(exporting = true) }
+
+        exportJob = viewModelScope.launch {
+            val result = exportRepo.export(state.value.exportOptions)
+            updateState { it.copy(exporting = false) }
+            if (!result) {
+                emit(Event.ShowSnackbar("Failed to export theme..."))
+            }
+        }
+    }
+
+    fun cancelExport() {
+        if (exportJob == null) return
+
+        exportJob?.cancel()
+        updateState { it.copy(exporting = false) }
+    }
+
     private fun updateSettings(block: (Settings) -> Settings) {
         viewModelScope.launch {
             settingsRepo.update(block)
@@ -183,6 +209,7 @@ class HomeModel(
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
         val colorPickerState: ColorPickerState? = null,
+        val exporting: Boolean = false,
     )
 
     sealed interface Event {

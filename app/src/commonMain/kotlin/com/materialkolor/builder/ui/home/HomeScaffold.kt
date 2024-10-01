@@ -5,6 +5,8 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -31,6 +33,7 @@ import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.home.HomeAction.Share
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateColor
+import com.materialkolor.builder.ui.home.components.ExportDialog
 import com.materialkolor.builder.ui.home.components.HomeBottomBar
 import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
@@ -43,6 +46,7 @@ fun HomeScreenScaffold(
     colorPickerState: ColorPickerState?,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
+    exporting: Boolean = false,
     screen: HomeScreens = HomeScreens.Preview,
     initialSection: PreviewSection? = null,
     snackbarState: SnackbarHostState = remember { SnackbarHostState() },
@@ -75,22 +79,34 @@ fun HomeScreenScaffold(
         },
         floatingActionButton = {
             if (exportSupported) {
-                AnimatedVisibility(screen == HomeScreens.Preview) {
-                    Crossfade(windowSizeClass.widthIsExpanded()) { isExpanded ->
-                        if (isExpanded) {
-                            ExtendedFloatingActionButton(
-                                onClick = dispatcher.rememberRelay(HomeAction.Nav(HomeScreens.Export)),
-                                icon = { Icon(Icons.Default.Download, contentDescription = "Export") },
-                                text = {
-                                    Text(text = "Export")
-                                },
-                            )
-                        } else {
-                            FloatingActionButton(
-                                onClick = dispatcher.rememberRelay(Share(selectedSection)),
-                                content = { Icon(Icons.Default.Share, contentDescription = "Share") },
-                            )
-                        }
+                Crossfade(windowSizeClass.widthIsExpanded()) { isExpanded ->
+                    if (isExpanded) {
+                        val action =
+                            if (screen == HomeScreens.Export) HomeAction.Export
+                            else HomeAction.Nav(HomeScreens.Export)
+
+                        ExtendedFloatingActionButton(
+                            onClick = dispatcher.rememberRelay(action),
+                            icon = {
+                                if (screen == HomeScreens.Export) {
+                                    Icon(Icons.Default.Download, contentDescription = "Export")
+                                } else {
+                                    Icon(
+                                        Icons.AutoMirrored.Default.KeyboardArrowRight,
+                                        contentDescription = "Next",
+                                    )
+                                }
+                            },
+                            text = {
+                                val text = if (screen == HomeScreens.Export) "Export" else "Next"
+                                Text(text = text)
+                            },
+                        )
+                    } else {
+                        FloatingActionButton(
+                            onClick = dispatcher.rememberRelay(Share(selectedSection)),
+                            content = { Icon(Icons.Default.Share, contentDescription = "Share") },
+                        )
                     }
                 }
             } else {
@@ -128,5 +144,11 @@ fun HomeScreenScaffold(
             toggleMode = dispatcher.rememberRelay(HomeAction.TogglePickerMode),
             selectImage = dispatcher.rememberRelay(HomeAction.PickImageForColor),
         )
+
+        if (exporting) {
+            ExportDialog(
+                onDismiss = dispatcher.relay(HomeAction.CancelExport),
+            )
+        }
     }
 }

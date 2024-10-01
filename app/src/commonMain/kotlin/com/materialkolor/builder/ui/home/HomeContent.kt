@@ -77,8 +77,8 @@ fun HomeContent(
                     onUpdate = dispatcher.rememberRelayOf(::UpdateContrast),
                     containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                     modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 16.dp, top = 16.dp),
+                        .align(Alignment.BottomStart)
+                        .padding(start = 16.dp, bottom = 16.dp),
                 )
             }
         }

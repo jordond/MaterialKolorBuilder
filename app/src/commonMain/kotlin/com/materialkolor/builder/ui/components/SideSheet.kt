@@ -63,7 +63,7 @@ fun SideSheet(
     initialExpanded: Boolean = false,
     maxWidthFraction: Float = 1f / 2.5f,
     minWidth: Dp = 200.dp,
-    visibleWidth: Dp = 60.dp,
+    visibleWidth: Dp = 30.dp,
     sheetCornerRadius: Dp = 25.dp,
     isFloating: Boolean = false,
     displayOverContent: Boolean = true,

@@ -21,8 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.materialkolor.builder.core.rememberDebounceDispatcher
+import com.materialkolor.builder.ui.home.HomeAction.CancelExport
 import com.materialkolor.builder.ui.home.HomeAction.ColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
+import com.materialkolor.builder.ui.home.HomeAction.Export
 import com.materialkolor.builder.ui.home.HomeAction.Nav
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.Reset
@@ -99,6 +101,7 @@ fun HomeScreen(destination: String? = null) {
                 snackbarState = snackbar,
                 initialSection = initialSection,
                 processingImage = state.processingImage,
+                exporting = state.exporting,
                 screen = screen,
                 dispatcher = rememberDebounceDispatcher { action ->
                     when (action) {
@@ -117,6 +120,8 @@ fun HomeScreen(destination: String? = null) {
                         is Share -> model.share(action.section)
                         is ToggleExportMode -> model.toggleExportMode()
                         is UpdateExportOptions -> model.updateExportOptions(action.options)
+                        is Export -> model.export()
+                        is CancelExport -> model.cancelExport()
                     }
                 },
             )

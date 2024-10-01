@@ -22,6 +22,8 @@ sealed interface HomeAction {
     data class Share(val section: PreviewSection) : HomeAction
     data object ToggleExportMode : HomeAction
     data class UpdateExportOptions(val options: ExportOptions) : HomeAction
+    data object Export : HomeAction
+    data object CancelExport : HomeAction
 
     data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker
     data class UpdateColor(val color: Color) : ColorPicker

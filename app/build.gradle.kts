@@ -138,6 +138,7 @@ kotlin {
 
         wasmJsMain.dependencies {
             implementation(libs.kstore.storage)
+            implementation(npm("jszip", "3.10.1"))
         }
 
         val nonBrowserMain by creating {
