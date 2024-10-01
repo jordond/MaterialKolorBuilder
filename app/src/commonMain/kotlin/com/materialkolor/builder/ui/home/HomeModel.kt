@@ -40,7 +40,7 @@ class HomeModel(
 
     init {
         settingsRepo.settings.collectToState { state, value ->
-            state.copy(exportOptions = state.exportOptions.update(settings = value))
+            state.copy(exportOptions = state.exportOptions.copy(settings = value))
         }
     }
 
@@ -156,13 +156,9 @@ class HomeModel(
     }
 
     fun toggleExportMode() {
-        val current = state.value.exportOptions
-        val inverted =  when (current) {
-            is ExportOptions.MaterialKolor -> current
-            is ExportOptions.Standard -> ExportOptions.MaterialKolor(current.settings)
+        updateState { state ->
+            state.copy(exportOptions = state.exportOptions.toggleType())
         }
-
-        // updateState { it.copy(exportOptions = inactive, inactiveOptions = current) }
     }
 
     fun updateExportOptions(options: ExportOptions) {

@@ -4,7 +4,7 @@ import com.materialkolor.builder.export.ExportFile
 import com.materialkolor.builder.export.ExportOptions
 import dev.snipme.highlights.model.SyntaxLanguage
 
-fun ExportOptions.MaterialKolor.createFiles(): List<ExportFile> {
+fun ExportOptions.createMaterialKolorFiles(): List<ExportFile> {
     val libs = if (useVersionCatalog) libsVersionsToml() else null
     val gradle = gradleKts(isMultiplatform = multiplatform, useVersionCatalog = useVersionCatalog)
     val colors = mkColorsKt(packageName = packageName, colors = settings.colors)

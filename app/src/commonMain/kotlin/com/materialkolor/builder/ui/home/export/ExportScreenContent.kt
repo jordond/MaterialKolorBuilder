@@ -2,13 +2,11 @@ package com.materialkolor.builder.ui.home.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -109,16 +107,15 @@ fun ExportExpandedContent(
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxSize()
-                .padding(32.dp),
+                .padding(16.dp),
         ) {
             ExportOptionsCard(
                 options = options,
                 toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
                 updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier.widthIn(max = 300.dp),
             )
 
             var selected by remember { mutableStateOf(options.files.first()) }

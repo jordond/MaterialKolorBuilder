@@ -1,71 +1,46 @@
 package com.materialkolor.builder.export
 
-import com.materialkolor.builder.export.library.createFiles
-import com.materialkolor.builder.export.standard.createFiles
+import com.materialkolor.builder.export.library.createMaterialKolorFiles
+import com.materialkolor.builder.export.standard.createStandardFiles
 import com.materialkolor.builder.settings.model.Settings
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
-sealed interface ExportOptions {
-    val settings: Settings
-    val multiplatform: Boolean
-    val themeName: String
-    val packageName: String
-    val files: PersistentList<ExportFile>
+enum class ExportType(val displayName: String) {
+    Standard("Standard"),
+    MaterialKolor("Material Kolor"),
+}
 
-    data class Standard(
-        override val settings: Settings,
-        override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
-        override val themeName: String = DEFAULT_THEME_NAME,
-        override val packageName: String = DEFAULT_PACKAGE_NAME,
-    ) : ExportOptions {
-        override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
-    }
+data class ExportOptions(
+    val type: ExportType,
+    val settings: Settings,
+    val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
+    val themeName: String = DEFAULT_THEME_NAME,
+    val packageName: String = DEFAULT_PACKAGE_NAME,
+    val useVersionCatalog: Boolean = DEFAULT_USE_VERSION_CATALOG,
+    val animate: Boolean = DEFAULT_ANIMATE,
+) {
 
-    data class MaterialKolor(
-        override val settings: Settings,
-        override val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
-        override val themeName: String = DEFAULT_THEME_NAME,
-        override val packageName: String = DEFAULT_PACKAGE_NAME,
-        val useVersionCatalog: Boolean = true,
-        val animate: Boolean = true,
-    ) : ExportOptions {
-        override val files: PersistentList<ExportFile> = createFiles().toPersistentList()
-    }
+    val files: PersistentList<ExportFile> = when (type) {
+        ExportType.MaterialKolor -> createMaterialKolorFiles()
+        ExportType.Standard -> createStandardFiles()
+    }.toPersistentList()
 
-    fun update(settings: Settings): ExportOptions {
-        return when (this) {
-            is Standard -> copy(settings = settings)
-            is MaterialKolor -> copy(settings = settings)
-        }
-    }
-
-    fun update(
-        settings: Settings = this.settings,
-        multiplatform: Boolean = this.multiplatform,
-        themeName: String = this.themeName,
-        packageName: String = this.packageName,
-        useVersionCatalog: Boolean = (this as? MaterialKolor)?.useVersionCatalog ?: true,
-        animate: Boolean = (this as? MaterialKolor)?.animate ?: true,
-    ): ExportOptions = when (this) {
-        is Standard -> Standard(settings, multiplatform, themeName, packageName)
-        is MaterialKolor ->
-            MaterialKolor(settings, multiplatform, themeName, packageName, useVersionCatalog, animate)
-    }
-
-    fun ExportOptions.swap(): ExportOptions {
-        return when (this) {
-            is Standard -> MaterialKolor(settings, multiplatform, themeName, packageName)
-            is MaterialKolor -> Standard(settings, multiplatform, themeName, packageName)
-        }
-    }
+    fun toggleType(): ExportOptions = copy(
+        type = when (type) {
+            ExportType.MaterialKolor -> ExportType.Standard
+            ExportType.Standard -> ExportType.MaterialKolor
+        },
+    )
 
     companion object {
 
-        const val DEFAULT_MULTIPLATFORM = true
         const val DEFAULT_THEME_NAME = "AppTheme"
         const val DEFAULT_PACKAGE_NAME = "com.example"
+        const val DEFAULT_MULTIPLATFORM = true
+        const val DEFAULT_USE_VERSION_CATALOG = true
+        const val DEFAULT_ANIMATE = true
 
-        fun default(settings: Settings) = MaterialKolor(settings)
+        fun default(settings: Settings) = ExportOptions(ExportType.MaterialKolor, settings)
     }
 }
