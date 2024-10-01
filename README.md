@@ -14,7 +14,7 @@ A Material3 Theme builder powered by [MaterialKolor](https://github.com/jordond/
 
 Visit at [materialkolor.com](https://materialkolor.com).
 
-<img src="assets/mkb-demo.gif" />
+[mkb-demo.webm](https://github.com/user-attachments/assets/6368a0c3-9df9-416e-81ce-eeb763e74c6e)
 
 ## Table of Contents
 
