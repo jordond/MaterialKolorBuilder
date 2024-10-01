@@ -164,4 +164,25 @@ jobs:
 
             console.log('All assets uploaded successfully.');
 
-# TODO: Deploy web to production channel
+  deploy:
+    name: "Deploy to Production"
+    runs-on: ubuntu-latest
+    needs: build
+    if: success() && contains(needs.build.outputs.matrix-target, 'web')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download web build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: app/build/dist/wasmJs/productionExecutable
+
+      - name: Deploy to production
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MATERIALKOLOR }}
+          channelId: live
+          projectId: materialkolor
