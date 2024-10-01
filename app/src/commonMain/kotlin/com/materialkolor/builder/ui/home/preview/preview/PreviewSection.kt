@@ -17,19 +17,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.materialkolor.Contrast
 import com.materialkolor.builder.settings.model.Settings
-import com.materialkolor.builder.ui.home.components.ContrastSelector
 import com.materialkolor.builder.ui.home.preview.device.DeviceSection
 import com.materialkolor.builder.ui.home.preview.gallery.GallerySection
 import com.materialkolor.builder.ui.home.preview.palette.PaletteSection
 import com.materialkolor.builder.ui.home.preview.theme.ThemeSection
 import com.materialkolor.builder.ui.ktx.sidePadding
-import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
 
 @Composable
 fun PreviewSection(
     settings: Settings,
-    onUpdateContrast: (Contrast) -> Unit,
     modifier: Modifier = Modifier,
     onCopyColor: (String, Color) -> Unit = { _, _ -> },
     windowSizeClass: WindowSizeClass = windowSizeClass(),
@@ -64,16 +61,6 @@ fun PreviewSection(
             }
 
             Spacer(modifier = Modifier.height(200.dp))
-        }
-
-        if (windowSizeClass.widthIsExpanded()) {
-            ContrastSelector(
-                selected = settings.contrast,
-                onUpdate = onUpdateContrast,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 16.dp),
-            )
         }
     }
 }

@@ -28,23 +28,14 @@ import androidx.compose.ui.unit.dp
 import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.ui.LocalWindowSizeClass
-import com.materialkolor.builder.ui.components.SideSheet
-import com.materialkolor.builder.ui.components.SideSheetPosition
 import com.materialkolor.builder.ui.home.HomeAction
-import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
-import com.materialkolor.builder.ui.home.HomeAction.RandomColor
-import com.materialkolor.builder.ui.home.HomeAction.SelectImage
-import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
 import com.materialkolor.builder.ui.home.HomeAction.UpdateExportOptions
-import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
-import com.materialkolor.builder.ui.home.preview.customize.CustomizeSection
 import com.materialkolor.builder.ui.ktx.launch
 
 @Composable
 fun ExportScreenContent(
     options: ExportOptions,
-    processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
@@ -55,8 +46,6 @@ fun ExportScreenContent(
                 options = options,
                 modifier = modifier,
                 dispatcher = dispatcher,
-                processingImage = processingImage,
-                windowSizeClass = windowSizeClass,
             )
         }
         else -> {
@@ -80,64 +69,42 @@ fun ExportScreenContent(
 @Composable
 fun ExportExpandedContent(
     options: ExportOptions,
-    processingImage: Boolean,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
-    windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
 ) {
-    SideSheet(
-        position = SideSheetPosition.Start,
-        initialExpanded = true,
-        isFloating = true,
-        displayOverContent = false,
-        maxWidthFraction = 0.3f,
-        sheetContent = {
-            CustomizeSection(
-                settings = options.settings,
-                onSelectImage = dispatcher.rememberRelayOf(::SelectImage),
-                onRandomColor = dispatcher.rememberRelay(RandomColor),
-                openColorPicker = dispatcher.rememberRelayOf(::OpenColorPicker),
-                onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
-                onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
-                processingImage = processingImage,
-                windowSizeClass = windowSizeClass,
-            )
-        },
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 32.dp, vertical = 16.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = 32.dp, vertical = 16.dp),
-        ) {
-            ExportOptionsCard(
-                options = options,
-                toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
-                updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
-                modifier = Modifier.widthIn(max = 300.dp),
-            )
+        ExportOptionsCard(
+            options = options,
+            toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
+            updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
+            modifier = Modifier.widthIn(max = 300.dp),
+        )
 
-            var selected by remember { mutableStateOf(options.files.first()) }
-            LaunchedEffect(options.files) {
-                selected = options.files.firstOrNull { it.name == selected.name } ?: options.files.first()
-            }
-
-            val clipboard = LocalClipboardManager.current
-            val snackbar = LocalSnackbarHostState.current
-            val scope = rememberCoroutineScope()
-            FileListContainer(
-                selected = selected,
-                files = options.files,
-                onSelected = { selected = it },
-                onClick = {
-                    clipboard.setText(AnnotatedString(selected.content))
-                    snackbar.launch(scope, "Copied the contents of ${selected.name} to clipboard")
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp),
-            )
+        var selected by remember { mutableStateOf(options.files.first()) }
+        LaunchedEffect(options.files) {
+            selected = options.files.firstOrNull { it.name == selected.name } ?: options.files.first()
         }
+
+        val clipboard = LocalClipboardManager.current
+        val snackbar = LocalSnackbarHostState.current
+        val scope = rememberCoroutineScope()
+        FileListContainer(
+            selected = selected,
+            files = options.files,
+            onSelected = { selected = it },
+            onClick = {
+                clipboard.setText(AnnotatedString(selected.content))
+                snackbar.launch(scope, "Copied the contents of ${selected.name} to clipboard")
+            },
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp),
+        )
     }
 }

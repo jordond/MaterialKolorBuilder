@@ -7,8 +7,8 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
 enum class ExportType(val displayName: String) {
-    Standard("Standard"),
     MaterialKolor("Material Kolor"),
+    Standard("Standard"),
 }
 
 data class ExportOptions(

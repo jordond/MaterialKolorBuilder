@@ -26,7 +26,6 @@ fun PreviewScreenContent(
         WindowWidthSizeClass.Expanded -> {
             PreviewExpandedContent(
                 settings = settings,
-                processingImage = processingImage,
                 dispatcher = dispatcher,
                 windowSizeClass = windowSizeClass,
                 modifier = modifier,
