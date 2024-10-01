@@ -1,14 +1,13 @@
-name: Deploy Web App
+name: Deploy Web App to Staging
 
 on:
   workflow_dispatch:
-#  TODO: Disabled until release
-#  push:
-#    branches:
-#      - main
-#    paths-ignore:
-#      - "**.md"
-#      - "ios/**"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - "ios/**"
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -46,7 +45,7 @@ jobs:
           path: app/build/dist/wasmJs/productionExecutable
 
   deploy:
-    name: "Deploy"
+    name: "Deploy to Staging"
     runs-on: ubuntu-latest
     needs:
       - build
