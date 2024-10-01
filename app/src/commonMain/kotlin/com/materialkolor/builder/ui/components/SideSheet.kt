@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.materialkolor.builder.ui.ktx.conditional
-import com.materialkolor.builder.ui.ktx.debugBorder
 import com.materialkolor.builder.ui.ktx.whenNotNull
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -120,7 +119,7 @@ fun SideSheet(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(contentContainerColor)
+                .background(contentContainerColor),
         ) {
             val contentAlignment = when (position) {
                 SideSheetPosition.Start -> Alignment.CenterEnd
@@ -167,7 +166,7 @@ fun SideSheet(
                         reverseDirection = position == SideSheetPosition.End,
                         enabled = true,
                     )
-                    .clip(position.sheetShape(sheetCornerRadius))
+                    .clip(position.sheetShape(sheetCornerRadius)),
             ) {
                 val panel = @Composable {
                     ExpandCollapsePanel(

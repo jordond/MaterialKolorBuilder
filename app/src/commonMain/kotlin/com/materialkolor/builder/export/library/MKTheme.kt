@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.decapitalize
 import androidx.compose.ui.text.intl.Locale
 import com.materialkolor.Contrast
-import com.materialkolor.builder.export.Header
+import com.materialkolor.builder.export.header
 import com.materialkolor.builder.settings.model.Settings
 
 fun mkThemeKt(
@@ -27,36 +27,36 @@ fun mkThemeKt(
         settings.colors.error.parameter("Error"),
         settings.colors.neutral.parameter("Neutral"),
         settings.colors.neutralVariant.parameter("NeutralVariant"),
-    ).joinToString(",\n            ")
+    ).joinToString(",\n        ")
 
     return """
-    $Header
-    package $packageName
+${header(settings)}
+package $packageName
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+import com.materialkolor.DynamicMaterialTheme
+import com.materialkolor.PaletteStyle
+import com.materialkolor.rememberDynamicMaterialThemeState
+
+@Composable
+fun $themeName(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    val dynamicThemeState = rememberDynamicMaterialThemeState(
+        isDark = darkTheme,
+        style = PaletteStyle.${settings.style},
+        $params,
+    )
     
-    import androidx.compose.foundation.isSystemInDarkTheme
-    import androidx.compose.runtime.Composable
-    import com.materialkolor.DynamicMaterialTheme
-    import com.materialkolor.PaletteStyle
-    import com.materialkolor.rememberDynamicMaterialThemeState
-    
-    @Composable
-    fun $themeName(
-        isDarkTheme: Boolean = isSystemInDarkTheme(),
-        content: @Composable () -> Unit,
-    ) {
-        val dynamicThemeState = rememberDynamicMaterialThemeState(
-            isDark = isDarkTheme,
-            style = PaletteStyle.${settings.style},
-            $params,
-        )
-        
-        DynamicMaterialTheme(
-            state = dynamicThemeState,
-            animate = $animate,
-            content = content,
-        )
-    }
-    """.trimIndent()
+    DynamicMaterialTheme(
+        state = dynamicThemeState,
+        animate = $animate,
+        content = content,
+    )
+}
+""".trimIndent()
 }
 
 private fun Boolean.parameter(name: String) = if (this) "$name = true" else null

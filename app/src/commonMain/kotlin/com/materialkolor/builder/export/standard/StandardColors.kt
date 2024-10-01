@@ -1,7 +1,9 @@
 package com.materialkolor.builder.export.standard
 
+import androidx.annotation.VisibleForTesting
+import androidx.compose.ui.text.decapitalize
+import androidx.compose.ui.text.intl.Locale
 import com.materialkolor.Contrast
-import com.materialkolor.builder.export.Header
 import com.materialkolor.builder.export.variable
 import com.materialkolor.builder.ktx.snakeToCamelCase
 import com.materialkolor.builder.settings.model.Settings
@@ -19,9 +21,7 @@ fun standardColorsKt(
     val light = createScheme(isDark = false, settings = settings)
     val dark = createScheme(isDark = true, settings = settings)
 
-
     return """
-$Header
 package $packageName
 
 import androidx.compose.ui.graphics.Color
@@ -30,7 +30,7 @@ ${settings.colors.seed.variable("Seed")}
 
 ${map.toColorVariables(scheme = light)}
 ${map.toColorVariables(scheme = dark)}
-""".trimIndent()
+""".trimIndent().dropLastWhile { it == '\n' }
 }
 
 /**
@@ -38,22 +38,27 @@ ${map.toColorVariables(scheme = dark)}
  *
  * Example:
  * ```
- * "primaryLight" to "primary"
+ * "primary" to "PrimaryLight"
  * ```
  */
-fun lightVariableNamePairs(settings: Settings): List<String> {
-    val list = MaterialDynamicColors(settings.isExtendedFidelity).colorList()
-    val light = createScheme(isDark = false, settings = settings)
-    return list.variableNamePair(light).map { it.key }
+fun lightVariableNamePairs(settings: Settings): Map<String, String> {
+    return variableNamePairs(settings, isDark = false)
 }
 
-fun darkVariableNamePairs(settings: Settings): List<String> {
-    val list = MaterialDynamicColors(settings.isExtendedFidelity).colorList()
-    val dark = createScheme(isDark = true, settings = settings)
-    return list.variableNamePair(dark).map { it.key }
+fun darkVariableNamePairs(settings: Settings): Map<String, String> {
+    return variableNamePairs(settings, isDark = true)
 }
 
-private fun createScheme(
+private fun variableNamePairs(settings: Settings, isDark: Boolean): Map<String, String> {
+    val list = MaterialDynamicColors(settings.isExtendedFidelity).colorList()
+    val scheme = createScheme(isDark = isDark, settings = settings)
+    return list.variableNamePair(scheme).map { entry ->
+        entry.value.name.snakeToCamelCase().decapitalize(Locale("EN")) to entry.key
+    }.toMap()
+}
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+internal fun createScheme(
     isDark: Boolean,
     settings: Settings,
 ) = DynamicScheme(
@@ -107,7 +112,7 @@ private fun MaterialDynamicColors.colorList(): List<DynamicColor> = listOf(
     surfaceContainerHighest(),
 )
 
-fun List<DynamicColor>.variableNamePair(
+private fun List<DynamicColor>.variableNamePair(
     scheme: DynamicScheme,
 ): Map<String, DynamicColor> {
     val contrast = scheme.contrastSuffix()

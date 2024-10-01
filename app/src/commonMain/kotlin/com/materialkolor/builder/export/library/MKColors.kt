@@ -1,6 +1,5 @@
 package com.materialkolor.builder.export.library
 
-import com.materialkolor.builder.export.Header
 import com.materialkolor.builder.export.variable
 import com.materialkolor.builder.settings.model.ColorSettings
 
@@ -19,7 +18,6 @@ fun mkColorsKt(
     )
 
     return """
-    $Header
     package $packageName
     
     import androidx.compose.ui.graphics.Color

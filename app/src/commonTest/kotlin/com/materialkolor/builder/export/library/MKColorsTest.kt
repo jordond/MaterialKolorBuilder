@@ -1,9 +1,7 @@
 package com.materialkolor.builder.export.library
 
-import com.materialkolor.builder.export.library.mkColorsKt
-import com.materialkolor.builder.settings.model.ColorSettings
 import androidx.compose.ui.graphics.Color
-import com.materialkolor.builder.export.Header
+import com.materialkolor.builder.settings.model.ColorSettings
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -20,7 +18,7 @@ class MKColorsTest {
             tertiary = Color(0xFF333333),
             error = Color(0xFF444444),
             neutral = Color(0xFF555555),
-            neutralVariant = Color(0xFF666666)
+            neutralVariant = Color(0xFF666666),
         )
 
         val result = mkColorsKt("com.example", colorSettings)
@@ -45,7 +43,7 @@ class MKColorsTest {
             tertiary = Color(0xFF333333),
             error = Color(0xFF444444),
             neutral = Color(0xFF555555),
-            neutralVariant = Color(0xFF666666)
+            neutralVariant = Color(0xFF666666),
         )
 
         val result = mkColorsKt("com.example", colorSettings)
@@ -63,7 +61,7 @@ class MKColorsTest {
             tertiary = null,
             error = Color(0xFF444444),
             neutral = null,
-            neutralVariant = Color(0xFF666666)
+            neutralVariant = Color(0xFF666666),
         )
 
         val result = mkColorsKt("com.example", colorSettings)
@@ -86,7 +84,7 @@ class MKColorsTest {
             tertiary = Color(0xFF333333),
             error = Color(0xFF444444),
             neutral = Color(0xFF555555),
-            neutralVariant = Color(0xFF666666)
+            neutralVariant = Color(0xFF666666),
         )
 
         val result = mkColorsKt("com.differentpackage", colorSettings)
@@ -103,13 +101,12 @@ class MKColorsTest {
             tertiary = null,
             error = null,
             neutral = Color(0xFF555555),
-            neutralVariant = null
+            neutralVariant = null,
         )
 
         val result = mkColorsKt("com.example", colorSettings)
 
         val expectedOutput = """
-        $Header
         package com.example
         
         import androidx.compose.ui.graphics.Color
@@ -131,13 +128,12 @@ class MKColorsTest {
             tertiary = null,
             error = null,
             neutral = null,
-            neutralVariant = null
+            neutralVariant = null,
         )
 
         val result = mkColorsKt("com.example", colorSettings)
 
         val expectedOutput = """
-            $Header
             package com.example
             
             import androidx.compose.ui.graphics.Color
@@ -157,13 +153,12 @@ class MKColorsTest {
             tertiary = null,
             error = null,
             neutral = null,
-            neutralVariant = null
+            neutralVariant = null,
         )
 
         val result = mkColorsKt("com.example", colorSettings)
 
         val expectedOutput = """
-            $Header
             package com.example
             
             import androidx.compose.ui.graphics.Color

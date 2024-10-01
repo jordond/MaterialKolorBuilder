@@ -110,7 +110,7 @@ fun FileListContainer(
                         ),
                         modifier = Modifier
                             .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
+                            .verticalScroll(rememberScrollState()),
                     )
 
                     CopyIcon(isHovered = isHovered, modifier = Modifier.align(Alignment.TopEnd))
