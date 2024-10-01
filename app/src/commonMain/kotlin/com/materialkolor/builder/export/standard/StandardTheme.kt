@@ -34,6 +34,9 @@ fun standardThemeKt(
     val lightSchemeName = settings.contrast.schemeName(isDark = false)
     val darkColors = darkVariableNamePairs(settings)
     val darkSchemeName = settings.contrast.schemeName(isDark = true)
+    val themeComposable =
+        if (multiplatform) multiplatformTheme(themeName, lightSchemeName, darkSchemeName)
+        else androidTheme(themeName, lightSchemeName, darkSchemeName)
 
     return """
 ${header(settings)}
@@ -49,19 +52,19 @@ private val $darkSchemeName = darkColorScheme(
 ${darkColors.toParamList()},
 )
 
-${if (multiplatform) multiplatformTheme(themeName) else androidTheme(themeName)}
+$themeComposable
 """.trimIndent()
 }
 
-private fun multiplatformTheme(themeName: String) = """
+private fun multiplatformTheme(themeName: String, lightSchemeName: String, darkSchemeName: String) = """
     @Composable
     fun $themeName(
         darkTheme: Boolean = isSystemInDarkTheme(),
         content: @Composable() () -> Unit,
     ) {
         val colorScheme = when {
-            darkTheme -> darkColorScheme
-            else -> lightColorScheme
+            darkTheme -> $darkSchemeName
+            else -> $lightSchemeName
         }
 
         MaterialTheme(
@@ -71,7 +74,7 @@ private fun multiplatformTheme(themeName: String) = """
     }
 """.trimIndent()
 
-private fun androidTheme(themeName: String) = """
+private fun androidTheme(themeName: String, lightSchemeName: String, darkSchemeName: String) = """
     @Composable
     fun $themeName(
         darkTheme: Boolean = isSystemInDarkTheme(),
@@ -84,8 +87,8 @@ private fun androidTheme(themeName: String) = """
                 val context = LocalContext.current
                 if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
-            darkTheme -> darkColorScheme
-            else -> lightColorScheme
+            darkTheme -> $darkSchemeName
+            else -> $lightSchemeName
         }
     
         MaterialTheme(

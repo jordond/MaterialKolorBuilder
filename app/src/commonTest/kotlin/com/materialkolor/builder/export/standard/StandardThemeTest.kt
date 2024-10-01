@@ -380,7 +380,7 @@ fun AppTheme(
         val result = standardThemeKt(
             packageName = "com.example",
             themeName = "AppTheme",
-            multiplatform = false,
+            multiplatform = true,
             settings = settings,
         )
 
@@ -463,6 +463,12 @@ fun AppTheme(
         """.trimIndent()
 
         assertContains(result, colors)
+
+        val darkSchemeName = "darkTheme -> mediumContrastDarkColorScheme"
+        val lightSchemeName = "else -> mediumContrastLightColorScheme"
+
+        assertContains(result, darkSchemeName)
+        assertContains(result, lightSchemeName)
     }
 
     @Test
