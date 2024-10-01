@@ -31,6 +31,7 @@ import com.materialkolor.builder.ui.home.HomeAction.Share
 import com.materialkolor.builder.ui.home.HomeAction.ToggleDarkMode
 import com.materialkolor.builder.ui.home.HomeAction.ToggleExportMode
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
+import com.materialkolor.builder.ui.home.HomeAction.UpdateExportOptions
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.home.preview.gallery.NavigationDrawerContent
@@ -115,6 +116,7 @@ fun HomeScreen(destination: String? = null) {
                         is Nav -> screen = action.screen
                         is Share -> model.share(action.section)
                         is ToggleExportMode -> model.toggleExportMode()
+                        is UpdateExportOptions -> model.updateExportOptions(action.options)
                     }
                 },
             )

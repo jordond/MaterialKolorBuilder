@@ -40,6 +40,26 @@ sealed interface ExportOptions {
         }
     }
 
+    fun update(
+        settings: Settings = this.settings,
+        multiplatform: Boolean = this.multiplatform,
+        themeName: String = this.themeName,
+        packageName: String = this.packageName,
+        useVersionCatalog: Boolean = (this as? MaterialKolor)?.useVersionCatalog ?: true,
+        animate: Boolean = (this as? MaterialKolor)?.animate ?: true,
+    ): ExportOptions = when (this) {
+        is Standard -> Standard(settings, multiplatform, themeName, packageName)
+        is MaterialKolor ->
+            MaterialKolor(settings, multiplatform, themeName, packageName, useVersionCatalog, animate)
+    }
+
+    fun ExportOptions.swap(): ExportOptions {
+        return when (this) {
+            is Standard -> MaterialKolor(settings, multiplatform, themeName, packageName)
+            is MaterialKolor -> Standard(settings, multiplatform, themeName, packageName)
+        }
+    }
+
     companion object {
 
         const val DEFAULT_MULTIPLATFORM = true

@@ -3,6 +3,7 @@ package com.materialkolor.builder.ui.home
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
+import com.materialkolor.builder.export.ExportOptions
 import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.ui.home.preview.PreviewSection
@@ -20,6 +21,7 @@ sealed interface HomeAction {
     data class Nav(val screen: HomeScreens) : HomeAction
     data class Share(val section: PreviewSection) : HomeAction
     data object ToggleExportMode : HomeAction
+    data class UpdateExportOptions(val options: ExportOptions) : HomeAction
 
     data class OpenColorPicker(val key: KeyColor, val initial: Color) : ColorPicker
     data class UpdateColor(val color: Color) : ColorPicker

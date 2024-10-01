@@ -2,6 +2,8 @@ package com.materialkolor.builder.ui.home.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
@@ -23,6 +25,7 @@ private enum class ExportMode(val value: String) {
 fun ExportOptionsCard(
     options: ExportOptions,
     toggleMode: () -> Unit,
+    updateOptions: (ExportOptions) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val selectedMode = remember(options) {
@@ -33,18 +36,20 @@ fun ExportOptionsCard(
     }
 
     Card(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier,
+            modifier = Modifier.padding(8.dp),
         ) {
             Text(
                 text = "Options",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
             )
 
-            SingleChoiceSegmentedButtonRow {
+            SingleChoiceSegmentedButtonRow(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
                 ExportMode.entries.forEachIndexed { index, mode ->
                     SegmentedButton(
                         shape = SegmentedButtonDefaults.itemShape(

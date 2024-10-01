@@ -157,12 +157,16 @@ class HomeModel(
 
     fun toggleExportMode() {
         val current = state.value.exportOptions
-        val inactive = state.value.inactiveOptions ?: when (current) {
-            is ExportOptions.MaterialKolor -> ExportOptions.Standard(current.settings)
+        val inverted =  when (current) {
+            is ExportOptions.MaterialKolor -> current
             is ExportOptions.Standard -> ExportOptions.MaterialKolor(current.settings)
         }
 
-        updateState { it.copy(exportOptions = inactive, inactiveOptions = current) }
+        // updateState { it.copy(exportOptions = inactive, inactiveOptions = current) }
+    }
+
+    fun updateExportOptions(options: ExportOptions) {
+        updateState { it.copy(exportOptions = options) }
     }
 
     private fun updateSettings(block: (Settings) -> Settings) {
@@ -180,7 +184,6 @@ class HomeModel(
 
     data class State(
         val exportOptions: ExportOptions,
-        val inactiveOptions: ExportOptions? = null,
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
         val colorPickerState: ColorPickerState? = null,

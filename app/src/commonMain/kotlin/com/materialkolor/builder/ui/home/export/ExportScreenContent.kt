@@ -2,11 +2,13 @@ package com.materialkolor.builder.ui.home.export
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +38,7 @@ import com.materialkolor.builder.ui.home.HomeAction.OpenColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.RandomColor
 import com.materialkolor.builder.ui.home.HomeAction.SelectImage
 import com.materialkolor.builder.ui.home.HomeAction.UpdateContrast
+import com.materialkolor.builder.ui.home.HomeAction.UpdateExportOptions
 import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.LocalSnackbarHostState
 import com.materialkolor.builder.ui.home.preview.customize.CustomizeSection
@@ -114,6 +117,8 @@ fun ExportExpandedContent(
             ExportOptionsCard(
                 options = options,
                 toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
+                updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
+                modifier = Modifier.width(300.dp)
             )
 
             var selected by remember { mutableStateOf(options.files.first()) }
