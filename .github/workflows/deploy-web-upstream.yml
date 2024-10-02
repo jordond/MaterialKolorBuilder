@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
+    name: Build and Deploy
     if: github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-latest
     steps:
@@ -61,14 +62,13 @@ jobs:
           script: |
             const prNumber = ${{ github.event.client_payload.pr_number }};
             const previewUrl = '${{ steps.firebase-deploy.outputs.details_url }}';
-            const expirationTime = '${{ steps.firebase-deploy.outputs.expire_time_formatted }}';
             const commitHash = '${{ github.event.client_payload.commit_hash }}';
             
             const commentBody = `Visit the preview URL for this PR (updated for commit ${commitHash.substring(0, 7)}):
 
             [${previewUrl}](${previewUrl})
 
-            <sub>(expires ${expirationTime})</sub>`;
+            <sub>(I'm a bot 🤖)</sub>`;
             
             const { data: comments } = await github.rest.issues.listComments({
               owner: 'jordond',
