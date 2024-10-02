@@ -77,7 +77,7 @@ jobs:
             });
             
             const botComment = comments.find(comment => 
-              comment.body.includes('(I'm a bot 🤖)')
+              comment.body.includes('(I\'m a bot 🤖)')
             );
             
             if (botComment) {
