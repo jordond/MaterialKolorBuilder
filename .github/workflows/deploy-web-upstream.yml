@@ -77,7 +77,7 @@ jobs:
             });
             
             const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && comment.body.includes('Visit the preview URL for this PR')
+              comment.body.includes('(I'm a bot 🤖)')
             );
             
             if (botComment) {
