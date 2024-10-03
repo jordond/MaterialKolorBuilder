@@ -1,7 +1,7 @@
 [versions]
 app-name = "com.materialkolor.builder"
-app-version = "1.0.0"
-app-code = "100"
+app-version = "1.0.1"
+app-code = "101"
 android-compileSdk = "34"
 android-targetSdk = "34"
 android-minSdk = "26"

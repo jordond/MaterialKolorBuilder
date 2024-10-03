@@ -48,7 +48,12 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - name: Build for ${{ matrix.target }}
-        run: ./scripts/build ${{ matrix.target }} ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+        run: |
+          if [ -n "${{ env.VERSION_CODE }}" ]; then
+            ./scripts/build ${{ matrix.target }} ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+          else
+            ./scripts/build ${{ matrix.target }} ${{ env.VERSION_NAME }}
+          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -80,7 +85,12 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - name: Build for ${{ matrix.os }}
-        run: ./scripts/build desktop ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+        run: |
+          if [ -n "${{ env.VERSION_CODE }}" ]; then
+            ./scripts/build desktop ${{ env.VERSION_NAME }} --code ${{ env.VERSION_CODE }}
+          else
+            ./scripts/build desktop ${{ env.VERSION_NAME }}
+          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -177,7 +187,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: web
-          path: app/build/dist/wasmJs/productionExecutable
+          path: ./web-artifact.zip
+
+      - name: Unzip web build artifacts
+        run: |
+          mkdir -p app/build/dist/wasmJs/productionExecutable
+          unzip -q ./web-artifact.zip -d app/build/dist/wasmJs/productionExecutable
+          rm ./web-artifact.zip
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0
