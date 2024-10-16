@@ -13,6 +13,9 @@ concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  USE_MATERIAL_KOLOR_SUBMODULE: false
+
 jobs:
   build:
     name: "Build"

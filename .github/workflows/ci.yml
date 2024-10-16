@@ -19,6 +19,9 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  USE_MATERIAL_KOLOR_SUBMODULE: false
+
 permissions:
   checks: write
   contents: read

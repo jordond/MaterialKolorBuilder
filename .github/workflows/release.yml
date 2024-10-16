@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 env:
-  IS_CI_RELEASE: true
+  USE_MATERIAL_KOLOR_SUBMODULE: false
   VERSION_NAME: ${{ github.event.release.tag_name || github.event.inputs.version_name }}
   VERSION_CODE: ${{ github.event.inputs.version_code }}
   KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}

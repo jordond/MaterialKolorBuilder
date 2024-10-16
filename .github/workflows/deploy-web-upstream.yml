@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [trigger-upstream-preview]
 
+env:
+  USE_MATERIAL_KOLOR_SUBMODULE: true
+
 jobs:
   build-and-deploy:
     name: Build and Deploy
