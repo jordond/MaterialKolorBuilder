@@ -193,6 +193,9 @@ jobs:
           name: web
           path: ./web-artifact.zip
 
+      - name: Display downloaded files
+        run: ls -R ./artifacts
+
       - name: Unzip web build artifacts
         run: |
           mkdir -p app/build/dist/wasmJs/productionExecutable
