@@ -194,7 +194,7 @@ jobs:
           path: ./web-artifact.zip
 
       - name: Display downloaded files
-        run: ls -R ./artifacts
+        run: ls -R .
 
       - name: Unzip web build artifacts
         run: |
