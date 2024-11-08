@@ -191,16 +191,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: web
-          path: ./web-artifact.zip
+          path: ./dist
 
       - name: Display downloaded files
-        run: ls -R .
+        run: ls -R ./dist
 
       - name: Unzip web build artifacts
         run: |
           mkdir -p app/build/dist/wasmJs/productionExecutable
-          unzip -q ./web-artifact.zip -d app/build/dist/wasmJs/productionExecutable
-          rm ./web-artifact.zip
+          cp -r ./dist/* app/build/dist/wasmJs/productionExecutable/
+          rm -rf ./dist
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0
