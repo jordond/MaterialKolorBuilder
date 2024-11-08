@@ -158,26 +158,32 @@ jobs:
               release = releaseData;
             }
 
-            const distPath = path.join(process.cwd(), 'artifacts');
-            const files = await fs.readdir(distPath);
-
-            for (const file of files) {
-              const filePath = path.join(distPath, file);
-              const stats = await fs.stat(filePath);
+            let uploadCount = 0;
+            
+            async function uploadFilesRecursively(dir) {
+              const entries = await fs.readdir(dir, { withFileTypes: true });
               
-              if (stats.isFile()) {
-                console.log(`Uploading ${file} to release...`);
-                await github.rest.repos.uploadReleaseAsset({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  release_id: release.id,
-                  name: file,
-                  data: await fs.readFile(filePath)
-                });
+              for (const entry of entries) {
+                const fullPath = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  await uploadFilesRecursively(fullPath);
+                } else {
+                  console.log(`Uploading ${entry.name} to release...`);
+                  await github.rest.repos.uploadReleaseAsset({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    release_id: release.id,
+                    name: entry.name,
+                    data: await fs.readFile(fullPath)
+                  });
+                  uploadCount++;
+                }
               }
             }
 
-            console.log('All assets uploaded successfully.');
+            const artifactsPath = path.join(process.cwd(), 'artifacts');
+            await uploadFilesRecursively(artifactsPath);
+            console.log(`Successfully uploaded ${uploadCount} assets to the release.`);
 
   deploy:
     name: "Deploy to Production"
