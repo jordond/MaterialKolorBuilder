@@ -199,14 +199,16 @@ jobs:
           name: web
           path: ./dist
 
-      - name: Display downloaded files
-        run: ls -R ./dist
-
-      - name: Unzip web build artifacts
+      - name: Copy web build artifacts
         run: |
+          # TODO This is broken and not publishing correctly. a manual release is required after this runs
           mkdir -p app/build/dist/wasmJs/productionExecutable
-          cp -r ./dist/* app/build/dist/wasmJs/productionExecutable/
-          rm -rf ./dist
+          echo "Source directory contents:"
+          ls -la ./dist/
+          echo "Copying files..."
+          cp -rv ./dist/* app/build/dist/wasmJs/productionExecutable/
+          echo "Destination directory contents:"
+          ls -la app/build/dist/wasmJs/productionExecutable/
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0
