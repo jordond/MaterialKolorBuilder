@@ -8,16 +8,20 @@ import com.materialkolor.builder.settings.DESTINATION_QUERY_PARAM
 import com.materialkolor.builder.settings.store.entity.splitQueryParams
 import com.materialkolor.builder.ui.App
 import kotlinx.browser.document
+import org.jetbrains.skiko.wasm.onWasmReady
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    ComposeViewport(document.body!!) {
-        LaunchedEffect(Unit) {
-            initWasm()
-        }
+    onWasmReady {
+        document.getElementById("warning")?.remove()
+        ComposeViewport(document.body!!) {
+            LaunchedEffect(Unit) {
+                initWasm()
+            }
 
-        val initialDestination = extractInitialDestination()
-        App(initialDestination)
+            val initialDestination = extractInitialDestination()
+            App(initialDestination)
+        }
     }
 }
 

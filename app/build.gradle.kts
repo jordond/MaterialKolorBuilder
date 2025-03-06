@@ -1,7 +1,6 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.INT
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -25,6 +24,16 @@ buildkonfig {
 }
 
 kotlin {
+    js {
+        moduleName = "app"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "app.js"
+            }
+        }
+        binaries.executable()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "app"
@@ -45,7 +54,6 @@ kotlin {
     }
 
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -136,8 +144,11 @@ kotlin {
             implementation(libs.kstore.file)
         }
 
+        jsMain.dependencies {
+            implementation(npm("jszip", "3.10.1"))
+        }
+
         wasmJsMain.dependencies {
-            implementation(libs.kstore.storage)
             implementation(npm("jszip", "3.10.1"))
         }
 
@@ -146,6 +157,16 @@ kotlin {
             androidMain.get().dependsOn(this)
             iosMain.get().dependsOn(this)
             desktopMain.dependsOn(this)
+        }
+
+        val browserMain by creating {
+            dependsOn(commonMain.get())
+            wasmJsMain.get().dependsOn(this)
+            jsMain.get().dependsOn(this)
+
+            dependencies {
+                implementation(libs.kstore.storage)
+            }
         }
 
         val mobileMain by creating {
