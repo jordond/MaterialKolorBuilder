@@ -27,7 +27,7 @@ materialKolor = "2.1.1"
 composeIcons = "1.1.1"
 stateHolder = "1.2.0"
 colorpicker = "1.1.2"
-buildKonfig = "0.17.0"
+buildKonfig = "0.17.1"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
