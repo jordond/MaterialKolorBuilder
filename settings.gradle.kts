@@ -49,7 +49,7 @@ include(":app")
 // When the CI is building release versions of the app we want to use only published versions of the
 // MaterialKolor library.
 val useSubmodule = System.getenv("USE_MATERIAL_KOLOR_SUBMODULE").toBoolean()
-if (true || useSubmodule) {
+if (useSubmodule) {
     includeBuild("library") {
         dependencySubstitution {
             substitute(module("com.materialkolor:material-kolor")).using(project(":material-kolor"))
