@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "labels": [
     "dependencies"
@@ -9,12 +9,12 @@
   "packageRules": [
     {
       "groupName": "Kotlin",
-      "matchPackagePrefixes": [
-        "org.jetbrains.compose",
-        "org.jetbrains.compose:compose-gradle-plugin",
-        "com.google.devtools.ksp",
-        "org.jetbrains.kotlin",
-        "org.jetbrains.kotlinx:binary-compatibility-validator"
+      "matchPackageNames": [
+        "org.jetbrains.compose{/,}**",
+        "org.jetbrains.compose:compose-gradle-plugin{/,}**",
+        "com.google.devtools.ksp{/,}**",
+        "org.jetbrains.kotlin{/,}**",
+        "org.jetbrains.kotlinx:binary-compatibility-validator{/,}**"
       ]
     }
   ]
