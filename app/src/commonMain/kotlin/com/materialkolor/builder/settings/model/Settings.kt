@@ -3,6 +3,7 @@ package com.materialkolor.builder.settings.model
 import androidx.compose.runtime.Immutable
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamiccolor.ColorSpec
 
 @Immutable
 data class Settings(
@@ -13,6 +14,7 @@ data class Settings(
     val style: PaletteStyle = SettingsDefaults.style,
     val isAmoled: Boolean = SettingsDefaults.isAmoled,
     val isModified: Boolean = false,
+    val specVersion: ColorSpec.SpecVersion = SettingsDefaults.specVersion
 ) {
 
     companion object {
@@ -29,4 +31,5 @@ object SettingsDefaults {
     val contrast = Contrast.Default
     val style = PaletteStyle.TonalSpot
     val isAmoled = false
+    val specVersion = ColorSpec.SpecVersion.Default
 }
