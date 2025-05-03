@@ -18,6 +18,7 @@ private const val KEY_CONTRAST = "contrast"
 private const val KEY_SELECTED_PRESET_ID = "selected_preset_id"
 private const val KEY_COLOR_SPEC = "color_spec"
 private const val KEY_STYLE = "style"
+private const val KEY_PACKAGE_NAME = "package_name"
 private val KeyColor.KEY
     get() = "color_${name.lowercase()}"
 
@@ -44,7 +45,9 @@ fun SettingsEntity.toQueryParams(): String {
         contrast.param(KEY_CONTRAST, SettingsDefaults.contrast.value),
         isAmoled.param(KEY_IS_AMOLED, SettingsDefaults.isAmoled),
         specVersion.param(KEY_COLOR_SPEC, SettingsDefaults.specVersion),
-    ).joinToString(SEPARATOR)
+        packageName.param(KEY_PACKAGE_NAME),
+
+        ).joinToString(SEPARATOR)
 
     return "?$params"
 }
@@ -62,6 +65,7 @@ fun String.toSettingsEntity(): SettingsEntity {
         selectedPresetId = params[KEY_SELECTED_PRESET_ID]?.takeIf { it.isNotBlank() },
         style = params[KEY_STYLE]?.safeToPaletteStyle() ?: PaletteStyle.TonalSpot,
         specVersion = parseSpecVersion(params[KEY_COLOR_SPEC]),
+        packageName = params[KEY_PACKAGE_NAME],
     )
 }
 

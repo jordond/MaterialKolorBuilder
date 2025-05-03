@@ -9,7 +9,6 @@ import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.dynamiccolor.ColorSpec
 
 fun mkThemeKt(
-    packageName: String,
     themeName: String,
     settings: Settings,
     animate: Boolean,
@@ -41,17 +40,17 @@ fun mkThemeKt(
 
     return """
 ${header(settings)}
-package $packageName
+package ${settings.packageName}
 
 $imports
 
 @Composable
 fun $themeName(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     val dynamicThemeState = rememberDynamicMaterialThemeState(
-        isDark = darkTheme,
+        isDark = isDarkTheme,
         style = PaletteStyle.${settings.style},
         $params,
     )

@@ -20,6 +20,7 @@ data class SettingsEntity(
     val style: PaletteStyle = SettingsDefaults.style,
     val isAmoled: Boolean = SettingsDefaults.isAmoled,
     val specVersion: ColorSpec.SpecVersion = SettingsDefaults.specVersion,
+    val packageName: String? = null,
 )
 
 fun Settings.toEntity(): SettingsEntity {
@@ -32,6 +33,7 @@ fun Settings.toEntity(): SettingsEntity {
         style = style,
         isAmoled = isAmoled,
         specVersion = specVersion,
+        packageName = packageName,
     )
 }
 
@@ -48,6 +50,7 @@ fun SettingsEntity.toModel(isDarkModeFallback: Boolean): Settings {
         style = style,
         isAmoled = isAmoled,
         specVersion = specVersion,
+        packageName = packageName ?: SettingsDefaults.packageName,
     )
 }
 
