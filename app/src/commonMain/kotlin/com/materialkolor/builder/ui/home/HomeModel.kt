@@ -50,6 +50,9 @@ class HomeModel(
         }
     }
 
+    private var previousSpec: ColorSpec.SpecVersion? = null
+    private var previousStyle: PaletteStyle? = null
+
     fun toggleDarkMode() {
         updateSettings { it.copy(isDarkMode = !it.isDarkMode) }
     }
@@ -59,19 +62,29 @@ class HomeModel(
     }
 
     fun updateSpecVersion(version: ColorSpec.SpecVersion) {
+        previousSpec = null
         updateSettings { it.copy(specVersion = version) }
     }
 
     fun updatePaletteStyle(style: PaletteStyle) {
+        previousStyle = null
         updateSettings { it.copy(style = style) }
     }
 
-    fun toggleExpressive(enabled: Boolean) {
+    fun toggleExpressive() {
         updateSettings { settings ->
+            val enabled = !settings.useMaterialExpressive
+            val specVersion =
+                if (enabled) ColorSpec.SpecVersion.SPEC_2025 else previousSpec ?: settings.specVersion
+            val style = if (enabled) PaletteStyle.Expressive else previousStyle ?: settings.style
+
+            previousSpec = if (enabled) settings.specVersion else null
+            previousStyle = if (enabled) settings.style else null
+
             settings.copy(
                 useMaterialExpressive = enabled,
-                specVersion = if (enabled) ColorSpec.SpecVersion.SPEC_2025 else settings.specVersion,
-                style = if (enabled) PaletteStyle.Expressive else settings.style,
+                specVersion = specVersion,
+                style = style,
             )
         }
     }

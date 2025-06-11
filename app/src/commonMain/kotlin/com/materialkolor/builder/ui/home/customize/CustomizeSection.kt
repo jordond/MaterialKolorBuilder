@@ -43,7 +43,7 @@ fun CustomizeSection(
     onUpdatePaletteStyle: (PaletteStyle) -> Unit,
     onUpdateContrast: (Contrast) -> Unit,
     updateSpecVersion: (ColorSpec.SpecVersion) -> Unit,
-    toggleMaterialExpressive: (Boolean) -> Unit,
+    toggleMaterialExpressive: () -> Unit,
     scrollState: ScrollState = rememberScrollState(),
     imagePresets: PersistentList<SeedImage.Resource> = ImagePresets.all,
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
@@ -79,7 +79,7 @@ fun CustomizeSection(
             OptionSwitch(
                 text = "Preview Expressive Color System",
                 value = settings.useMaterialExpressive,
-                onValueChange = toggleMaterialExpressive,
+                onValueChange = { toggleMaterialExpressive() },
             )
         }
 

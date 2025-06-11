@@ -54,7 +54,7 @@ fun HomeContent(
                     onUpdatePaletteStyle = dispatcher.rememberRelayOf(::UpdatePaletteStyle),
                     onUpdateContrast = dispatcher.rememberRelayOf(::UpdateContrast),
                     updateSpecVersion = dispatcher.rememberRelayOf(::UpdateSpecVersion),
-                    toggleMaterialExpressive = dispatcher.rememberRelayOf(HomeAction::ToggleExpressive),
+                    toggleMaterialExpressive = dispatcher.rememberRelay(HomeAction.ToggleExpressive),
                     processingImage = processingImage,
                     windowSizeClass = windowSizeClass,
                 )
