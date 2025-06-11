@@ -207,8 +207,16 @@ jobs:
           echo "Extracting web zip file..."
           cd ./dist/
           unzip -q mkb-web-*.zip
+          echo "Contents after extraction:"
+          find . -type f -name "*.html" -o -name "*.js" -o -name "*.wasm" | head -10
           echo "Moving extracted files to build directory..."
-          cp -rv app/build/dist/wasmJs/productionExecutable/* ../app/build/dist/wasmJs/productionExecutable/
+          if [ -d "app/build/dist/wasmJs/productionExecutable" ]; then
+            cp -rv app/build/dist/wasmJs/productionExecutable/* ../app/build/dist/wasmJs/productionExecutable/
+          else
+            echo "Direct web files found, copying them..."
+            cp -rv *.html *.js *.wasm *.css 2>/dev/null || true
+            cp -rv * ../app/build/dist/wasmJs/productionExecutable/ 2>/dev/null || true
+          fi
           cd ..
           echo "Destination directory contents:"
           ls -la app/build/dist/wasmJs/productionExecutable/
