@@ -201,12 +201,15 @@ jobs:
 
       - name: Copy web build artifacts
         run: |
-          # TODO This is broken and not publishing correctly. a manual release is required after this runs
           mkdir -p app/build/dist/wasmJs/productionExecutable
           echo "Source directory contents:"
           ls -la ./dist/
-          echo "Copying files..."
-          cp -rv ./dist/* app/build/dist/wasmJs/productionExecutable/
+          echo "Extracting web zip file..."
+          cd ./dist/
+          unzip -q mkb-web-*.zip
+          echo "Moving extracted files to build directory..."
+          cp -rv app/build/dist/wasmJs/productionExecutable/* ../app/build/dist/wasmJs/productionExecutable/
+          cd ..
           echo "Destination directory contents:"
           ls -la app/build/dist/wasmJs/productionExecutable/
 
