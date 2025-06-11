@@ -3,14 +3,11 @@ package com.materialkolor.builder.ui
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.materialkolor.builder.ui.home.HomeScreen
-import com.materialkolor.builder.ui.ktx.windowSizeClass
 import com.materialkolor.builder.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -30,11 +27,5 @@ fun App(destination: String? = null) {
     AppTheme(
         settings = state.settings,
         urlLauncher = model.urlLauncher,
-    ) {
-        CompositionLocalProvider(
-            LocalWindowSizeClass provides windowSizeClass(),
-        ) {
-            HomeScreen(destination)
-        }
-    }
+    )
 }

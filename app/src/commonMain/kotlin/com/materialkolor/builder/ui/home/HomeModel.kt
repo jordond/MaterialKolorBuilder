@@ -66,6 +66,16 @@ class HomeModel(
         updateSettings { it.copy(style = style) }
     }
 
+    fun toggleExpressive(enabled: Boolean) {
+        updateSettings { settings ->
+            settings.copy(
+                useMaterialExpressive = enabled,
+                specVersion = if (enabled) ColorSpec.SpecVersion.SPEC_2025 else settings.specVersion,
+                style = if (enabled) PaletteStyle.Expressive else settings.style,
+            )
+        }
+    }
+
     fun handleColorPickerAction(action: HomeAction.ColorPicker) {
         when (action) {
             is HomeAction.CloseColorPicker -> updateState { it.copy(colorPickerState = null) }
