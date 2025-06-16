@@ -59,6 +59,7 @@ class StandardColorsTest {
         val dark = { s: MaterialDynamicColors.() -> DynamicColor -> map.s().getColor(darkScheme).h() }
 
         val actual = standardColorsKt(settings)
+
         val expected = """
          package ${settings.packageName}
 
@@ -70,6 +71,7 @@ class StandardColorsTest {
          val OnPrimaryLight = ${light { onPrimary() }}
          val PrimaryContainerLight = ${light { primaryContainer() }}
          val OnPrimaryContainerLight = ${light { onPrimaryContainer() }}
+         val InversePrimaryLight = ${light { inversePrimary() }}
          val SecondaryLight = ${light { secondary() }}
          val OnSecondaryLight = ${light { onSecondary() }}
          val SecondaryContainerLight = ${light { secondaryContainer() }}
@@ -78,29 +80,29 @@ class StandardColorsTest {
          val OnTertiaryLight = ${light { onTertiary() }}
          val TertiaryContainerLight = ${light { tertiaryContainer() }}
          val OnTertiaryContainerLight = ${light { onTertiaryContainer() }}
-         val ErrorLight = ${light { error() }}
-         val OnErrorLight = ${light { onError() }}
-         val ErrorContainerLight = ${light { errorContainer() }}
-         val OnErrorContainerLight = ${light { onErrorContainer() }}
          val BackgroundLight = ${light { background() }}
          val OnBackgroundLight = ${light { onBackground() }}
          val SurfaceLight = ${light { surface() }}
          val OnSurfaceLight = ${light { onSurface() }}
          val SurfaceVariantLight = ${light { surfaceVariant() }}
          val OnSurfaceVariantLight = ${light { onSurfaceVariant() }}
+         val SurfaceTintLight = ${light { surfaceTint() }}
+         val InverseSurfaceLight = ${light { inverseSurface() }}
+         val InverseOnSurfaceLight = ${light { inverseOnSurface() }}
+         val ErrorLight = ${light { error() }}
+         val OnErrorLight = ${light { onError() }}
+         val ErrorContainerLight = ${light { errorContainer() }}
+         val OnErrorContainerLight = ${light { onErrorContainer() }}
          val OutlineLight = ${light { outline() }}
          val OutlineVariantLight = ${light { outlineVariant() }}
          val ScrimLight = ${light { scrim() }}
-         val InverseSurfaceLight = ${light { inverseSurface() }}
-         val InverseOnSurfaceLight = ${light { inverseOnSurface() }}
-         val InversePrimaryLight = ${light { inversePrimary() }}
-         val SurfaceDimLight = ${light { surfaceDim() }}
          val SurfaceBrightLight = ${light { surfaceBright() }}
-         val SurfaceContainerLowestLight = ${light { surfaceContainerLowest() }}
-         val SurfaceContainerLowLight = ${light { surfaceContainerLow() }}
          val SurfaceContainerLight = ${light { surfaceContainer() }}
          val SurfaceContainerHighLight = ${light { surfaceContainerHigh() }}
          val SurfaceContainerHighestLight = ${light { surfaceContainerHighest() }}
+         val SurfaceContainerLowLight = ${light { surfaceContainerLow() }}
+         val SurfaceContainerLowestLight = ${light { surfaceContainerLowest() }}
+         val SurfaceDimLight = ${light { surfaceDim() }}
          val ShadowLight = ${light { shadow() }}
          val ControlActivatedLight = ${light { controlActivated() }}
          val ControlNormalLight = ${light { controlNormal() }}
@@ -115,6 +117,7 @@ class StandardColorsTest {
          val OnPrimaryDark = ${dark { onPrimary() }}
          val PrimaryContainerDark = ${dark { primaryContainer() }}
          val OnPrimaryContainerDark = ${dark { onPrimaryContainer() }}
+         val InversePrimaryDark = ${dark { inversePrimary() }}
          val SecondaryDark = ${dark { secondary() }}
          val OnSecondaryDark = ${dark { onSecondary() }}
          val SecondaryContainerDark = ${dark { secondaryContainer() }}
@@ -123,29 +126,29 @@ class StandardColorsTest {
          val OnTertiaryDark = ${dark { onTertiary() }}
          val TertiaryContainerDark = ${dark { tertiaryContainer() }}
          val OnTertiaryContainerDark = ${dark { onTertiaryContainer() }}
-         val ErrorDark = ${dark { error() }}
-         val OnErrorDark = ${dark { onError() }}
-         val ErrorContainerDark = ${dark { errorContainer() }}
-         val OnErrorContainerDark = ${dark { onErrorContainer() }}
          val BackgroundDark = ${dark { background() }}
          val OnBackgroundDark = ${dark { onBackground() }}
          val SurfaceDark = ${dark { surface() }}
          val OnSurfaceDark = ${dark { onSurface() }}
          val SurfaceVariantDark = ${dark { surfaceVariant() }}
          val OnSurfaceVariantDark = ${dark { onSurfaceVariant() }}
+         val SurfaceTintDark = ${dark { surfaceTint() }}
+         val InverseSurfaceDark = ${dark { inverseSurface() }}
+         val InverseOnSurfaceDark = ${dark { inverseOnSurface() }}
+         val ErrorDark = ${dark { error() }}
+         val OnErrorDark = ${dark { onError() }}
+         val ErrorContainerDark = ${dark { errorContainer() }}
+         val OnErrorContainerDark = ${dark { onErrorContainer() }}
          val OutlineDark = ${dark { outline() }}
          val OutlineVariantDark = ${dark { outlineVariant() }}
          val ScrimDark = ${dark { scrim() }}
-         val InverseSurfaceDark = ${dark { inverseSurface() }}
-         val InverseOnSurfaceDark = ${dark { inverseOnSurface() }}
-         val InversePrimaryDark = ${dark { inversePrimary() }}
-         val SurfaceDimDark = ${dark { surfaceDim() }}
          val SurfaceBrightDark = ${dark { surfaceBright() }}
-         val SurfaceContainerLowestDark = ${dark { surfaceContainerLowest() }}
-         val SurfaceContainerLowDark = ${dark { surfaceContainerLow() }}
          val SurfaceContainerDark = ${dark { surfaceContainer() }}
          val SurfaceContainerHighDark = ${dark { surfaceContainerHigh() }}
          val SurfaceContainerHighestDark = ${dark { surfaceContainerHighest() }}
+         val SurfaceContainerLowDark = ${dark { surfaceContainerLow() }}
+         val SurfaceContainerLowestDark = ${dark { surfaceContainerLowest() }}
+         val SurfaceDimDark = ${dark { surfaceDim() }}
          val ShadowDark = ${dark { shadow() }}
          val ControlActivatedDark = ${dark { controlActivated() }}
          val ControlNormalDark = ${dark { controlNormal() }}
@@ -175,7 +178,6 @@ class StandardColorsTest {
          val NeutralVariantPaletteKeyColor = ${dark { neutralVariantPaletteKeyColor() }}
          val ErrorPaletteKeyColor = ${dark { errorPaletteKeyColor() }}
      """.trimIndent()
-
         assertEquals(expected, actual)
     }
 
