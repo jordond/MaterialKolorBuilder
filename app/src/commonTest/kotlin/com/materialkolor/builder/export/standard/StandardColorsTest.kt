@@ -22,7 +22,8 @@ class StandardColorsTest {
             ),
             isDarkMode = false,
             selectedImage = null,
-            packageName = "foo.bar.biz.buzz"
+            packageName = "foo.bar.biz.buzz",
+            includeMiscColors = true,
         )
 
         compare(settings)
@@ -42,6 +43,7 @@ class StandardColorsTest {
             ),
             isDarkMode = false,
             selectedImage = null,
+            includeMiscColors = true,
         )
 
         compare(settings)
@@ -99,6 +101,15 @@ class StandardColorsTest {
          val SurfaceContainerLight = ${light { surfaceContainer() }}
          val SurfaceContainerHighLight = ${light { surfaceContainerHigh() }}
          val SurfaceContainerHighestLight = ${light { surfaceContainerHighest() }}
+         val ShadowLight = ${light { shadow() }}
+         val ControlActivatedLight = ${light { controlActivated() }}
+         val ControlNormalLight = ${light { controlNormal() }}
+         val ControlHighlightLight = ${light { controlHighlight() }}
+         val TextPrimaryInverseLight = ${light { textPrimaryInverse() }}
+         val TextSecondaryAndTertiaryInverseLight = ${light { textSecondaryAndTertiaryInverse() }}
+         val TextPrimaryInverseDisableOnlyLight = ${light { textPrimaryInverseDisableOnly() }}
+         val TextSecondaryAndTertiaryInverseDisabledLight = ${light { textSecondaryAndTertiaryInverseDisabled() }}
+         val TextHintInverseLight = ${light { textHintInverse() }}
 
          val PrimaryDark = ${dark { primary() }}
          val OnPrimaryDark = ${dark { onPrimary() }}
@@ -135,6 +146,34 @@ class StandardColorsTest {
          val SurfaceContainerDark = ${dark { surfaceContainer() }}
          val SurfaceContainerHighDark = ${dark { surfaceContainerHigh() }}
          val SurfaceContainerHighestDark = ${dark { surfaceContainerHighest() }}
+         val ShadowDark = ${dark { shadow() }}
+         val ControlActivatedDark = ${dark { controlActivated() }}
+         val ControlNormalDark = ${dark { controlNormal() }}
+         val ControlHighlightDark = ${dark { controlHighlight() }}
+         val TextPrimaryInverseDark = ${dark { textPrimaryInverse() }}
+         val TextSecondaryAndTertiaryInverseDark = ${dark { textSecondaryAndTertiaryInverse() }}
+         val TextPrimaryInverseDisableOnlyDark = ${dark { textPrimaryInverseDisableOnly() }}
+         val TextSecondaryAndTertiaryInverseDisabledDark = ${dark { textSecondaryAndTertiaryInverseDisabled() }}
+         val TextHintInverseDark = ${dark { textHintInverse() }}
+         
+         val PrimaryFixed = ${dark { primaryFixed() }}
+         val PrimaryFixedDim = ${dark { primaryFixedDim() }}
+         val OnPrimaryFixed = ${dark { onPrimaryFixed() }}
+         val OnPrimaryFixedVariant = ${dark { onPrimaryFixedVariant() }}
+         val SecondaryFixed = ${dark { secondaryFixed() }}
+         val SecondaryFixedDim = ${dark { secondaryFixedDim() }}
+         val OnSecondaryFixed = ${dark { onSecondaryFixed() }}
+         val OnSecondaryFixedVariant = ${dark { onSecondaryFixedVariant() }}
+         val TertiaryFixed = ${dark { tertiaryFixed() }}
+         val TertiaryFixedDim = ${dark { tertiaryFixedDim() }}
+         val OnTertiaryFixed = ${dark { onTertiaryFixed() }}
+         val OnTertiaryFixedVariant = ${dark { onTertiaryFixedVariant() }}
+         val PrimaryPaletteKeyColor = ${dark { primaryPaletteKeyColor() }}
+         val SecondaryPaletteKeyColor = ${dark { secondaryPaletteKeyColor() }}
+         val TertiaryPaletteKeyColor = ${dark { tertiaryPaletteKeyColor() }}
+         val NeutralPaletteKeyColor = ${dark { neutralPaletteKeyColor() }}
+         val NeutralVariantPaletteKeyColor = ${dark { neutralVariantPaletteKeyColor() }}
+         val ErrorPaletteKeyColor = ${dark { errorPaletteKeyColor() }}
      """.trimIndent()
 
         assertEquals(expected, actual)
