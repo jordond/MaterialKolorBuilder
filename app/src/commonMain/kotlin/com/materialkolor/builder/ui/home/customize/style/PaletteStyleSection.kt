@@ -11,6 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.materialkolor.PaletteStyle
+import com.materialkolor.builder.ktx.isExpressive
+import com.materialkolor.dynamiccolor.ColorSpec
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -19,6 +21,7 @@ fun PaletteStyleSection(
     selected: PaletteStyle,
     onUpdate: (PaletteStyle) -> Unit,
     modifier: Modifier = Modifier,
+    colorSpec: ColorSpec.SpecVersion = ColorSpec.SpecVersion.Default,
     styles: PersistentList<PaletteStyle> = PaletteStyle.entries.toPersistentList(),
 ) {
     Column(
@@ -28,6 +31,7 @@ fun PaletteStyleSection(
         Text(
             text = "Variant - ${selected.name()}",
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary,
         )
 
         FlowRow(
@@ -35,6 +39,7 @@ fun PaletteStyleSection(
         ) {
             styles.forEach { style ->
                 FilterChip(
+                    enabled = style.rememberIsEnabled(colorSpec),
                     selected = style == selected,
                     label = { Text(text = style.name()) },
                     onClick = { onUpdate(style) },
@@ -49,6 +54,16 @@ fun PaletteStyleSection(
         )
     }
 }
+
+@Composable
+private fun PaletteStyle.rememberIsEnabled(specVersion: ColorSpec.SpecVersion): Boolean =
+    remember(this, specVersion) {
+        if (specVersion == ColorSpec.SpecVersion.SPEC_2025) {
+            this.isExpressive
+        } else {
+            true
+        }
+    }
 
 @Composable
 private fun PaletteStyle.name() = remember(this) {

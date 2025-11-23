@@ -25,6 +25,7 @@ fun ColorSpecSection(
         Text(
             text = "ColorSpec Version",
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary,
         )
 
         Text(
