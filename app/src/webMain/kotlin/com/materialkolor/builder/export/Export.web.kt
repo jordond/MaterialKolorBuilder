@@ -42,7 +42,7 @@ private suspend fun <T : JsAny?> Promise<T>.await(): T = suspendCancellableCorou
 
 actual suspend fun exportFiles(list: List<ExportFile>) {
     val blob = createZipBlob(list)
-    offerFileForDownload(blob, "theme.zip")
+    offerFileForDownload(blob, "materialkolor-theme.zip")
 }
 
 private suspend fun createZipBlob(files: List<ExportFile>): Blob {
