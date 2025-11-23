@@ -1,8 +1,10 @@
 package com.materialkolor.builder.export.model
 
+import com.materialkolor.builder.core.DI
 import com.materialkolor.builder.export.model.library.createMaterialKolorFiles
 import com.materialkolor.builder.export.model.standard.createStandardFiles
 import com.materialkolor.builder.settings.model.Settings
+import com.materialkolor.builder.version.MaterialKolorVersionService
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -14,6 +16,7 @@ enum class ExportType(val displayName: String) {
 data class ExportOptions(
     val type: ExportType,
     val settings: Settings,
+    val materialKolorVersion: String,
     val multiplatform: Boolean = DEFAULT_MULTIPLATFORM,
     val themeName: String = DEFAULT_THEME_NAME,
     val useVersionCatalog: Boolean = DEFAULT_USE_VERSION_CATALOG,
@@ -39,6 +42,13 @@ data class ExportOptions(
         const val DEFAULT_USE_VERSION_CATALOG = true
         const val DEFAULT_ANIMATE = true
 
-        fun default(settings: Settings) = ExportOptions(ExportType.MaterialKolor, settings)
+        fun default(
+            settings: Settings,
+            versionService: MaterialKolorVersionService = DI.versionService,
+        ) = ExportOptions(
+            type = ExportType.MaterialKolor,
+            settings = settings,
+            materialKolorVersion = versionService.getVersion(settings.useMaterialExpressive),
+        )
     }
 }

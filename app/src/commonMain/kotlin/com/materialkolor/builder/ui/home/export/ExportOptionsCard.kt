@@ -5,9 +5,11 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -85,6 +87,23 @@ fun ExportOptionsCard(
                     )
                 },
             )
+
+            AnimatedVisibility(visible = options.settings.useMaterialExpressive) {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = "Material Expressive support is experimental and requires a " +
+                            "pre-release version of MaterialKolor (${options.materialKolorVersion}).",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(12.dp),
+                    )
+                }
+            }
 
             AnimatedVisibility(visible = options.type == ExportType.Standard) {
                 OptionSwitch(

@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.hot.reload)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 buildkonfig {
@@ -82,6 +83,9 @@ kotlin {
             implementation(libs.kotlinx.collections)
             implementation(libs.kstore)
             implementation(libs.ktor.http)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.stateHolder)
             implementation(libs.stateHolder.compose)
@@ -110,23 +114,24 @@ kotlin {
             implementation(libs.androidx.core)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.kotlinx.coroutines.guava)
-            implementation(libs.kstore.file)
+            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
-            implementation(libs.kstore.file)
+            implementation(libs.ktor.client.darwin)
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.kstore.file)
+            implementation(libs.ktor.client.okhttp)
         }
 
         webMain.dependencies {
             implementation(libs.kstore.storage)
             implementation(npm("jszip", "3.10.1"))
             implementation(libs.kotlinx.browser)
+            implementation(libs.ktor.client.js)
         }
 
         val nonBrowserMain by creating {
@@ -134,6 +139,9 @@ kotlin {
             androidMain.get().dependsOn(this)
             iosMain.get().dependsOn(this)
             jvmMain.get().dependsOn(this)
+            dependencies {
+                implementation(libs.kstore.file)
+            }
         }
 
         val mobileMain by creating {

@@ -37,6 +37,7 @@ class HomeModel(
     private val settingsRepo: SettingsRepo = DI.settingsRepo,
     private val exportRepo: ExportRepo = DI.exportRepo,
     private val clipboard: Clipboard = DI.clipboard,
+    private val versionService: com.materialkolor.builder.version.MaterialKolorVersionService = DI.versionService,
     private val random: Random = Random.Default,
 ) : UiStateViewModel<HomeModel.State, HomeModel.Event>(
     State(ExportOptions.default(settingsRepo.settings.value)),
@@ -46,7 +47,13 @@ class HomeModel(
 
     init {
         settingsRepo.settings.mergeState { state, value ->
-            state.copy(exportOptions = state.exportOptions.copy(settings = value))
+            val newVersion = versionService.getVersion(value.useMaterialExpressive)
+            state.copy(
+                exportOptions = state.exportOptions.copy(
+                    settings = value,
+                    materialKolorVersion = newVersion,
+                ),
+            )
         }
     }
 

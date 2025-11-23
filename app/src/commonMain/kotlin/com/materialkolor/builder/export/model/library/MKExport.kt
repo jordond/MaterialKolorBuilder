@@ -5,8 +5,12 @@ import com.materialkolor.builder.export.model.ExportOptions
 import dev.snipme.highlights.model.SyntaxLanguage
 
 fun ExportOptions.createMaterialKolorFiles(): List<ExportFile> {
-    val libs = if (useVersionCatalog) libsVersionsToml() else null
-    val gradle = gradleKts(isMultiplatform = multiplatform, useVersionCatalog = useVersionCatalog)
+    val libs = if (useVersionCatalog) libsVersionsToml(materialKolorVersion) else null
+    val gradle = gradleKts(
+        version = materialKolorVersion,
+        isMultiplatform = multiplatform,
+        useVersionCatalog = useVersionCatalog,
+    )
     val colors = mkColorsKt(packageName = settings.packageName, colors = settings.colors)
     val theme = mkThemeKt(
         themeName = themeName,
