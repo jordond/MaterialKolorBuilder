@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.ui.components.SideSheet
 import com.materialkolor.builder.ui.components.SideSheetPosition
@@ -27,6 +26,9 @@ import com.materialkolor.builder.ui.home.preview.PreviewScreenContent
 import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
+import dev.stateholder.dispatcher.Dispatcher
+import dev.stateholder.dispatcher.rememberRelay
+import dev.stateholder.dispatcher.rememberRelayOf
 
 @Composable
 fun HomeContent(

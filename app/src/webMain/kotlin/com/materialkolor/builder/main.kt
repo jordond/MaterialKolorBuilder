@@ -6,11 +6,10 @@ import com.materialkolor.builder.core.readPlatformQueryParams
 import com.materialkolor.builder.settings.DESTINATION_QUERY_PARAM
 import com.materialkolor.builder.settings.store.entity.splitQueryParams
 import com.materialkolor.builder.ui.App
-import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    ComposeViewport(document.body!!) {
+    ComposeViewport {
         val initialDestination = extractInitialDestination()
         App(initialDestination)
     }

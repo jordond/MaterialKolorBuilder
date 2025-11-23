@@ -1,16 +1,17 @@
+@file:Suppress("unused")
+
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.INT
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.hot.reload)
     alias(libs.plugins.buildKonfig)
 }
 
@@ -27,46 +28,31 @@ buildkonfig {
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        outputModuleName.set("app")
-        browser {
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                outputFileName = "app.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(projectDirPath)
-                    }
-                }
-            }
-        }
+        browser()
+        binaries.executable()
+    }
 
+    js {
+        browser()
         binaries.executable()
     }
 
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
-    jvm("desktop")
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "App"
-            isStatic = true
-        }
-    }
+    jvm()
 
     sourceSets {
         all {
             languageSettings {
+                optIn("kotlin.time.ExperimentalTime")
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
@@ -77,15 +63,13 @@ kotlin {
 
         applyDefaultHierarchyTemplate()
 
-        val desktopMain by getting
-
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.foundation)
+            implementation(libs.material.icons.extended)
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.compose.resources)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
             implementation(libs.material3)
             implementation(libs.material3.adaptive)
             implementation(libs.material3.adaptive.layout)
@@ -101,6 +85,9 @@ kotlin {
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.stateHolder)
             implementation(libs.stateHolder.compose)
+            implementation(libs.stateHolder.dispatcher)
+            implementation(libs.stateHolder.dispatcher.compose)
+            implementation(libs.stateHolder.viewModel)
             implementation(libs.materialKolor)
             implementation(libs.materialKolor.utilities)
             implementation(libs.compose.colorpicker)
@@ -114,10 +101,10 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.kotest.assertions)
+            implementation(libs.compose.ui.test)
         }
 
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.core)
@@ -130,22 +117,23 @@ kotlin {
             implementation(libs.kstore.file)
         }
 
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.kstore.file)
         }
 
-        wasmJsMain.dependencies {
+        webMain.dependencies {
             implementation(libs.kstore.storage)
             implementation(npm("jszip", "3.10.1"))
+            implementation(libs.kotlinx.browser)
         }
 
         val nonBrowserMain by creating {
             dependsOn(commonMain.get())
             androidMain.get().dependsOn(this)
             iosMain.get().dependsOn(this)
-            desktopMain.dependsOn(this)
+            jvmMain.get().dependsOn(this)
         }
 
         val mobileMain by creating {
@@ -159,10 +147,6 @@ kotlin {
 android {
     namespace = libs.versions.app.name.get()
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
         applicationId = libs.versions.app.name.get()
@@ -201,10 +185,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    dependencies {
-        debugImplementation(compose.uiTooling)
     }
 }
 

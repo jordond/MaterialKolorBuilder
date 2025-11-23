@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import org.w3c.dom.events.Event
+import kotlin.js.ExperimentalWasmJsInterop
 
 private val REGEX1 = Regex(
     pattern = "(android|bb\\d+|meego).+mobile|avantgo|bada/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)/|plucker|pocket|psp|series([46])0|symbian|treo|up\\.(browser|link)|vodafone|wap|windows ce|xda|xiino",
@@ -34,6 +35,7 @@ actual val exportSupported: Boolean
 actual val platformContext: PlatformContext
     get() = PlatformContext.INSTANCE
 
+@OptIn(ExperimentalWasmJsInterop::class)
 actual fun updatePlatformQueryParams(queryParams: String) {
     // TODO: Add setting to enable/disable undo
     window.history.pushState(null, "", queryParams)
@@ -68,7 +70,7 @@ private fun isMobileBrowser(): Boolean {
     val vendor = window.navigator.vendor
 
     return REGEX1.containsMatchIn(userAgent) ||
-        REGEX2.containsMatchIn(userAgent.substring(0, 4)) ||
+        REGEX2.containsMatchIn(userAgent.take(4)) ||
         REGEX1.containsMatchIn(vendor) ||
-        REGEX2.containsMatchIn(vendor.substring(0, 4))
+        REGEX2.containsMatchIn(vendor.take(4))
 }

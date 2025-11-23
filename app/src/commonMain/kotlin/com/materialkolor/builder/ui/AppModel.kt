@@ -6,7 +6,7 @@ import com.materialkolor.builder.core.UrlLauncher
 import com.materialkolor.builder.settings.DarkModeProvider
 import com.materialkolor.builder.settings.SettingsRepo
 import com.materialkolor.builder.settings.model.Settings
-import com.materialkolor.builder.ui.ktx.StateViewModel
+import dev.stateholder.extensions.viewmodel.StateViewModel
 import kotlinx.coroutines.launch
 
 class AppModel(
@@ -17,7 +17,7 @@ class AppModel(
 ) : StateViewModel<AppModel.State>(State(isDarkMode)) {
 
     init {
-        settingsRepo.settings.collectToState { state, value ->
+        settingsRepo.settings.mergeState { state, value ->
             state.copy(settings = value)
         }
     }

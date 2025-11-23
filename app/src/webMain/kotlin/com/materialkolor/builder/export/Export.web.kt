@@ -1,12 +1,18 @@
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 package com.materialkolor.builder.export
 
 import com.materialkolor.builder.export.model.ExportFile
 import kotlinx.browser.document
-import kotlinx.coroutines.await
 import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.url.URL
 import org.w3c.files.Blob
+import kotlin.js.ExperimentalWasmJsInterop
+import kotlin.js.JsAny
+import kotlin.js.JsModule
 import kotlin.js.Promise
+import kotlin.js.definedExternally
+import kotlin.js.js
 
 @JsModule("jszip")
 external class JSZip {

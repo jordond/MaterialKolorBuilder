@@ -46,9 +46,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
-
       - name: Lint
         run: ./gradlew lint --scan
 
@@ -73,17 +70,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
-
       - name: Build web app
-        run: ./gradlew wasmJsBrowserDistribution
+        run: ./gradlew :app:composeCompatibilityBrowserDistribution
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: web-app
-          path: app/build/dist/wasmJs/productionExecutable
+          path: app/build/dist/composeWebCompatibility/productionExecutable
 
   deploy-preview:
     name: "Deploy Preview"

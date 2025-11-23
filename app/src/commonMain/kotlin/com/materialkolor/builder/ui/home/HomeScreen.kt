@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.materialkolor.builder.core.rememberDebounceDispatcher
 import com.materialkolor.builder.ui.home.HomeAction.CancelExport
 import com.materialkolor.builder.ui.home.HomeAction.ColorPicker
 import com.materialkolor.builder.ui.home.HomeAction.CopyColor
@@ -38,11 +37,12 @@ import com.materialkolor.builder.ui.home.HomeAction.UpdatePaletteStyle
 import com.materialkolor.builder.ui.home.HomeAction.UpdateSpecVersion
 import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.home.preview.gallery.NavigationDrawerContent
-import com.materialkolor.builder.ui.ktx.HandleEvents
 import com.materialkolor.builder.ui.ktx.launch
 import com.mohamedrejeb.calf.picker.FilePickerFileType
 import com.mohamedrejeb.calf.picker.FilePickerSelectionMode
 import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
+import dev.stateholder.dispatcher.rememberDebounceDispatcher
+import dev.stateholder.extensions.HandleEvents
 
 val LocalSnackbarHostState =
     compositionLocalOf<SnackbarHostState> { error("SnackbarHostState is not found") }

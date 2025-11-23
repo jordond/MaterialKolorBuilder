@@ -19,11 +19,11 @@ import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.components.ColorPickerState
 import com.materialkolor.builder.ui.home.preview.PreviewSection
-import com.materialkolor.builder.ui.ktx.UiStateViewModel
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.materialkolor.ktx.themeColorOrNull
 import com.materialkolor.ktx.toHex
 import com.mohamedrejeb.calf.io.KmpFile
+import dev.stateholder.extensions.viewmodel.UiStateViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +45,7 @@ class HomeModel(
     private var exportJob: Job? = null
 
     init {
-        settingsRepo.settings.collectToState { state, value ->
+        settingsRepo.settings.mergeState { state, value ->
             state.copy(exportOptions = state.exportOptions.copy(settings = value))
         }
     }

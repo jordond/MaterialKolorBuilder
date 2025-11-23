@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.materialkolor.builder.core.Dispatcher
 import com.materialkolor.builder.core.exportSupported
 import com.materialkolor.builder.export.model.ExportOptions
 import com.materialkolor.builder.ui.about.AboutInfo
@@ -38,6 +37,9 @@ import com.materialkolor.builder.ui.home.preview.PreviewSection
 import com.materialkolor.builder.ui.ktx.widthIsCompact
 import com.materialkolor.builder.ui.ktx.widthIsExpanded
 import com.materialkolor.builder.ui.ktx.windowSizeClass
+import dev.stateholder.dispatcher.Dispatcher
+import dev.stateholder.dispatcher.rememberRelay
+import dev.stateholder.dispatcher.rememberRelayOf
 
 @Composable
 fun HomeScreenScaffold(
