@@ -5,30 +5,34 @@ app-code = "102"
 android-compileSdk = "36"
 android-targetSdk = "36"
 android-minSdk = "26"
-agp = "8.12.0"
-androidx-activity = "1.10.1"
-androidx-activityCompose = "1.10.1"
-androidx-core = "1.16.0"
-androidx-lifecycle = "2.9.1"
-calfFilePicker = "0.8.0"
-highlights = "1.0.0"
-kotlin = "2.2.0"
-compose-multiplatform = "1.9.0-beta01"
-compose-material3 = "1.9.0-alpha04"
-compose-windowSizeClass = "1.9.0-alpha04"
+agp = "8.13.1"
+androidx-activity = "1.12.0"
+androidx-activityCompose = "1.12.0"
+androidx-core = "1.17.0"
+androidx-lifecycle = "2.9.6"
+calfFilePicker = "0.9.0"
+foundation = "1.10.0-beta02"
+highlights = "1.1.0"
+kotlin = "2.2.21"
+compose-multiplatform = "1.10.0-beta02"
+compose-material3 = "1.10.0-alpha05"
+compose-windowSizeClass = "1.10.0-alpha05"
+compose-hot-reload = "1.0.0-rc04"
 kotlinx-coroutines = "1.10.2"
 kotlinx-datetime = "0.7.1-0.6.x-compat"
 kotlinx-collections = "0.4.0"
-kotest = "5.9.1"
-coil = "3.3.0"
+kotest = "6.0.5"
+kotlinxBrowser = "0.5.0"
 kstore = "1.0.0"
-kermit = "2.0.6"
-ktor = "3.2.3"
-material3-adaptive = "1.1.2"
-materialKolor = "3.0.1"
+kermit = "2.0.8"
+ktor = "3.3.2"
+material3-adaptive = "1.2.0"
+material3-adaptive-suite = "1.10.0-alpha05"
+materialIconsExtended = "1.7.3"
+materialKolor = "5.0.0-alpha04"
 composeIcons = "1.1.1"
-stateHolder = "1.2.0"
-colorpicker = "1.1.2"
+stateHolder = "2.0.0-rc06"
+colorpicker = "1.1.3"
 buildKonfig = "0.17.1"
 
 [libraries]
@@ -39,11 +43,15 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 calf-filePicker = { module = "com.mohamedrejeb.calf:calf-file-picker", version.ref = "calfFilePicker" }
-coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "foundation" }
+compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
+compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
+compose-ui-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "compose-multiplatform" }
 highlights = { module = "dev.snipme:highlights", version.ref = "highlights" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinxBrowser" }
 kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
 kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }
 kstore-storage = { module = "io.github.xxfast:kstore-storage", version.ref = "kstore" }
@@ -55,23 +63,35 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 kotlinx-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 ktor-http = { module = "io.ktor:ktor-http", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3"}
 material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
 material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "material3-adaptive" }
 material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "material3-adaptive" }
-material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "compose-multiplatform" }
+material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3-adaptive-suite" }
 material3-windowSizeClass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "compose-windowSizeClass" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 materialKolor-utilities = { module = "com.materialkolor:material-color-utilities", version.ref = "materialKolor" }
-stateHolder = { module = "dev.stateholder:core", version.ref = "stateHolder" }
-stateHolder-compose = { module = "dev.stateholder:extensions-compose", version.ref = "stateHolder" }
+stateHolder = { module = "dev.jordond.stateholder:core", version.ref = "stateHolder" }
+stateHolder-viewModel = { module = "dev.jordond.stateholder:extensions-viewmodel", version.ref = "stateHolder" }
+stateHolder-compose = { module = "dev.jordond.stateholder:extensions-compose", version.ref = "stateHolder" }
+stateHolder-dispatcher = { module = "dev.jordond.stateholder:dispatcher", version.ref = "stateHolder" }
+stateHolder-dispatcher-compose = { module = "dev.jordond.stateholder:dispatcher-compose", version.ref = "stateHolder" }
 composeIcons-fontAwesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 
 [plugins]
-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-hot-reload = { id = "org.jetbrains.compose.hot-reload", version.ref = "compose-hot-reload" }
