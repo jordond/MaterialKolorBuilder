@@ -42,10 +42,7 @@ jobs:
           distribution: adopt
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build for ${{ matrix.target }}
         run: |
@@ -79,10 +76,7 @@ jobs:
           distribution: adopt
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build for ${{ matrix.os }}
         run: |
@@ -201,7 +195,7 @@ jobs:
 
       - name: Copy web build artifacts
         run: |
-          mkdir -p app/build/dist/wasmJs/productionExecutable
+          mkdir -p app/build/dist/composeWebCompatibility/productionExecutable
           echo "Source directory contents:"
           ls -la ./dist/
           echo "Extracting web zip file..."
@@ -210,16 +204,16 @@ jobs:
           echo "Contents after extraction:"
           find . -type f -name "*.html" -o -name "*.js" -o -name "*.wasm" | head -10
           echo "Moving extracted files to build directory..."
-          if [ -d "app/build/dist/wasmJs/productionExecutable" ]; then
-            cp -rv app/build/dist/wasmJs/productionExecutable/* ../app/build/dist/wasmJs/productionExecutable/
+          if [ -d "app/build/dist/composeWebCompatibility/productionExecutable" ]; then
+            cp -rv app/build/dist/composeWebCompatibility/productionExecutable/* ../app/build/dist/composeWebCompatibility/productionExecutable/
           else
             echo "Direct web files found, copying them..."
             cp -rv *.html *.js *.wasm *.css 2>/dev/null || true
-            cp -rv * ../app/build/dist/wasmJs/productionExecutable/ 2>/dev/null || true
+            cp -rv * ../app/build/dist/composeWebCompatibility/productionExecutable/ 2>/dev/null || true
           fi
           cd ..
           echo "Destination directory contents:"
-          ls -la app/build/dist/wasmJs/productionExecutable/
+          ls -la app/build/dist/composeWebCompatibility/productionExecutable/
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0

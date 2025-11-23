@@ -33,19 +33,16 @@ jobs:
           distribution: adopt
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build web app
-        run: ./gradlew wasmJsBrowserDistribution
+        run: ./gradlew :app:composeCompatibilityBrowserDistribution
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: web-app
-          path: app/build/dist/wasmJs/productionExecutable
+          path: app/build/dist/composeWebCompatibility/productionExecutable
 
   deploy:
     name: "Deploy to Staging"
@@ -60,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: web-app
-          path: app/build/dist/wasmJs/productionExecutable
+          path: app/build/dist/composeWebCompatibility/productionExecutable
 
       - name: Deploy to production
         uses: FirebaseExtended/action-hosting-deploy@v0
