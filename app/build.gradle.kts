@@ -129,9 +129,16 @@ kotlin {
 
         webMain.dependencies {
             implementation(libs.kstore.storage)
-            implementation(npm("jszip", "3.10.1"))
             implementation(libs.kotlinx.browser)
             implementation(libs.ktor.client.js)
+        }
+
+        jsMain.dependencies {
+            implementation(npm("jszip", "3.10.1"))
+        }
+
+        wasmJsMain.dependencies {
+            implementation(npm("jszip", "3.10.1"))
         }
 
         val nonBrowserMain by creating {

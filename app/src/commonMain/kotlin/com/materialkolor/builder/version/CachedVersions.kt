@@ -3,7 +3,6 @@ package com.materialkolor.builder.version
 import kotlinx.serialization.Serializable
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
-import kotlin.time.ExperimentalTime
 
 @Serializable
 data class CachedVersions(
@@ -11,7 +10,6 @@ data class CachedVersions(
     val prerelease: String?,
     val cachedAt: Long,
 ) {
-    @OptIn(ExperimentalTime::class)
     fun isExpired(): Boolean {
         val now = Clock.System.now().toEpochMilliseconds()
         val age = now - cachedAt
@@ -25,7 +23,6 @@ data class CachedVersions(
     companion object {
         private val CACHE_DURATION_MS = 1.days.inWholeMilliseconds
 
-        @OptIn(ExperimentalTime::class)
         fun from(versions: MaterialKolorVersions): CachedVersions {
             return CachedVersions(
                 stable = versions.stable,
