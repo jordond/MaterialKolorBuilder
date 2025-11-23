@@ -44,6 +44,7 @@ import dev.stateholder.dispatcher.rememberRelayOf
 @Composable
 fun HomeScreenScaffold(
     options: ExportOptions,
+    materialKolorVersion: String,
     colorPickerState: ColorPickerState?,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
@@ -123,6 +124,7 @@ fun HomeScreenScaffold(
             HomeContent(
                 screen = screen,
                 options = options,
+                materialKolorVersion = materialKolorVersion,
                 selectedSection = selectedSection,
                 updateSelectedSection = { selectedSection = it },
                 dispatcher = dispatcher,

@@ -98,6 +98,7 @@ fun HomeScreen(destination: String? = null) {
         ) {
             HomeScreenScaffold(
                 options = state.exportOptions,
+                materialKolorVersion = state.materialKolorVersion,
                 colorPickerState = state.colorPickerState,
                 snackbarState = snackbar,
                 initialSection = initialSection,

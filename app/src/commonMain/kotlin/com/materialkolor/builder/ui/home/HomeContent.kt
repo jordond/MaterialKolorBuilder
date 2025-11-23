@@ -34,6 +34,7 @@ import dev.stateholder.dispatcher.rememberRelayOf
 fun HomeContent(
     screen: HomeScreens,
     options: ExportOptions,
+    materialKolorVersion: String,
     selectedSection: PreviewSection,
     updateSelectedSection: (PreviewSection) -> Unit,
     processingImage: Boolean,
@@ -69,6 +70,7 @@ fun HomeContent(
                     Content(
                         screen = targetState,
                         options = options,
+                        materialKolorVersion = materialKolorVersion,
                         selectedSection = selectedSection,
                         updateSelectedSection = updateSelectedSection,
                         processingImage = processingImage,
@@ -91,6 +93,7 @@ fun HomeContent(
         Content(
             screen = screen,
             options = options,
+            materialKolorVersion = materialKolorVersion,
             selectedSection = selectedSection,
             updateSelectedSection = updateSelectedSection,
             processingImage = processingImage,
@@ -104,6 +107,7 @@ fun HomeContent(
 fun Content(
     screen: HomeScreens,
     options: ExportOptions,
+    materialKolorVersion: String,
     selectedSection: PreviewSection,
     updateSelectedSection: (PreviewSection) -> Unit,
     processingImage: Boolean,
@@ -122,6 +126,7 @@ fun Content(
     } else {
         ExportScreenContent(
             options = options,
+            materialKolorVersion = materialKolorVersion,
             dispatcher = dispatcher,
             windowSizeClass = windowSizeClass,
         )

@@ -38,6 +38,7 @@ import dev.stateholder.dispatcher.rememberRelayOf
 @Composable
 fun ExportScreenContent(
     options: ExportOptions,
+    materialKolorVersion: String,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
     windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current,
@@ -46,6 +47,7 @@ fun ExportScreenContent(
         WindowWidthSizeClass.Expanded -> {
             ExportExpandedContent(
                 options = options,
+                materialKolorVersion = materialKolorVersion,
                 modifier = modifier,
                 dispatcher = dispatcher,
             )
@@ -71,9 +73,14 @@ fun ExportScreenContent(
 @Composable
 fun ExportExpandedContent(
     options: ExportOptions,
+    materialKolorVersion: String,
     dispatcher: Dispatcher<HomeAction>,
     modifier: Modifier = Modifier,
 ) {
+    val files = remember(options, materialKolorVersion) {
+        options.createFiles(materialKolorVersion)
+    }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -83,14 +90,15 @@ fun ExportExpandedContent(
     ) {
         ExportOptionsCard(
             options = options,
+            materialKolorVersion = materialKolorVersion,
             toggleMode = dispatcher.rememberRelay(HomeAction.ToggleExportMode),
             updateOptions = dispatcher.rememberRelayOf(::UpdateExportOptions),
             modifier = Modifier.widthIn(max = 300.dp),
         )
 
-        var selected by remember { mutableStateOf(options.files.first()) }
-        LaunchedEffect(options.files) {
-            selected = options.files.firstOrNull { it.name == selected.name } ?: options.files.first()
+        var selected by remember { mutableStateOf(files.first()) }
+        LaunchedEffect(files) {
+            selected = files.firstOrNull { it.name == selected.name } ?: files.first()
         }
 
         val clipboard = LocalClipboardManager.current
@@ -98,7 +106,7 @@ fun ExportExpandedContent(
         val scope = rememberCoroutineScope()
         FileListContainer(
             selected = selected,
-            files = options.files,
+            files = files,
             onSelected = { selected = it },
             onClick = {
                 clipboard.setText(AnnotatedString(selected.content))

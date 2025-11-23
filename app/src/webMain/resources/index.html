@@ -62,5 +62,23 @@
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <script src="app.js"></script>
   </head>
-  <body></body>
+  <body>
+  <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js"
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js"
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCwGN9wrnWJGzraBuo7xsNEF_aizDPAVNo",
+        authDomain: "materialkolor.firebaseapp.com",
+        projectId: "materialkolor",
+        storageBucket: "materialkolor.firebasestorage.app",
+        messagingSenderId: "131466006013",
+        appId: "1:131466006013:web:4f8880352a83b427c4dd94",
+        measurementId: "G-8J9JX04LH4"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+  </script>
+  </body>
 </html>

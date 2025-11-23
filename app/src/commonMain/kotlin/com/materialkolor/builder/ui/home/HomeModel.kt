@@ -40,7 +40,10 @@ class HomeModel(
     private val versionService: com.materialkolor.builder.version.MaterialKolorVersionService = DI.versionService,
     private val random: Random = Random.Default,
 ) : UiStateViewModel<HomeModel.State, HomeModel.Event>(
-    State(ExportOptions.default(settingsRepo.settings.value)),
+    State(
+        exportOptions = ExportOptions.default(settingsRepo.settings.value),
+        materialKolorVersion = versionService.getVersion(settingsRepo.settings.value.useMaterialExpressive),
+    ),
 ) {
 
     private var exportJob: Job? = null
@@ -49,10 +52,8 @@ class HomeModel(
         settingsRepo.settings.mergeState { state, value ->
             val newVersion = versionService.getVersion(value.useMaterialExpressive)
             state.copy(
-                exportOptions = state.exportOptions.copy(
-                    settings = value,
-                    materialKolorVersion = newVersion,
-                ),
+                exportOptions = state.exportOptions.copy(settings = value),
+                materialKolorVersion = newVersion,
             )
         }
     }
@@ -202,7 +203,13 @@ class HomeModel(
     }
 
     fun updateExportOptions(options: ExportOptions) {
-        updateState { it.copy(exportOptions = options) }
+        updateState { state ->
+            val newVersion = versionService.getVersion(options.settings.useMaterialExpressive)
+            state.copy(
+                exportOptions = options,
+                materialKolorVersion = newVersion,
+            )
+        }
     }
 
     fun export() {
@@ -211,7 +218,8 @@ class HomeModel(
         updateState { it.copy(exporting = true) }
 
         exportJob = viewModelScope.launch {
-            val result = exportRepo.export(state.value.exportOptions)
+            val currentState = state.value
+            val result = exportRepo.export(currentState.exportOptions, currentState.materialKolorVersion)
             updateState { it.copy(exporting = false) }
             if (!result) {
                 emit(Event.ShowSnackbar("Failed to export theme..."))
@@ -241,6 +249,7 @@ class HomeModel(
 
     data class State(
         val exportOptions: ExportOptions,
+        val materialKolorVersion: String,
         val imagePresets: PersistentList<SeedImage> = ImagePresets.all.toPersistentList(),
         val processingImage: Boolean = false,
         val colorPickerState: ColorPickerState? = null,

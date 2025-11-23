@@ -26,6 +26,7 @@ import com.materialkolor.builder.ui.home.components.OptionSwitch
 @Composable
 fun ExportOptionsCard(
     options: ExportOptions,
+    materialKolorVersion: String,
     toggleMode: () -> Unit,
     updateOptions: (ExportOptions) -> Unit,
     modifier: Modifier = Modifier,
@@ -98,7 +99,7 @@ fun ExportOptionsCard(
                 ) {
                     Text(
                         text = "Material Expressive support is experimental and requires a " +
-                            "pre-release version of MaterialKolor (${options.materialKolorVersion}).",
+                            "pre-release version of MaterialKolor ($materialKolorVersion).",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(12.dp),
                     )
