@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew :app:composeCompatibilityBrowserDistribution
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: web-app
           path: app/build/dist/composeWebCompatibility/productionExecutable
@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: web-app
           path: app/build/dist/composeWebCompatibility/productionExecutable
