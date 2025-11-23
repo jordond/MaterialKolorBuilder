@@ -23,6 +23,7 @@ import com.materialkolor.builder.settings.model.KeyColor
 import com.materialkolor.builder.settings.model.SeedImage
 import com.materialkolor.builder.settings.model.Settings
 import com.materialkolor.builder.ui.LocalWindowSizeClass
+import com.materialkolor.builder.ui.home.components.ExpressiveIcon
 import com.materialkolor.builder.ui.home.components.OptionSwitch
 import com.materialkolor.builder.ui.home.customize.colors.CoreColorsSection
 import com.materialkolor.builder.ui.home.customize.contrast.ContrastSection
@@ -72,8 +73,8 @@ fun CustomizeSection(
             )
 
             Text(
-                text = "Material 3 Expressive is a design system update that introduces the 2025 color " +
-                    "spec with richer, more vibrant colors across all variants. Preview it below.",
+                text = "Material 3 Expressive is a design system update that introduces the 2025 Color " +
+                    "Spec with richer, more vibrant colors."
             )
 
             Text(
@@ -87,6 +88,7 @@ fun CustomizeSection(
                 text = "Preview Expressive Color System",
                 value = settings.useMaterialExpressive,
                 onValueChange = { toggleMaterialExpressive() },
+                leadingContent = { ExpressiveIcon() },
             )
         }
 

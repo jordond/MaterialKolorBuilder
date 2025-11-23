@@ -3,15 +3,20 @@ package com.materialkolor.builder.ui.home.customize.style
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.materialkolor.PaletteStyle
 import com.materialkolor.builder.ktx.isExpressive
+import com.materialkolor.builder.ui.home.components.ExpressiveIcon
 import com.materialkolor.dynamiccolor.ColorSpec
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -29,7 +34,7 @@ fun PaletteStyleSection(
         modifier = modifier,
     ) {
         Text(
-            text = "Variant - ${selected.name()}",
+            text = "Style - ${selected.name()}",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -43,6 +48,14 @@ fun PaletteStyleSection(
                     selected = style == selected,
                     label = { Text(text = style.name()) },
                     onClick = { onUpdate(style) },
+                    trailingIcon = if (!style.isExpressive) {
+                        null
+                    } else {
+                        {
+                            ExpressiveIcon(Modifier.size(FilterChipDefaults.IconSize))
+
+                        }
+                    },
                 )
             }
         }
@@ -52,6 +65,18 @@ fun PaletteStyleSection(
             style = MaterialTheme.typography.bodySmall,
             minLines = 2,
         )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            ExpressiveIcon(Modifier.size(16.dp))
+            Text(
+                text = "Supports Material Expressive (2025 spec)",
+                style = MaterialTheme.typography.labelSmall,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
     }
 }
 
