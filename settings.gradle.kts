@@ -32,7 +32,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("com.gradle.develocity") version "4.2.2"
+    id("com.gradle.develocity") version "4.3.2"
 
     //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
     id("org.gradle.toolchains.foojay-resolver-convention").version("1.0.0")
