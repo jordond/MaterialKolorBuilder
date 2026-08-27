@@ -1,5 +1,7 @@
 # MaterialKolor Builder
 
+**Note:** This has been moved to the main [MaterialKolor](https://github.com/jordond/MaterialKolor) library.
+
 [![Kotlin](https://img.shields.io/badge/kotlin-v2.1.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 [![Build](https://github.com/jordond/materialkolorbuilder/actions/workflows/ci.yml/badge.svg)](https://github.com/jordond/materialkolorbuilder/actions/workflows/ci.yml)
 [![Release](https://github.com/jordond/materialkolorbuilder/actions/workflows/release.yml/badge.svg)](https://github.com/jordond/materialkolorbuilder/actions/workflows/release.yml)
